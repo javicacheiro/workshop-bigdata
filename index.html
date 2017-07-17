@@ -1,0 +1,1122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>Workshop BD|CESGA</title>
+
+<meta name="description" content="Introducción al servicio Big Data del CESGA basado en Hadoop.">
+<meta name="author" content="Javier Cacheiro">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+<!-- JLC CSS customizations -->
+<link rel="stylesheet" href="css/custom.css">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- Printing and PDF exports -->
+<script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+      <h2 style="font-family: arvo;">BD|CESGA</h2>
+      <p style="font-size: 30px;text-align:center;">
+          Providing quick access to ready-to-use Big Data solutions</p>
+      <p style="font-size: 20px;text-align:center;">
+          Because Big Data doesn't have to be complicated</p>
+      <p style="text-align: center;">
+      <br/><br/>
+      <small><a href="http://www.cesga.es">Javier Cacheiro</a> / Cloudera Certified Developer for Hadoop / <a href="http://twitter.com/javicacheiro">@javicacheiro</a></small>
+      </p>
+    </section>
+
+    <!-- Intro -->
+    <section>
+      <section>
+        <h1>Big Data</h1>
+        <h3>What?</h3>
+      </section>
+      <section>
+        <h2>The 3V model</h2>
+        <img class="stretch" src="img/3v.png" />
+      </section>
+      <section>
+        <h2>Data Centric</h2>
+        <p><em>Compute centric</em>: 
+            bring the <strong>data</strong> to the <strong>computation</strong></p>
+        <p><em>Data centric</em>:
+             bring the <strong>computation</strong> to the <strong>data</strong></p>
+      </section>
+      <!-- HPC is dying, and MPI is killing it -->
+      <section>
+        <h2>MPI Shortcomings</h2>
+        <p>Jonathan Dursi:
+          <a href="http://www.dursi.ca/hpc-is-dying-and-mpi-is-killing-it/">
+              <strong>HPC is dying, and MPI is killing it</strong></a>
+        </p>
+        <ul>
+          <li>Wrong level of abstraction for application writers</li>
+          <li>No fault-tolerance</li>
+        </ul>
+      </section>
+      <section>
+        <h2>MPI Boilerplate</h2>
+        <table><thead>
+        <tr>  
+        <th>Framework&nbsp;&nbsp;</th>  
+        <th>Lines&nbsp;&nbsp;</th>  
+        <th>Lines of Boilerplate</th>  
+        </tr>  
+        </thead><tbody>  
+        <tr>  
+        <td>MPI+Python</td>  
+        <td>52</td>  
+        <td>20+</td>  
+        </tr>  
+        <tr>  
+        <td>Spark+Python&nbsp;&nbsp;&nbsp;</td>  
+        <td>28</td>  
+        <td>2</td>  
+        </tr>  
+        <tr>  
+        <td>Chapel</td>  
+        <td>20</td>  
+        <td>1</td>  
+        </tr>  
+        </tbody></table>
+      </section>
+    </section>
+
+
+    <!-- BD|CESGA Hardware -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2 style="font-family: arvo;">BD|CESGA</h2>
+        <h3>Hardware</h3>
+      </section>
+      <section>
+        <h2>Evolution</h2>
+        <ul>
+          <li>2013: Initial service providing Hadoop on cloud</li>
+          <li>2014: Hadoop on SVG for demanding applications</li>
+          <li>2015: BD hardware <a href="https://www.cesga.es/gl/biblioteca/downloadAsset/id/775">requirement analysis</a></li>
+          <li>End of 2015: End of the procurement process</li>
+          <li>July 2016: new infrastructure ready for production</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Hardware Infrastructure</h2>
+        <ul>
+          <li>38 nodes: 4 masters + 34 slaves</li>
+          <li>Storage capacity <strong>816TB</strong></li>
+          <li>Aggregated I/O throughtput <strong>30GB/s</strong></li>
+          <li><strong>64GB</strong> RAM per node</li>
+          <li><strong>10GbE</strong> connectivity between all nodes</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Hardware Master Nodes</h2>
+        <ul>
+           <li>Model: Lenovo System x3550 M5</li>
+           <li>CPU: 2x Intel Xeon E5-2620 v3 @ 2.40GHz  </li>
+           <li>Cores: 12 (2x6)  </li>
+           <li>HyperThreading: On (24 threads)</li>
+           <li>Total memory: 64GB  </li>
+           <li>Network: 1x10Gbps + 2x1Gbps  </li>
+           <li>Disks: 8x 480GB SSD SATA 2.5" MLC G3HS</li>
+           <li>Controller: ServeRAID M5210 1GB Cache FastPath</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Hardware Slave Nodes</h2>
+        <ul>
+           <li>Modelo: Lenovo System x3650 M5</li>
+           <li>CPU: 2x Intel Xeon E5-2620 v3 @ 2.40GHz  </li>
+           <li>Cores: 12 (2x6)  </li>
+           <li>HyperThreading: On (24 threads)</li>
+           <li>Total memory: 64GB  </li>
+           <li>Network: 1x10Gbps + 2x1Gbps  </li>
+           <li>Disks: 12x 2TB NL SATA 6Gbps 3.5" G2HS</li>
+           <li>Controller: N2215 SAS/SATA HBA</li>
+      </section>
+
+    </section>
+
+    <!-- BD|CESGA Software -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2 style="font-family: arvo;">BD|CESGA</h2>
+        <h3>Software</h3>
+      </section>
+      <section>
+        <h2>Platforms available</h2>
+        <ul>
+          <li>Hadoop Platform</li>
+          <li>PaaS Platform (beta)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Hadoop Platform</h2>
+        <ul>
+          <li>Ready to use Hadoop ecosystem</li>
+          <li>Covers most of the uses cases</li>
+          <li>Production ready</li>
+          <li>Fully optimized for Big Data applications</li>
+        </ul>
+      </section>
+      <section>
+        <h2>PaaS Platform</h2>
+        <ul>
+          <li>When you need something outside the Hadoop ecosystem</li>
+          <li>Enables you to deploy custom Big Data clusters</li>
+          <li>Advanced resource planning based on Mesos</li>
+          <li>No virtualization overheads: based on Docker</li>
+          <li>Includes a catalog of products ready to use: eg. Cassandra, MongoDB, PostgreSQL</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- hadoop.cesga.es demo -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>BD|CESGA Portal</h2>
+        <h4>hadoop.cesga.es</h4>
+      </section>
+      <section>
+        <h2>Front Page</h2>
+        <img class="stretch" src="img/web_frontpage.png" />
+      </section>
+      <section>
+        <h2>General info</h2>
+        <img class="stretch" src="img/web_how.png" />
+      </section>
+      <section>
+        <h2>Tools available</h2>
+        <img class="stretch" src="img/web_what.png" />
+      </section>
+      <section>
+        <h2>WebUI</h2>
+        <img class="stretch" src="img/web_webui.png" />
+      </section>
+      <section>
+        <h2>Tutorials</h2>
+        <img class="stretch" src="img/web_tutorials.png" />
+      </section>
+    </section>
+
+    <!-- Hadoop Platform -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Hadoop Platform</h2>
+        <h4> Your ready-to-use Hadoop ecosystem </h4>
+      </section>
+      <section>
+        <h2>Ecosystem</h2>
+        <img class="stretch" src="img/hdp_ecosystem.png" />
+        <footer>Source: <a href="http://hortonworks.com/products/data-center/hdp/">HortonWorks Data Platform</a></footer>
+      </section>
+      <section>
+        <h2>Core Components</h2>
+        <ul>
+          <li><strong>HDFS</strong>: Parallel filesystem</li>
+          <li><strong>YARN</strong>: Resource manager</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- HDFS -->
+    <section>
+      <section>
+        <h1>HDFS</h1>
+        <h3>The Hadoop Distributed Filesystem</h3>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Characteristics
+          - Parallel Filesystem written in Java
+          - Best performance on large files (>100MB)
+          - Files in HDFS are of type <em>write once</em>
+          - HDFS is optimized for large sequential reads
+        </script>
+      </section>
+      
+      <section data-markdown>
+        <script type="text/template">
+          ## How files are stored
+          - Data is distributed over multiple nodes
+          - Files are split in blocks
+            - In our case default block size is <strong>128MB</strong>
+          - Blocks are stored as standard files in DataNodes
+          - Blocks are replicated across multiple nodes
+            - By default <strong>3 replicas</strong>
+          - NameNode keeps track of what blocks are part of a file and where they are (metadata)        </script>
+      </section>
+
+      <section>
+        <h2>HDFS Architecture</h2>
+        <img src="img/hdfsarchitecture.gif" />
+        <footer>Source: <a href="http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS Architecture Guide</a></footer>
+      </section>
+
+      <section>
+        <h2>HDFS Replicas</h2>
+        <img src="img/hdfsreplicas.gif" />
+        <footer>Source: <a href="http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS Architecture Guide</a></footer>
+      </section>
+
+      <section>
+        <h2>Upload a file to HDFS</h2>
+        <p>
+          To upload a file from local disk to HDFS:
+        </p>
+        <pre><code>hdfs dfs -put file.txt file.txt</code></pre>
+        <p>It will copy the file to <em>/user/username/file.txt</em> in HDFS.</p>
+      </section>
+      
+      <section>
+        <h2>List files</h2>
+        <p>
+          To list files in HDFS:
+        </p>
+        <pre><code>hdfs dfs -ls</code></pre>
+        <p>Lists the files in our HOME directory of HDFS <em>/user/username/</em></p>
+        <p>To list files in the root directory:</p>
+        <pre><code>hdfs dfs -ls /</code></pre>
+      </section>
+
+      <section>
+        <h2>Working with directories</h2>
+        <p> Create a directory: </p>
+        <pre><code>hdfs dfs -mkdir /tmp/test</code></pre>
+        <p> Delete a directory: </p>
+        <pre><code>hdfs dfs -rm -r -f /tmp/test</code></pre>
+      </section>
+
+      <section>
+        <h2>Working with files</h2>
+        <p> Read a file: </p>
+        <pre><code>hdfs dfs -cat file.txt</code></pre>
+        <p> Download a file from HDFS to local disk: </p>
+        <pre><code>hdfs dfs -get fichero.txt</code></pre>
+      </section>
+      <section>
+        <h2>Web File Explorer</h2>
+        <p>
+        You can easily access the HUE File Explorer from the
+        <a href="https://hadoop.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/hue_file_explorer.png" />
+      </section>
+      <section>
+        <h2>Monitoring</h2>
+        <p>
+        You can easily access the NameNode UI from the
+        <a href="https://hadoop.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/namenodeui.png" />
+      </section>
+    </section>
+
+    <!-- YARN -->
+    <section>
+      <section>
+        <h2>YARN</h2>
+        <h4>Yet Another Resource Negotiator</h4>
+      </section>
+      <section>
+        <h2>YARN Architecture</h2>
+        <img src="img/yarn_architecture.gif" />
+        <footer>Source: <a href="https://hadoop.apache.org/docs/r2.7.2/hadoop-yarn/hadoop-yarn-site/YARN.html">Apache Hadoop YARN Architecture</a></footer>
+      </section>
+      <section>
+        <h2>Launching an application</h2>
+        <pre><code>yarn jar application.jar DriverClass input output</code></pre>
+      </section>
+      <section>
+        <h2>List running jobs</h2>
+        <pre><code>yarn application -list</code></pre>
+      </section>
+      <section>
+        <h2>See application logs</h2>
+        <pre><code>yarn logs -applicationId applicationId</code></pre>
+      </section>
+      <section>
+        <h2>Kill an application</h2>
+        <pre><code>yarn application -kill applicationId</code></pre>
+      </section>
+      <section>
+        <h2>Capacity Scheduler Queues</h2>
+        <img src="img/yarn_queues.png">
+      </section>
+      <section>
+        <h2>WebUI</h2>
+        <img class="stretch" src="img/webui.png">
+      </section>
+      <section>
+        <h2>YARN UI</h2>
+        <img src="img/yarnui.png">
+      </section>
+    </section>
+
+    <!-- MapReduce -->
+    <section>
+      <section>
+        <h2>MapReduce</h2>
+        <p>MapReduce is a programming model and an associated implementation for processing and generating large data sets with a parallel, distributed algorithm on a cluster.</p>
+      </section>
+
+      <section>
+        <h2>MapReduce</h2>
+        <img src="img/mapreduce.png" />
+      </section>
+      
+      <section>
+        <h2>Launching a job</h2>
+        <p>
+          To launch a job:
+        </p>
+        <pre><code>yarn jar job.jar DriverClass input output</code></pre>
+      </section>
+      
+      <section>
+        <h2>List MR jobs</h2>
+        <p>
+          To list running MR jobs:
+        </p>
+        <pre><code>mapred job -list</code></pre>
+      </section>
+
+      <section>
+        <h2>Cancelling a job</h2>
+        <p>
+          To cancel a job:
+        </p>
+        <pre><code>mapred job -kill [jobid]</code></pre>
+      </section>
+      <section>
+        <h2>Monitoring</h2>
+        <p>
+        You can easily monitor your jobs using the YARN UI from the
+        <a href="https://hadoop.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/yarnui.png" />
+      </section>
+      <section>
+        <h2>Job History</h2>
+        <p>
+        You can see finished jobs using the MR2 UI from the
+        <a href="https://hadoop.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/mapreduceui.png" />
+      </section>
+    </section>
+
+    <!-- MapReduce Streaming API -->
+    <section>
+      <section data-markdown>
+        <script type="text/template">
+          ## MapReduce Streaming API
+          - Advantadges of the Streaming API
+            - Supports any language (perl, python, ruby, etc)
+            - Easy to reuse existing code
+          - Disadvantadges
+            - Performance
+            - Less flexibility during development than using the native MapReduce API
+        </script>
+      </section>
+      <section>
+        <h2>Quick how-to</h2>
+        <ul>
+          <li>We write two separated scripts: Mapper y Reducer</li>
+          <li>The Mapper script will receive as stdin the file line by line</li>
+          <li>The stdout of the Mapper and Reducer must be key-value pairs separated by a tab</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- Spark -->
+    <section>
+      <section>
+        <h2>Spark</h2>
+        <h4>A fast and general engine for large-scale data processing</h4>
+      </section>
+      <section>
+        <h2>Speed</h2>
+        <img class="strecth" src="img/spark_speed.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Easy</h2>
+        <img class="strecth" src="img/spark_easy.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Generality</h2>
+        <img class="strecth" src="img/spark_generality.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Language Selection</h2>
+        <ul>
+          <li>Scala</li>
+          <li>Java</li>
+          <li>Python</li>
+          <li>R</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- PySpark -->
+    <section>
+      <section>
+        <h2>PySpark</h2>
+      </section>
+      <section>
+        <h2>PySpark Basics</h2>
+        <ul>
+          <li>Based on Anaconda Python distribution</li>
+          <li>Over 720 packages for data preparation, data analysis, data visualization, machine learning and interactive data science</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Running pyspark interactively</h2>
+        <ul>
+          <li>Using Jupyter notebook</li>
+          <li>Running from the command line using ipython:
+            <pre><code>PYSPARK_DRIVER_PYTHON=ipython pyspark</code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <pre><code>
+          [jlopez@login7 ~]$ PYSPARK_DRIVER_PYTHON=ipython pyspark
+          >>>  from pyspark.sql import Row
+          >>>  Person = Row('name', 'surname')
+          >>>  data = []
+          >>>  data.append(Person('Joe', 'MacMillan'))
+          >>>  data.append(Person('Gordon', 'Clark'))
+          >>>  data.append(Person('Cameron', 'Howe'))
+          >>>  df = sqlContext.createDataFrame(data)
+          >>>  df.show()
+            +-------+---------+
+            |   name|  surname|
+            +-------+---------+
+            |    Joe|MacMillan|
+            | Gordon|    Clark|
+            |Cameron|     Howe|
+            +-------+---------+
+        </code></pre>
+      </section>
+    </section>
+
+    <!-- SparkR -->
+    <section>
+      <section>
+        <h2>SparkR</h2>
+      </section>
+      <section>
+        <h2>SparkR Basics</h2>
+        <ul>
+          <li>Anaconda R distribution</li>
+          <li>r-essentials bundle: contains the IRKernel and more than 80 of the most popular R packages for data science, including dplyr, shiny, ggplot2, tidyr, caret and nnet.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Running SparkR interactively</h2>
+        <ul>
+          <li>Using Jupyter notebook</li>
+          <li>Running from the command line
+          <pre><code>[jlopez@login6 ~]$ sparkR</code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <pre><code>
+          [jlopez@login7 ~]$ sparkR
+          > df <- createDataFrame(sqlContext, faithful)
+          > head(df)
+            eruptions waiting
+            1     3.600      79
+            2     1.800      54
+            3     3.333      74
+            4     2.283      62
+            5     4.533      85
+            6     2.883      55
+        </code></pre>
+      </section>
+      
+      <section>
+        <h2>Jupyter Setup 1/2</h2>
+        Start an SSH session with X11 support:
+        <pre><code>ssh -X login.hdp.cesga.es</code></pre>
+      </section>
+      <section>
+        <h2>Jupyter Setup 2/2</h2>
+        Inside the notebook initialize the Spark context:
+        <pre><code>
+        Sys.setenv(SPARK_HOME='/usr/hdp/2.4.2.0-258/spark')
+        .libPaths(c(file.path(Sys.getenv('SPARK_HOME'), 'R', 'lib'), .libPaths()))
+
+        library(SparkR)
+
+        sc <- sparkR.init(master="yarn-client")
+        sqlContext <- sparkRSQL.init(sc)
+        </code></pre>
+        <ul>
+          <li></li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- spark-submit -->
+    <section>
+      <section>
+        <h2>spark-submit</h2>
+        <h4>Submit job to queue</h4>
+      </section>
+      <section>
+        <h2>Spark Components</h2>
+        <img class="strecth" src="img/cluster-overview.png" />
+        <footer>Source: <a href="http://spark.apache.org/docs/latest/cluster-overview.html">Apache Spark Components</a></footer>
+      </section>
+      <section>
+        <h2>spark-submit Python</h2>
+        <pre><code>
+        # client mode
+        spark-submit --master yarn \
+          --name testWC test.py input output
+        # cluster mode
+        spark-submit --master yarn --deploy-mode cluster \
+          --name testWC test.py input output
+        </code></pre>
+      </section>
+      <section>
+        <h2>spark-submit Scala/Java</h2>
+        <pre><code>
+        # client mode
+        spark-submit --master yarn --name testWC \
+          --class es.cesga.hadoop.Test test.jar \
+          input output
+        # cluster mode
+        spark-submit --master yarn --deploy-mode cluster \
+          --name testWC \
+          --class es.cesga.hadoop.Test test.jar \
+          input output
+        </code></pre>
+      </section>
+      <section>
+        <h2>spark-submit options</h2>
+        <pre><code>
+--num-executors NUM    Number of executors to launch (Default: 2)
+--executor-cores NUM   Number of cores per executor. (Default: 1)
+--driver-cores NUM     Number of cores for driver (cluster mode)
+--executor-memory MEM  Memory per executor (Default: 1G)
+--queue QUEUE_NAME     The YARN queue to submit to (Default: "default")
+--proxy-user NAME      User to impersonate
+        </code></pre>
+      </section>
+    </section>
+
+    <!-- HIVE -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Hive</h2>
+        <h4>SQL-like interface</h4>
+      </section>
+
+      <section>
+        <h2>Hive</h2>
+        <p>Hive offers the possibility to use Hadoop through a SQL-like interface</p> 
+        <p>Hive and Impala use the same SQL syntax <strong>HiveQL</strong></p>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Create Table
+          ```
+          CREATE EXTERNAL TABLE jobs (
+            jobid INT,
+            username STRING,
+            submitted DATE,
+            etime BIGINT
+          ) LOCATION '/user/jlopez/data/jobs';
+          ```
+        </script>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Load Data
+          ```
+          hdfs dfs -put sge_201601*.log /user/jlopez/data/jobs
+          ```
+        </script>
+      </section>
+
+      <section>
+        <h2>Field delimitter</h2>
+        <ul>
+          <li>Default field delimitter Ctr+A (0x01)</li>
+          <li>It can be changed when creating a table
+          <pre><code>
+            ROW FORMAT DELIMITED
+            FIELDS TERMINATED BY ':'
+          </code></pre>
+          </li>
+        </ul>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Sample queries
+          ```
+          SELECT * FROM jobs;
+          SELECT count(*) FROM jobs;
+          SELECT username, sum(etime) FROM jobs GROUP BY username;
+          SELECT jobs.*, users.*
+            FROM jobs JOIN users ON (jobs.username = users.username);
+          ```
+        </script>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Remove table
+          ```
+          DROP TABLE jobs;
+          ```
+        </script>
+      </section>
+    </section>
+
+    <!-- Sqoop -->
+    <section>
+      <section>
+        <h1>Sqoop</h1>
+        <h4>Transferring data between Hadoop and relational databases</h4>
+      </section>
+      <section>
+        <h2>Sqoop</h2>
+        <img class="stretch" src="img/sqoop_diagram.png" />
+        <footer>Source: <a href="http://bigdatariding.blogspot.com.es/">bigdatariding</a></footer>
+      </section>
+      <section>
+        <h2>List tables</h2>
+        <pre><code>
+        sqoop list-tables \
+          --username ${USER} -P \
+          --connect jdbc:postgresql://${SERVER}/${DB}
+        </code></pre>
+      </section>
+      <section>
+        <h2>Import one table</h2>
+        <pre><code>
+        sqoop import \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --target-dir /user/username/mytable \
+          --num-mappers 1
+        </code></pre>
+      </section>
+      <section>
+        <h2>Import into Hive</h2>
+        <pre><code>
+        sqoop import \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --target-dir /user/username/mytable \
+          --num-mappers 1 \
+          --hive-import
+        </code></pre>
+      </section>
+      <section>
+        <h2>Create only the table structure into Hive</h2>
+        <pre><code>
+        sqoop create-hive-table \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable
+        </code></pre>
+      </section>
+      <section>
+        <h2>Sqoop Export</h2>
+        <img class="stretch" src="img/sqoop_export.png" />
+        <footer>Source: <a href="http://bigdatariding.blogspot.com.es/">bigdatariding</a></footer>
+      </section>
+      <section>
+        <h2>Export</h2>
+        <p>First create table into PostgreSQL</p>
+        <pre><code>
+        sqoop export \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --export-dir /user/username/mytable \
+          --input-fields-terminated-by '\001' \
+          --num-mappers 1
+        </code></pre>
+      </section>
+      <section>
+        <h2>Direct mode</h2>
+        <p>For MySQL and PosgreSQL for faster performance you can use direct mode (<strong>--direct</strong> option)</p>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h2>Machine Learning</h2>
+      </section>
+      <section>
+        <h2>Mahout</h2>
+        <p>
+        Apache Mahout is a machine learning library that includes collaborative filtering, clustering and classification algorithms built using MapReduce.
+        </p>
+        <a href="https://mahout.apache.org/users/recommender/intro-itembased-hadoop.html">Introduction to Item-Based Recommendations with Hadoop</a>
+      </section>
+      <section>
+        <h2>Spark MLlib</h2>
+        <ul>
+          <li>Machine Learning library for Spark</li>
+          <li>RDD-based API</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Spark ML</h2>
+        <ul>
+          <li>Machine Learning library for Spark</li>
+          <li>Dataframes-based API</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- Optimizations -->
+    <section>
+      <section>
+        <h1>Optimizations</h1>
+        <h3>Improving the performance</h3>
+      </section>
+      <section>
+        <h2>BLAS</h2>
+        <p>Low-level routines for performing common linear algebra operations</p>
+        <ul>
+          <li><strong>Intel MKL</strong>: /opt/Anaconda2-4.1.1/lib/libmkl_rt.so<br/>
+          <a href="https://software.intel.com/es-es/node/528522">Single Dynamic Library (SDL) interface</a>
+          </li>
+          <li> <strong>OpenBlas</strong>: /usr/lib64/libopenblas.so.0</li>
+        </ul>
+      </section>
+      <section>
+        <h1>NumPy</h1>
+        <p>Adds support to Python for <strong>fast</strong> operations with multi-dimensional arrays and matrices</p>
+        <p>Already configured to use Intel MKL</p>
+      </section>
+      <section>
+        <h1>Storage Formats</h1>
+        <img height="100" src="img/avro.png" />
+        <img height="100" src="img/parquet.png" />
+      </section>
+    </section>
+
+    <!-- DEMOS -->
+    <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+      <h2>Demo Tutorials</h2>
+    </section>
+
+    <!-- How to connect -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>How to connect</h2>
+      </section>
+      <section>
+        <h2>How to connect: Setup</h2>
+        <ol>
+          <li>Start the <strong>VPN</strong></li>
+          <li>Create a ssh tunnel
+          <pre><code>ssh -C2qTnNf -D 9876 <username>@login.hdp.cesga.es</code></pre>
+          <li>Configure your browser to use localhost:9876 as a SOCKS v5 proxy</li>
+          <li>Select Remote DNS</li>
+        </ol>
+      </section>
+      <section>
+        <h2>How to connect: CLI</h2>
+        <p>Using a powerful CLI through SSH:
+          <pre><code>ssh <username>@login.hdp.cesga.es</code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>How to connect: WebUI</h2>
+        <p>Using a simple <a href="https://hadoop.cesga.es">Web User Interface</a></p>
+        <img class="stretch" src="img/webui.png" />
+      </section>
+    </section>
+
+    <!-- Jupyter -->
+    <section>
+      <section>
+        <h2>Jupyter</h2>
+        <p>The <strong>Jupyter Notebook</strong> is a web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.</p>
+      </section>
+      <section>
+        <h2>Launching Jupyter</h2>
+        <ul>
+          <li>Connect to login.hdp.cesga.es</li>
+          <li>Go to your working directory</li>
+          <li>Launch the Jupyter server
+          <pre><code>start_jupyter</code></pre>
+          </li>
+          <li>Type a password to protect the notebook</li>
+          <li>Point your browser to the address where the notebook is running:
+          <pre><code>The Jupyter Notebook is running at: http://1.2.3.4:8888/</code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Jupyter</h2>
+        <img class="stretch" src="img/jupyter_files.png">
+      </section>
+      <section>
+        <h2>Jupyter Terminal</h2>
+        <img class="stretch" src="img/jupyter_terminal.png">
+      </section>
+      <section>
+        <h2>Jupyter Conda</h2>
+        <img class="stretch" src="img/jupyter_conda.png">
+      </section>
+    </section>
+
+    <section>
+      <h2>Sqoop</h2>
+    </section>
+
+    <section>
+      <h2>Hive</h2>
+    </section>
+
+    <section>
+      <h2>Spark</h2>
+    </section>
+
+    <!-- MapReduce for Java developers -->
+    <section>
+      <section>
+        <h2>MapReduce for Java developers</h2>
+      </section>
+      <section>
+        <h2>Development Environment Setup</h2>
+        <ul>
+          <li>For a sample Maven-based project use:
+            <pre><code>git clone https://github.com/bigdatacesga/mr-wordcount</code></pre>
+          </li>
+          <li>Import the project in Eclipse using m2e or in Intellij</li>
+          <li>If using an IDE like Eclipse or Intellij it can be useful to:
+            <pre><code>
+              # Download sources and javadoc
+              mvn dependency:sources
+              mvn dependency:resolve -Dclassifier=javadoc
+              # Update the existing Eclipse project
+              mvn eclipse:eclipse
+              # Or if you using Intellij IDEA
+              mvn idea:idea
+            </code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Maven Basic Usage</h2>
+        <p>Compile:
+          <pre><code>mvn compile</code></pre>
+        </p>
+        <p>Run the tests
+          <pre><code>mvn test</code></pre>
+        </p>
+        <p>Package your app
+          <pre><code>mvn package</code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>Manual Process</h2>
+        <p>If you prefer to compile and package manually:
+          <pre><code>
+            javac -classpath $(hadoop classpath) *.java
+            jar cvf wordcount.jar *.class
+          </code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>MapReduce Program</h2>
+        <p>Basic components of a program:</p>
+        <ul>
+          <li><strong>Driver</strong>: management code for the job or sequence of jobs</li>
+          <li><strong>map</strong> function of the Mapper</li>
+          <li><strong>reduce</strong> function of the Reducer</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Driver Code</h2>
+        <pre><code data-trim>
+public class Driver {
+  public static void main(String[] args) throws Exception {
+    Configuration conf = new Configuration();
+    Job job = Job.getInstance(conf);
+    job.setJarByClass(Driver.class);
+    job.setJobName("Word Count");
+    job.setMapperClass(WordMapper.class);
+    job.setCombinerClass(SumReducer.class);
+    job.setReducerClass(SumReducer.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
+    FileInputFormat.setInputPaths(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));    
+    boolean success = job.waitForCompletion(true);
+    System.exit(success ? 0 : 1);
+  }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Map Code</h2>
+        <pre><code data-trim>
+public class WordMapper
+    extends Mapper&lt;LongWritable, Text, Text, IntWritable&gt; {
+	private final static IntWritable one = new IntWritable(1);
+	private Text word = new Text();
+	@Override
+	public void map(LongWritable key, Text value, Context context)
+			throws IOException, InterruptedException {
+		String line = value.toString();
+		for (String field : line.split("\\W+")) {
+			if (field.length() &gt; 0) {
+				word.set(field);
+				context.write(word, one);
+			}
+		}
+	}
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Reduce Code</h2>
+        <pre><code data-trim>
+public class SumReducer
+  extends Reducer&lt;Text, IntWritable, Text, IntWritable&gt; {
+	@Override
+	public void reduce(
+            Text key, Iterable&lt;IntWritable&gt; values, Context context)
+			throws IOException, InterruptedException {
+		int wordCount = 0;
+
+		for (IntWritable value : values) {
+			wordCount += value.get();
+		}
+		context.write(key, new IntWritable(wordCount));
+	}
+}
+        </code></pre>
+      </section>
+
+    </section>
+
+    <section>
+      <section>
+        <h2>Success Stories</h2>
+      </section>
+      
+      <section>
+        <h2>Gaia (UDC)</h2>
+        <a href="https://www.cesga.es/es/biblioteca/downloadAsset/id/750" target="_blank">
+          <img src="img/gaia.jpg" />
+        </a>
+      </section>
+
+      <section>
+        <h2>FilmYou (CITIC)</h2>
+        <a href="http://citic-research.org/sala_de_prensa/object_details_remote/1869691728?action_page=noticias&locale=es&object_name=NewsItem"><img src="img/filmyou.jpg" /></a>
+      </section>
+
+    </section>
+
+    <section>
+      <h3>Q&A</h3>
+      <p style="text-align: center;">We are here to help:</p>
+      <p style="text-align: center;">
+        <script language="JavaScript">
+        var address = "bigdata";
+        var domain = "cesga.es";
+        var linktext = address + "@" + domain ;
+        document.write("<a href='" + "mail" + "to:" + address + "@" + domain + "'>" + linktext + "</a>");
+        </script>
+      </p>
+
+      <p style="text-align: center;">Stay up to date subscribing to our <a href="https://listas.cesga.es/mailman/listinfo/bigdata-dev">Mailing list</a></p>
+
+    </section>
+    
+
+  </div>
+
+</div>
+
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+controls: true,
+progress: true,
+history: true,
+center: true,
+
+transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+// Optional reveal.js plugins
+dependencies: [
+{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+{ src: 'plugin/zoom-js/zoom.js', async: true },
+{ src: 'plugin/notes/notes.js', async: true }
+]
+});
+
+            </script>
+
+            </body>
+            </html>
