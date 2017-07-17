@@ -205,7 +205,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>BD|CESGA Portal</h2>
-        <h4>hadoop.cesga.es</h4>
+        <h4>bigdata.cesga.gal</h4>
       </section>
       <section>
         <h2>Front Page</h2>
@@ -437,8 +437,134 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
     </section>
 
+    <!-- MapReduce for Java developers -->
+    <section>
+      <section>
+        <h2>MapReduce for Java developers</h2>
+      </section>
+      <section>
+        <h2>Development Environment Setup</h2>
+        <ul>
+          <li>For a sample Maven-based project use:
+            <pre><code>git clone https://github.com/bigdatacesga/mr-wordcount</code></pre>
+          </li>
+          <li>Import the project in Eclipse using m2e or in Intellij</li>
+          <li>If using an IDE like Eclipse or Intellij it can be useful to:
+            <pre><code>
+              # Download sources and javadoc
+              mvn dependency:sources
+              mvn dependency:resolve -Dclassifier=javadoc
+              # Update the existing Eclipse project
+              mvn eclipse:eclipse
+              # Or if you using Intellij IDEA
+              mvn idea:idea
+            </code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Maven Basic Usage</h2>
+        <p>Compile:
+          <pre><code>mvn compile</code></pre>
+        </p>
+        <p>Run the tests
+          <pre><code>mvn test</code></pre>
+        </p>
+        <p>Package your app
+          <pre><code>mvn package</code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>Manual Process</h2>
+        <p>If you prefer to compile and package manually:
+          <pre><code>
+            javac -classpath $(hadoop classpath) *.java
+            jar cvf wordcount.jar *.class
+          </code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>MapReduce Program</h2>
+        <p>Basic components of a program:</p>
+        <ul>
+          <li><strong>Driver</strong>: management code for the job or sequence of jobs</li>
+          <li><strong>map</strong> function of the Mapper</li>
+          <li><strong>reduce</strong> function of the Reducer</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Driver Code</h2>
+        <pre><code data-trim>
+public class Driver {
+  public static void main(String[] args) throws Exception {
+    Configuration conf = new Configuration();
+    Job job = Job.getInstance(conf);
+    job.setJarByClass(Driver.class);
+    job.setJobName("Word Count");
+    job.setMapperClass(WordMapper.class);
+    job.setCombinerClass(SumReducer.class);
+    job.setReducerClass(SumReducer.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
+    FileInputFormat.setInputPaths(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));    
+    boolean success = job.waitForCompletion(true);
+    System.exit(success ? 0 : 1);
+  }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Map Code</h2>
+        <pre><code data-trim>
+public class WordMapper
+    extends Mapper&lt;LongWritable, Text, Text, IntWritable&gt; {
+	private final static IntWritable one = new IntWritable(1);
+	private Text word = new Text();
+	@Override
+	public void map(LongWritable key, Text value, Context context)
+			throws IOException, InterruptedException {
+		String line = value.toString();
+		for (String field : line.split("\\W+")) {
+			if (field.length() &gt; 0) {
+				word.set(field);
+				context.write(word, one);
+			}
+		}
+	}
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Reduce Code</h2>
+        <pre><code data-trim>
+public class SumReducer
+  extends Reducer&lt;Text, IntWritable, Text, IntWritable&gt; {
+	@Override
+	public void reduce(
+            Text key, Iterable&lt;IntWritable&gt; values, Context context)
+			throws IOException, InterruptedException {
+		int wordCount = 0;
+
+		for (IntWritable value : values) {
+			wordCount += value.get();
+		}
+		context.write(key, new IntWritable(wordCount));
+	}
+}
+        </code></pre>
+      </section>
+
+    </section>
+
     <!-- MapReduce Streaming API -->
     <section>
+      <section>
+        <h2>MapReduce Streaming API</h2>
+      </section>
       <section data-markdown>
         <script type="text/template">
           ## MapReduce Streaming API
@@ -458,6 +584,16 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <li>The stdout of the Mapper and Reducer must be key-value pairs separated by a tab</li>
         </ul>
       </section>
+      <section>
+        <h2>Example</h2>
+        <pre><code>
+yarn jar \
+    /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar \
+    -input input -output output \
+    -mapper mapper.pl -reducer reducer.pl \
+    -file mapper.pl -file reducer.pl
+        </code></pre>
+    </section>
     </section>
 
     <!-- Spark -->
@@ -915,6 +1051,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
     </section>
 
     <section>
+      <h2>MapReduce</h2>
+    </section>
+
+    <section>
       <h2>Sqoop</h2>
     </section>
 
@@ -924,129 +1064,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
     <section>
       <h2>Spark</h2>
-    </section>
-
-    <!-- MapReduce for Java developers -->
-    <section>
-      <section>
-        <h2>MapReduce for Java developers</h2>
-      </section>
-      <section>
-        <h2>Development Environment Setup</h2>
-        <ul>
-          <li>For a sample Maven-based project use:
-            <pre><code>git clone https://github.com/bigdatacesga/mr-wordcount</code></pre>
-          </li>
-          <li>Import the project in Eclipse using m2e or in Intellij</li>
-          <li>If using an IDE like Eclipse or Intellij it can be useful to:
-            <pre><code>
-              # Download sources and javadoc
-              mvn dependency:sources
-              mvn dependency:resolve -Dclassifier=javadoc
-              # Update the existing Eclipse project
-              mvn eclipse:eclipse
-              # Or if you using Intellij IDEA
-              mvn idea:idea
-            </code></pre>
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h2>Maven Basic Usage</h2>
-        <p>Compile:
-          <pre><code>mvn compile</code></pre>
-        </p>
-        <p>Run the tests
-          <pre><code>mvn test</code></pre>
-        </p>
-        <p>Package your app
-          <pre><code>mvn package</code></pre>
-        </p>
-      </section>
-      <section>
-        <h2>Manual Process</h2>
-        <p>If you prefer to compile and package manually:
-          <pre><code>
-            javac -classpath $(hadoop classpath) *.java
-            jar cvf wordcount.jar *.class
-          </code></pre>
-        </p>
-      </section>
-      <section>
-        <h2>MapReduce Program</h2>
-        <p>Basic components of a program:</p>
-        <ul>
-          <li><strong>Driver</strong>: management code for the job or sequence of jobs</li>
-          <li><strong>map</strong> function of the Mapper</li>
-          <li><strong>reduce</strong> function of the Reducer</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Driver Code</h2>
-        <pre><code data-trim>
-public class Driver {
-  public static void main(String[] args) throws Exception {
-    Configuration conf = new Configuration();
-    Job job = Job.getInstance(conf);
-    job.setJarByClass(Driver.class);
-    job.setJobName("Word Count");
-    job.setMapperClass(WordMapper.class);
-    job.setCombinerClass(SumReducer.class);
-    job.setReducerClass(SumReducer.class);
-    job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(IntWritable.class);
-    FileInputFormat.setInputPaths(job, new Path(args[0]));
-    FileOutputFormat.setOutputPath(job, new Path(args[1]));    
-    boolean success = job.waitForCompletion(true);
-    System.exit(success ? 0 : 1);
-  }
-}
-        </code></pre>
-      </section>
-
-      <section>
-        <h2>Map Code</h2>
-        <pre><code data-trim>
-public class WordMapper
-    extends Mapper&lt;LongWritable, Text, Text, IntWritable&gt; {
-	private final static IntWritable one = new IntWritable(1);
-	private Text word = new Text();
-	@Override
-	public void map(LongWritable key, Text value, Context context)
-			throws IOException, InterruptedException {
-		String line = value.toString();
-		for (String field : line.split("\\W+")) {
-			if (field.length() &gt; 0) {
-				word.set(field);
-				context.write(word, one);
-			}
-		}
-	}
-}
-        </code></pre>
-      </section>
-
-      <section>
-        <h2>Reduce Code</h2>
-        <pre><code data-trim>
-public class SumReducer
-  extends Reducer&lt;Text, IntWritable, Text, IntWritable&gt; {
-	@Override
-	public void reduce(
-            Text key, Iterable&lt;IntWritable&gt; values, Context context)
-			throws IOException, InterruptedException {
-		int wordCount = 0;
-
-		for (IntWritable value : values) {
-			wordCount += value.get();
-		}
-		context.write(key, new IntWritable(wordCount));
-	}
-}
-        </code></pre>
-      </section>
-
     </section>
 
     <section>
@@ -1074,7 +1091,7 @@ public class SumReducer
       <p style="text-align: center;">
         <script language="JavaScript">
         var address = "bigdata";
-        var domain = "cesga.es";
+        var domain = "cesga.gal";
         var linktext = address + "@" + domain ;
         document.write("<a href='" + "mail" + "to:" + address + "@" + domain + "'>" + linktext + "</a>");
         </script>
