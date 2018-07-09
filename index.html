@@ -63,15 +63,15 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
       <section>
         <h2>3Vs of Big Data</h2>
-        <img class="stretch" src="img/3v.png" />
+        <img class="stretch" src="img/3vs_not_just_volume.png" />
       </section>
       <section>
         <h2>Vertical Scaling</h2>
-        <img class="stretch" src="img/scale_up.png" />
+        <img class="stretch" style="border:20px solid white; opacity: 1.0; background: white;" src="img/scale_up.png" />
       </section>
       <section>
         <h2>Horizontal Scaling</h2>
-        <img class="stretch" src="img/scale_out.png" />
+        <img class="stretch" style="border:20px solid white; opacity: 1.0; background: white;" src="img/scale_out.png" />
       </section>
       <section>
         <h2>Data Centric</h2>
@@ -926,33 +926,6 @@ yarn jar \
       </section>
     </section>
 
-    <section>
-      <section>
-        <h2>Machine Learning</h2>
-      </section>
-      <section>
-        <h2>Mahout</h2>
-        <p>
-        Apache Mahout is a machine learning library that includes collaborative filtering, clustering and classification algorithms built using MapReduce.
-        </p>
-        <a href="https://mahout.apache.org/users/recommender/intro-itembased-hadoop.html">Introduction to Item-Based Recommendations with Hadoop</a>
-      </section>
-      <section>
-        <h2>Spark MLlib</h2>
-        <ul>
-          <li>Machine Learning library for Spark</li>
-          <li>RDD-based API</li>
-        </ul>
-      </section>
-      <section>
-        <h2>Spark ML</h2>
-        <ul>
-          <li>Machine Learning library for Spark</li>
-          <li>Dataframes-based API</li>
-        </ul>
-      </section>
-    </section>
-
     <!-- Optimizations -->
     <section>
       <section>
@@ -983,7 +956,7 @@ yarn jar \
 
     <!-- DEMOS -->
     <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-      <h2>Demo Tutorials</h2>
+      <h2>Tutorials</h2>
     </section>
 
     <!-- How to connect -->
@@ -1014,8 +987,49 @@ yarn jar \
       </section>
     </section>
 
+    <!-- How to upload data -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>How to upload data</h2>
+      </section>
+      <section>
+        <h2>How to upload data</h2>
+        <p>Use our dedicated Data Transfer Node: <strong>dtn.srv.cesga.es</strong></p>
+        <p>SCP/SFTP is fine for small transfers</p>
+        <p>But for large transfers use <a target="_blank" href="https://www.globus.org">Globus Online</a></p>
+        <p>Our endpoint is <strong>cesga#dtn</strong></p>
+        <p>If you prefer you can use gridftp directly :-)</p>
+      </section>
+      <section>
+        <h2>Expected upload times</h2>
+        <img class="stretch" src="img/expected_upload_times.png" />
+      </section>
+      </section>
+    </section>
+
+    <!-- Modules -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Modules</h2>
+      </section>
+      <section>
+        <h2>Choosing software versions</h2>
+        <pre><code>module available</code></pre>
+      </section>
+      <section>
+        <h2>Anaconda</h2>
+        <p>You can use newer versions of Anaconda</p>
+        <pre><code>module load anaconda2/5.1.0</code></pre>
+        <p>Even python 3</p>
+        <pre><code>module load anaconda3/5.1.0</code></pre>
+      </section>
+    </section>
+
     <!-- Jupyter -->
     <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Jupyter</h2>
+      </section>
       <section>
         <h2>Jupyter</h2>
         <p>The <strong>Jupyter Notebook</strong> is a web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.</p>
@@ -1048,20 +1062,44 @@ yarn jar \
       </section>
     </section>
 
+    <!-- Spark 2 -->
     <section>
-      <h2>MapReduce</h2>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Spark 2</h2>
+      </section>
+      <section>
+        <h2>Spark 2</h2>
+        <p>You can use Spark 2</p>
+        <pre><code>module load spark/2.2.1</code></pre>
+        <p>Or even better with Python 3</p>
+        <pre><code data-trim>
+        module load anaconda3
+        module load spark/2.2.1
+        </code></pre>
+      </section>
     </section>
 
+    <!-- Extra demos -->
     <section>
-      <h2>Sqoop</h2>
-    </section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Demos</h2>
+      </section>
 
-    <section>
-      <h2>Hive</h2>
-    </section>
+      <section>
+        <h2>MapReduce</h2>
+      </section>
 
-    <section>
-      <h2>Spark</h2>
+      <section>
+        <h2>Sqoop</h2>
+      </section>
+
+      <section>
+        <h2>Hive</h2>
+      </section>
+
+      <section>
+        <h2>Spark</h2>
+      </section>
     </section>
 
     <section>
@@ -1071,14 +1109,14 @@ yarn jar \
       
       <section>
         <h2>Gaia (UDC)</h2>
-        <a href="https://www.cesga.es/es/biblioteca/downloadAsset/id/750" target="_blank">
-          <img src="img/gaia.jpg" />
-        </a>
+        <img class="stretch" src="img/gaia.jpg" />
+        <!-- <a target="_blank" href="https://www.cesga.es/es/biblioteca/downloadAsset/id/750" target="_blank">Technical Report</a> -->
       </section>
 
       <section>
         <h2>FilmYou (CITIC)</h2>
-        <a href="http://citic-research.org/sala_de_prensa/object_details_remote/1869691728?action_page=noticias&locale=es&object_name=NewsItem"><img src="img/filmyou.jpg" /></a>
+        <img class="stretch" src="img/filmyou.jpg" />
+        <!-- <a target="_blank" href="http://citic-research.org/sala_de_prensa/object_details_remote/1869691728?action_page=noticias&locale=es&object_name=NewsItem">Portal</a> -->
       </section>
 
     </section>
