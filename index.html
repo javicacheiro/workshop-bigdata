@@ -710,7 +710,7 @@ yarn jar \
       <section>
         <h2>Jupyter Setup 1/2</h2>
         Start an SSH session with X11 support:
-        <pre><code>ssh -X login.hdp.cesga.es</code></pre>
+        <pre><code>ssh -X hadoop.cesga.es</code></pre>
       </section>
       <section>
         <h2>Jupyter Setup 2/2</h2>
@@ -996,7 +996,7 @@ yarn jar \
         <ol>
           <li>Start the <strong>VPN</strong></li>
           <li>Create a ssh tunnel
-          <pre><code>ssh -C2qTnNf -D 9876 username@login.hdp.cesga.es</code></pre>
+          <pre><code>ssh -C2qTnNf -D 9876 username@hadoop.cesga.es</code></pre>
           <li>Configure your browser to use localhost:9876 as a SOCKS v5 proxy (we recommend Firefox's Foxy Proxy extension)</li>
           <li>Select Remote DNS</li>
         </ol>
@@ -1004,7 +1004,7 @@ yarn jar \
       <section>
         <h2>How to connect: CLI</h2>
         <p>Using a powerful CLI through SSH:
-          <pre><code>ssh <username>@login.hdp.cesga.es</code></pre>
+          <pre><code>ssh username@hadoop.cesga.es</code></pre>
         </p>
       </section>
       <section>
@@ -1023,7 +1023,7 @@ yarn jar \
       <section>
         <h2>Launching Jupyter</h2>
         <ul>
-          <li>Connect to login.hdp.cesga.es</li>
+          <li>Connect to hadoop.cesga.es</li>
           <li>Go to your working directory</li>
           <li>Launch the Jupyter server
           <pre><code>start_jupyter</code></pre>
