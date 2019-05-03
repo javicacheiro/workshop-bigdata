@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>Workshop BD|CESGA</title>
+
+<meta name="description" content="Introducción al servicio Big Data del CESGA basado en Hadoop.">
+<meta name="author" content="Javier Cacheiro">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+<!-- JLC CSS customizations -->
+<link rel="stylesheet" href="css/custom.css">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- Printing and PDF exports -->
+<script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+      <section>
+        <h1>HDFS</h1>
+        <h3>The Hadoop Distributed Filesystem</h3>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Characteristics
+          - Parallel Filesystem written in Java
+          - Best performance on large files (>100MB)
+          - Files in HDFS are of type <em>write once</em>
+          - HDFS is optimized for large sequential reads
+        </script>
+      </section>
+      
+      <section data-markdown>
+        <script type="text/template">
+          ## How files are stored
+          - Data is distributed over multiple nodes
+          - Files are split in blocks
+            - In our case default block size is <strong>128MB</strong>
+          - Blocks are stored as standard files in DataNodes
+          - Blocks are replicated across multiple nodes
+            - By default <strong>3 replicas</strong>
+          - NameNode keeps track of what blocks are part of a file and where they are (metadata)        </script>
+      </section>
+
+      <section>
+        <h2>HDFS Architecture</h2>
+        <img src="img/hdfsarchitecture.gif" />
+        <footer>Source: <a href="http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS Architecture Guide</a></footer>
+      </section>
+
+      <section>
+        <h2>HDFS Replicas</h2>
+        <img src="img/hdfsreplicas.gif" />
+        <footer>Source: <a href="http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS Architecture Guide</a></footer>
+      </section>
+
+      <section>
+        <h2>Upload a file to HDFS</h2>
+        <p>
+          To upload a file from local disk to HDFS:
+        </p>
+        <pre><code>hdfs dfs -put file.txt file.txt</code></pre>
+        <p>It will copy the file to <em>/user/username/file.txt</em> in HDFS.</p>
+      </section>
+      
+      <section>
+        <h2>List files</h2>
+        <p>
+          To list files in HDFS:
+        </p>
+        <pre><code>hdfs dfs -ls</code></pre>
+        <p>Lists the files in our HOME directory of HDFS <em>/user/username/</em></p>
+        <p>To list files in the root directory:</p>
+        <pre><code>hdfs dfs -ls /</code></pre>
+      </section>
+
+      <section>
+        <h2>Working with directories</h2>
+        <p> Create a directory: </p>
+        <pre><code>hdfs dfs -mkdir /tmp/test</code></pre>
+        <p> Delete a directory: </p>
+        <pre><code>hdfs dfs -rm -r -f /tmp/test</code></pre>
+      </section>
+
+      <section>
+        <h2>Working with files</h2>
+        <p> Read a file: </p>
+        <pre><code>hdfs dfs -cat file.txt</code></pre>
+        <p> Download a file from HDFS to local disk: </p>
+        <pre><code>hdfs dfs -get fichero.txt</code></pre>
+      </section>
+      <section>
+        <h2>Web File Explorer</h2>
+        <p>
+        You can easily access the HUE File Explorer from the
+        <a href="https://bigdata.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/hue_file_explorer.png" />
+      </section>
+      <section>
+        <h2>Monitoring</h2>
+        <p>
+        You can easily access the NameNode UI from the
+        <a href="https://bigdata.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/namenodeui.png" />
+      </section>
+    </section>
+
+  </div>
+
+</div>
+
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+controls: true,
+progress: true,
+history: true,
+center: true,
+
+transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+// Optional reveal.js plugins
+dependencies: [
+{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+{ src: 'plugin/zoom-js/zoom.js', async: true },
+{ src: 'plugin/notes/notes.js', async: true }
+]
+});
+
+            </script>
+
+            </body>
+            </html>
