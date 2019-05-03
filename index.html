@@ -121,7 +121,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
     </section>
 
 
-    <!-- BD|CESGA Hardware -->
+    <!-- Tutorial Start: Hardware -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2 style="font-family: arvo;">BD|CESGA</h2>
@@ -164,8 +164,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
 
     </section>
+    <!-- Tutorial End: Hardware -->
 
-    <!-- BD|CESGA Software -->
+    <!-- Software -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2 style="font-family: arvo;">BD|CESGA</h2>
@@ -199,7 +200,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
     </section>
 
-    <!-- hadoop.cesga.es demo -->
+    <!-- Web UI demo -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>BD|CESGA Portal</h2>
@@ -247,7 +248,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
     </section>
 
-    <!-- HDFS -->
+    <!-- Tutorial Start: HDFS -->
     <section>
       <section>
         <h1>HDFS</h1>
@@ -327,7 +328,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <h2>Web File Explorer</h2>
         <p>
         You can easily access the HUE File Explorer from the
-        <a href="https://hadoop.cesga.es">WebUI</a>:
+        <a href="https://bigdata.cesga.es">WebUI</a>:
         </p>
         <img class="stretch" src="img/hue_file_explorer.png" />
       </section>
@@ -335,13 +336,14 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <h2>Monitoring</h2>
         <p>
         You can easily access the NameNode UI from the
-        <a href="https://hadoop.cesga.es">WebUI</a>:
+        <a href="https://bigdata.cesga.es">WebUI</a>:
         </p>
         <img class="stretch" src="img/namenodeui.png" />
       </section>
     </section>
+    <!-- Tutorial End: HDFS -->
 
-    <!-- YARN -->
+    <!-- Tutorial Start: YARN -->
     <section>
       <section>
         <h2>YARN</h2>
@@ -381,9 +383,14 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <img src="img/yarnui.png">
       </section>
     </section>
+    <!-- Tutorial End: YARN -->
 
-    <!-- MapReduce -->
+    <!-- Tutorial: MapReduce -->
     <section>
+      <section>
+        <h2>MapReduce</h2>
+      </section>
+
       <section>
         <h2>MapReduce</h2>
         <p>MapReduce is a programming model and an associated implementation for processing and generating large data sets with a parallel, distributed algorithm on a cluster.</p>
@@ -421,7 +428,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <h2>Monitoring</h2>
         <p>
         You can easily monitor your jobs using the YARN UI from the
-        <a href="https://hadoop.cesga.es">WebUI</a>:
+        <a href="https://bigdata.cesga.es">WebUI</a>:
         </p>
         <img class="stretch" src="img/yarnui.png" />
       </section>
@@ -429,7 +436,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <h2>Job History</h2>
         <p>
         You can see finished jobs using the MR2 UI from the
-        <a href="https://hadoop.cesga.es">WebUI</a>:
+        <a href="https://bigdata.cesga.es">WebUI</a>:
         </p>
         <img class="stretch" src="img/mapreduceui.png" />
       </section>
@@ -591,10 +598,11 @@ yarn jar \
     -mapper mapper.pl -reducer reducer.pl \
     -file mapper.pl -file reducer.pl
         </code></pre>
+      </section>
     </section>
-    </section>
+    <!-- Tutorial End: MapReduce -->
 
-    <!-- Spark -->
+    <!-- Tutorial Start: Spark -->
     <section>
       <section>
         <h2>Spark</h2>
@@ -710,7 +718,7 @@ yarn jar \
       <section>
         <h2>Jupyter Setup 1/2</h2>
         Start an SSH session with X11 support:
-        <pre><code>ssh -X hadoop.cesga.es</code></pre>
+        <pre><code>ssh -X hadoop3.cesga.es</code></pre>
       </section>
       <section>
         <h2>Jupyter Setup 2/2</h2>
@@ -778,8 +786,9 @@ yarn jar \
         </code></pre>
       </section>
     </section>
+    <!-- Tutorial End: Spark -->
 
-    <!-- HIVE -->
+    <!-- Tutorial Start: HIVE -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>Hive</h2>
@@ -850,8 +859,9 @@ yarn jar \
         </script>
       </section>
     </section>
+    <!-- Tutorial End: HIVE -->
 
-    <!-- Sqoop -->
+    <!-- Tutorial Start: Sqoop -->
     <section>
       <section>
         <h1>Sqoop</h1>
@@ -925,6 +935,7 @@ yarn jar \
         <p>For MySQL and PosgreSQL for faster performance you can use direct mode (<strong>--direct</strong> option)</p>
       </section>
     </section>
+    <!-- Tutorial End: Sqoop -->
 
     <!-- Optimizations -->
     <section>
@@ -959,7 +970,7 @@ yarn jar \
       <h2>Tutorials</h2>
     </section>
 
-    <!-- How to connect -->
+    <!-- Tutorial Start: How to connect -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>How to connect</h2>
@@ -986,8 +997,9 @@ yarn jar \
         <img class="stretch" src="img/webui.png" />
       </section>
     </section>
+    <!-- Tutorial End: How to connect -->
 
-    <!-- How to upload data -->
+    <!-- Tutorial Start: How to upload data -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>How to upload data</h2>
@@ -1006,8 +1018,9 @@ yarn jar \
       </section>
       </section>
     </section>
+    <!-- Tutorial End: How to upload data -->
 
-    <!-- Modules -->
+    <!-- Tutorial Start: Modules -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>Modules</h2>
@@ -1024,8 +1037,9 @@ yarn jar \
         <pre><code>module load anaconda3/5.1.0</code></pre>
       </section>
     </section>
+    <!-- Tutorial End: Modules -->
 
-    <!-- Jupyter -->
+    <!-- Tutorial Start: Jupyter -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>Jupyter</h2>
@@ -1037,7 +1051,7 @@ yarn jar \
       <section>
         <h2>Launching Jupyter</h2>
         <ul>
-          <li>Connect to hadoop.cesga.es</li>
+          <li>Connect to hadoop3.cesga.es</li>
           <li>Go to your working directory</li>
           <li>Launch the Jupyter server
           <pre><code>start_jupyter</code></pre>
@@ -1061,6 +1075,7 @@ yarn jar \
         <img class="stretch" src="img/jupyter_conda.png">
       </section>
     </section>
+    <!-- Tutorial End: Jupyter -->
 
     <!-- Spark 2 -->
     <section>
