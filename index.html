@@ -887,7 +887,7 @@ yarn jar \
         <h2>BLAS</h2>
         <p>Low-level routines for performing common linear algebra operations</p>
         <ul>
-          <li><strong>Intel MKL</strong>: /opt/Anaconda2-4.1.1/lib/libmkl_rt.so<br/>
+          <li><strong>Intel MKL</strong>: /opt/cesga/anaconda/Anaconda2-2018.12/lib/libmkl_rt.so<br/>
           <a href="https://software.intel.com/es-es/node/528522">Single Dynamic Library (SDL) interface</a>
           </li>
           <li> <strong>OpenBlas</strong>: /usr/lib64/libopenblas.so.0</li>
@@ -918,22 +918,19 @@ yarn jar \
       <section>
         <h2>How to connect: Setup</h2>
         <ol>
+          <li>Configure the Fortigate VPN</li>
           <li>Start the <strong>VPN</strong></li>
-          <li>Create a ssh tunnel
-          <pre><code>ssh -C2qTnNf -D 9876 username@hadoop.cesga.es</code></pre>
-          <li>Configure your browser to use localhost:9876 as a SOCKS v5 proxy (we recommend Firefox's Foxy Proxy extension)</li>
-          <li>Select Remote DNS</li>
         </ol>
       </section>
       <section>
         <h2>How to connect: CLI</h2>
         <p>Using a powerful CLI through SSH:
-          <pre><code>ssh username@hadoop.cesga.es</code></pre>
+          <pre><code>ssh username@hadoop3.cesga.es</code></pre>
         </p>
       </section>
       <section>
         <h2>How to connect: WebUI</h2>
-        <p>Using a simple <a href="https://hadoop.cesga.es">Web User Interface</a></p>
+        <p>Using a simple <a href="https://bigdata.cesga.es">Web User Interface</a></p>
         <img class="stretch" src="img/webui.png" />
       </section>
     </section>
@@ -971,10 +968,18 @@ yarn jar \
       </section>
       <section>
         <h2>Anaconda</h2>
-        <p>You can use newer versions of Anaconda</p>
-        <pre><code>module load anaconda2/5.1.0</code></pre>
-        <p>Even python 3</p>
-        <pre><code>module load anaconda3/5.1.0</code></pre>
+        <p>We recommend that you use the Anaconda version of Python instead of the OS one</p>
+        <pre><code>module load anaconda2/2018.12</code></pre>
+        <p>Even you can try Python 3 (not officially supported)</p>
+        <pre><code>module load anaconda3/2018.12</code></pre>
+      </section>
+      <section>
+        <h2>Build tools</h2>
+        <p>You can load the following build tools</p>
+        <ul>
+          <li>maven</li>
+          <li>sbt</li>
+        </ul>
       </section>
     </section>
     <!-- Tutorial End: Modules -->
@@ -996,10 +1001,10 @@ yarn jar \
           <li>Launch the Jupyter server
           <pre><code>start_jupyter</code></pre>
           </li>
-          <li>Type a password to protect the notebook</li>
           <li>Point your browser to the address where the notebook is running:
           <pre><code>The Jupyter Notebook is running at: http://1.2.3.4:8888/</code></pre>
           </li>
+          <li>The VPN must be running</li>
         </ul>
       </section>
       <section>
@@ -1016,23 +1021,6 @@ yarn jar \
       </section>
     </section>
     <!-- Tutorial End: Jupyter -->
-
-    <!-- Spark 2 -->
-    <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Spark 2</h2>
-      </section>
-      <section>
-        <h2>Spark 2</h2>
-        <p>You can use Spark 2</p>
-        <pre><code>module load spark/2.2.1</code></pre>
-        <p>Or even better with Python 3</p>
-        <pre><code data-trim>
-        module load anaconda3
-        module load spark/2.2.1
-        </code></pre>
-      </section>
-    </section>
 
     <!-- Extra demos -->
     <section>
