@@ -936,6 +936,56 @@ yarn jar \
     </section>
     <!-- Tutorial End: How to connect -->
 
+    <!-- Tutorial Start: VPN -->
+    <section>
+      <section>
+        <h2>VPN</h2>
+        <p>The <strong>VPN</strong> software allows you not only to connect to CESGA in a secure way but also to access internal resources that you can not reach otherwise.</p>
+      </section>
+      <section>
+        <h2>Installing the Forticlient VPN software</h2>
+        <ul>
+          <li>Download the VPN software from <a href="https://www.forticlient.com/downloads" target="_blank">Official Forticlient download page</a> or from the <a href="https://ochpc.cesga.es/public.php?service=files&t=c17c6bfa72e88aa07f66b263fc007622" target="_blank">CESGA Repository</a></li>
+          <li>For Windows/Mac just launch the installation wizard</li>
+          <li>For new Linux version follow the <a href="https://www.forticlient.com/repoinfo" target="_blank">official instructions</a></li>
+          <li>For old Linux versions check the next slide</li>
+          <li>Enter the following configuration options</li>
+          <pre><code>Gateway: gateway.cesga.es
+Port: 443
+Username: your email address registered at CESGA
+Password: your password in the supercomputers</code></pre>
+          <li>Remember to start the VPN before connecting to <strong>hadoop.cesga.es</strong></li>
+        </ul>
+      </section>
+      <section>
+        <h2>VPN Installation in old Linux versions</h2>
+        <ul>
+          <li>If your Linux distribution is not supported in the <a href="https://www.forticlient.com/repoinfo" target="_blank">official download page</a> use our <a href="https://ochpc.cesga.es/public.php?service=files&t=c17c6bfa72e88aa07f66b263fc007622" target="_blank">CESGA Local Repository</a></li>
+          <li>Follow the next steps:</li>
+          <pre><code>unrar e vpn-fortissl.rar
+tar xvzf forticlientsslvpn_linux_4.4.2323.tar.gz
+cd forticlientsslvpn
+./fortisslvpn.sh
+Accept the license agreement presented
+../forticlientsslvpn_cli \
+   --server gateway.cesga.es:443 \
+   --vpnuser usuario@dominio.com
+          </code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Alternative Open Source Linux Client <strong>OpenfortiVPN</strong></h2>
+        <ul>
+          <li>For Linux there is also an alternative open-source client that you can use instead of the official fortivpn client</li>
+          <li>Some Linux distibutions like Ubuntu, Debian, OpenSuse or Arch Linux provide openfortivpn packages</li>
+          <li>Check the project github page for details <a href="https://github.com/adrienverge/openfortivpn" target="_blank">openfortivpn</a></li>
+          <li>It has also a GUI that you can use: <a href="https://hadler.me/linux/openfortigui/" target="_blank">openfortigui</a></li>
+        </ul>
+      </section>
+    </section>
+    <!-- Tutorial End: VPN -->
+
     <!-- Tutorial Start: How to upload data -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
