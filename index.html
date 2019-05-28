@@ -92,32 +92,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <li>No fault-tolerance</li>
         </ul>
       </section>
-      <section>
-        <h2>MPI Boilerplate</h2>
-        <table><thead>
-        <tr>  
-        <th>Framework&nbsp;&nbsp;</th>  
-        <th>Lines&nbsp;&nbsp;</th>  
-        <th>Lines of Boilerplate</th>  
-        </tr>  
-        </thead><tbody>  
-        <tr>  
-        <td>MPI+Python</td>  
-        <td>52</td>  
-        <td>20+</td>  
-        </tr>  
-        <tr>  
-        <td>Spark+Python&nbsp;&nbsp;&nbsp;</td>  
-        <td>28</td>  
-        <td>2</td>  
-        </tr>  
-        <tr>  
-        <td>Chapel</td>  
-        <td>20</td>  
-        <td>1</td>  
-        </tr>  
-        </tbody></table>
-      </section>
     </section>
 
 
@@ -200,11 +174,11 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
     </section>
 
-    <!-- Web UI demo -->
+    <!-- BD|CESGA Portal overview -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>BD|CESGA Portal</h2>
-        <h4>bigdata.cesga.gal</h4>
+        <h4>bigdata.cesga.es</h4>
       </section>
       <section>
         <h2>Front Page</h2>
@@ -228,16 +202,166 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
     </section>
 
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Accessing Hadoop 3 Service</h2>
+      </section>
+    </section>
+
+    <!-- Tutorial Start: VPN -->
+    <section>
+      <section>
+        <h2>VPN</h2>
+        <p>The <strong>VPN</strong> software allows you not only to connect to CESGA in a secure way but also to access internal resources that you can not reach otherwise.</p>
+      </section>
+      <section>
+        <h2>Installing the Forticlient VPN software</h2>
+        <ul>
+          <li>Download the VPN software from <a href="https://www.forticlient.com/downloads" target="_blank">Official Forticlient download page</a> or from the <a href="https://ochpc.cesga.es/public.php?service=files&t=c17c6bfa72e88aa07f66b263fc007622" target="_blank">CESGA Repository</a></li>
+          <li>For Windows/Mac just launch the installation wizard</li>
+          <li>For new Linux version follow the <a href="https://www.forticlient.com/repoinfo" target="_blank">official instructions</a></li>
+          <li>For old Linux versions see the next slides</li>
+          <li>There is also an alternative open-source Linux client: OpenFortiVPN</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Forticlient Configuration</h2>
+        <ul>
+          <li>Enter the following configuration options</li>
+          <pre><code>Gateway: gateway.cesga.es
+Port: 443
+Username: your email address registered at CESGA
+Password: your password in the supercomputers</code></pre>
+        </ul>
+      </section>
+      <section>
+        <h2>VPN Installation in old Linux versions</h2>
+        <ul>
+          <li>If your Linux distribution is not supported in the <a href="https://www.forticlient.com/repoinfo" target="_blank">official download page</a> use our <a href="https://ochpc.cesga.es/public.php?service=files&t=c17c6bfa72e88aa07f66b263fc007622" target="_blank">CESGA Local Repository</a></li>
+          <li>Follow the next steps:</li>
+          <pre><code>unrar e vpn-fortissl.rar
+tar xvzf forticlientsslvpn_linux_4.4.2323.tar.gz
+cd forticlientsslvpn
+./fortisslvpn.sh
+Accept the license agreement presented
+../forticlientsslvpn_cli \
+   --server gateway.cesga.es:443 \
+   --vpnuser usuario@dominio.com
+          </code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Alternative Open Source Linux Client <strong>OpenFortiVPN</strong></h2>
+        <ul>
+          <li>For Linux there is also an alternative open-source client that you can use instead of the official fortivpn client</li>
+          <li>Some Linux distibutions like Ubuntu, Debian, OpenSuse or Arch Linux provide openfortivpn packages</li>
+          <li>Check the project github page for details <a href="https://github.com/adrienverge/openfortivpn" target="_blank">openfortivpn</a></li>
+          <li>It has also a GUI that you can use: <a href="https://hadler.me/linux/openfortigui/" target="_blank">openfortigui</a></li>
+        </ul>
+        <p>For more info check the VPN section of the <a href="http://bigdata.cesga.es/user-guide/vpn.html">User Guide</a></p>
+      </section>
+    </section>
+    <!-- Tutorial End: VPN -->
+
+    <!-- Tutorial Start: How to connect -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>How to connect</h2>
+      </section>
+      <section>
+        <h2>How to connect: Setup</h2>
+        <ol>
+          <li>Configure the Fortigate VPN</li>
+          <li>Start the <strong>VPN</strong></li>
+          <p>More on this later on</p>
+        </ol>
+      </section>
+      <section>
+        <h2>How to connect: SSH</h2>
+        <p>Using a powerful CLI through SSH:
+          <pre><code>ssh username@hadoop3.cesga.es</code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>How to connect: WebUI</h2>
+        <p>Using a simple <a href="https://bigdata.cesga.es">Web User Interface</a></p>
+        <img class="stretch" src="img/webui.png" />
+      </section>
+      <section>
+        <h2>How to connect without VPN: Remote Desktop</h2>
+        <p>Indirectly through a <a href="https://portalusuarios.cesga.es">Remote Desktop</a></p>
+        <img class="stretch" src="img/remotedesktop.png" />
+      </section>
+    </section>
+    <!-- Tutorial End: How to connect -->
+
+    <!-- Tutorial Start: How to upload data -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>How to transfer data</h2>
+      </section>
+      <section>
+        <h2>Filesystem Quotas</h2>
+        <ul>
+          <li>HOMEBD and HDFS have quotas</li>
+          <li>To check current usage you can use the command:</li>
+          <pre><code>myquota</code></pre>
+          <li>Verify that you have enough space before transfering files or submitting jobs</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Default Filesystem Quotas</h2>
+        <p>Defaults:</p>
+        <ul>
+          <li>HDFS: 18TB</li>
+          <li>HOMEBD: 800GB</li>
+        </ul>
+        <p>If you need additional space you can request <a href="//www.altausuarios.cesga.es/solic/almalta.php">Additional Storage</a></p>
+        </ul>
+      </section>
+      <section>
+        <h2>Backup policies</h2>
+        <p>HDFS and HOMEBD <strong>do not have automatic backups</strong> configured</p>
+        <p>Only HOME FT has automatic daily backups</p>
+        <p>If you need to backup data in HDFS or HOMEBD contact us</p>
+      </section>
+      <section>
+        <h2>Migrating Data from Hadoop 2</h2>
+        <p>We recommend that you use the <strong>discp</strong> tool</p>
+        <pre><code>hadoop distcp -i -pat -update hdfs://10.121.13.19:8020/user/uscfajlc/wcresult hdfs://nameservice1/user/uscfajlc/wcresult</code></pre>
+        <p>Run it from <strong>hadoop3.cesga.es</strong> so it takes into account HA</p>
+      </section>
+      <section>
+        <h2>How to transfer data efficiently</h2>
+        <p>Use our dedicated Data Transfer Node: <strong>dtn.srv.cesga.es</strong></p>
+        <p>SCP/SFTP is fine for small transfers</p>
+        <p>But for large transfers use <a target="_blank" href="https://www.globus.org">Globus</a></p>
+        <p>Our endpoint is <strong>cesga#dtn</strong></p>
+        <p>For more info check the <a href="http://bigdata.cesga.es/dtn-user-guide/">DTN User Guide</a></p>
+      </section>
+      <section>
+        <h2>Expected upload times</h2>
+        <img class="stretch" src="img/expected_upload_times.png" />
+      </section>
+      <section>
+        <h2>How to transfer data: non-efficient way</h2>
+        <p>Direct SCP/SFTP to hadoop3.cesga.es</p>
+        <p>Useful only for internal transfers: eg. FT to BD</p>
+        <p>Not recommended for external transfers because it will be slowed down by the VPN server and the firewall</p>
+      </section>
+    </section>
+    <!-- Tutorial End: How to upload data -->
+
     <!-- Hadoop Platform -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Hadoop Platform</h2>
-        <h4> Your ready-to-use Hadoop ecosystem </h4>
+        <h2>Hadoop</h2>
+        <h4>Core Concepts</h4>
       </section>
       <section>
         <h2>Ecosystem</h2>
-        <img class="stretch" src="img/hdp_ecosystem.png" />
-        <footer>Source: <a href="http://hortonworks.com/products/data-center/hdp/">HortonWorks Data Platform</a></footer>
+        <img class="stretch" src="img/hadoop_ecosystem.png" />
       </section>
       <section>
         <h2>Core Components</h2>
@@ -332,14 +456,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         </p>
         <img class="stretch" src="img/hue_file_explorer.png" />
       </section>
-      <section>
-        <h2>Monitoring</h2>
-        <p>
-        You can easily access the NameNode UI from the
-        <a href="https://bigdata.cesga.es">WebUI</a>:
-        </p>
-        <img class="stretch" src="img/namenodeui.png" />
-      </section>
     </section>
     <!-- Tutorial End: HDFS -->
 
@@ -379,8 +495,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <img class="stretch" src="img/webui.png">
       </section>
       <section>
-        <h2>YARN UI</h2>
-        <img src="img/yarnui.png">
+        <h2>HUE Job Browser</h2>
+        <img src="img/hue_job_browser.png">
       </section>
     </section>
     <!-- Tutorial End: YARN -->
@@ -909,103 +1025,6 @@ yarn jar \
     <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
       <h2>Tutorials</h2>
     </section>
-
-    <!-- Tutorial Start: How to connect -->
-    <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>How to connect</h2>
-      </section>
-      <section>
-        <h2>How to connect: Setup</h2>
-        <ol>
-          <li>Configure the Fortigate VPN</li>
-          <li>Start the <strong>VPN</strong></li>
-        </ol>
-      </section>
-      <section>
-        <h2>How to connect: CLI</h2>
-        <p>Using a powerful CLI through SSH:
-          <pre><code>ssh username@hadoop3.cesga.es</code></pre>
-        </p>
-      </section>
-      <section>
-        <h2>How to connect: WebUI</h2>
-        <p>Using a simple <a href="https://bigdata.cesga.es">Web User Interface</a></p>
-        <img class="stretch" src="img/webui.png" />
-      </section>
-    </section>
-    <!-- Tutorial End: How to connect -->
-
-    <!-- Tutorial Start: VPN -->
-    <section>
-      <section>
-        <h2>VPN</h2>
-        <p>The <strong>VPN</strong> software allows you not only to connect to CESGA in a secure way but also to access internal resources that you can not reach otherwise.</p>
-      </section>
-      <section>
-        <h2>Installing the Forticlient VPN software</h2>
-        <ul>
-          <li>Download the VPN software from <a href="https://www.forticlient.com/downloads" target="_blank">Official Forticlient download page</a> or from the <a href="https://ochpc.cesga.es/public.php?service=files&t=c17c6bfa72e88aa07f66b263fc007622" target="_blank">CESGA Repository</a></li>
-          <li>For Windows/Mac just launch the installation wizard</li>
-          <li>For new Linux version follow the <a href="https://www.forticlient.com/repoinfo" target="_blank">official instructions</a></li>
-          <li>For old Linux versions check the next slide</li>
-          <li>Enter the following configuration options</li>
-          <pre><code>Gateway: gateway.cesga.es
-Port: 443
-Username: your email address registered at CESGA
-Password: your password in the supercomputers</code></pre>
-          <li>Remember to start the VPN before connecting to <strong>hadoop.cesga.es</strong></li>
-        </ul>
-      </section>
-      <section>
-        <h2>VPN Installation in old Linux versions</h2>
-        <ul>
-          <li>If your Linux distribution is not supported in the <a href="https://www.forticlient.com/repoinfo" target="_blank">official download page</a> use our <a href="https://ochpc.cesga.es/public.php?service=files&t=c17c6bfa72e88aa07f66b263fc007622" target="_blank">CESGA Local Repository</a></li>
-          <li>Follow the next steps:</li>
-          <pre><code>unrar e vpn-fortissl.rar
-tar xvzf forticlientsslvpn_linux_4.4.2323.tar.gz
-cd forticlientsslvpn
-./fortisslvpn.sh
-Accept the license agreement presented
-../forticlientsslvpn_cli \
-   --server gateway.cesga.es:443 \
-   --vpnuser usuario@dominio.com
-          </code></pre>
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h2>Alternative Open Source Linux Client <strong>OpenfortiVPN</strong></h2>
-        <ul>
-          <li>For Linux there is also an alternative open-source client that you can use instead of the official fortivpn client</li>
-          <li>Some Linux distibutions like Ubuntu, Debian, OpenSuse or Arch Linux provide openfortivpn packages</li>
-          <li>Check the project github page for details <a href="https://github.com/adrienverge/openfortivpn" target="_blank">openfortivpn</a></li>
-          <li>It has also a GUI that you can use: <a href="https://hadler.me/linux/openfortigui/" target="_blank">openfortigui</a></li>
-        </ul>
-      </section>
-    </section>
-    <!-- Tutorial End: VPN -->
-
-    <!-- Tutorial Start: How to upload data -->
-    <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>How to upload data</h2>
-      </section>
-      <section>
-        <h2>How to upload data</h2>
-        <p>Use our dedicated Data Transfer Node: <strong>dtn.srv.cesga.es</strong></p>
-        <p>SCP/SFTP is fine for small transfers</p>
-        <p>But for large transfers use <a target="_blank" href="https://www.globus.org">Globus Online</a></p>
-        <p>Our endpoint is <strong>cesga#dtn</strong></p>
-        <p>If you prefer you can use gridftp directly :-)</p>
-      </section>
-      <section>
-        <h2>Expected upload times</h2>
-        <img class="stretch" src="img/expected_upload_times.png" />
-      </section>
-      </section>
-    </section>
-    <!-- Tutorial End: How to upload data -->
 
     <!-- Tutorial Start: Modules -->
     <section>
