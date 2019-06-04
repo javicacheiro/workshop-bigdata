@@ -360,15 +360,15 @@ Accept the license agreement presented
         <h4>Core Concepts</h4>
       </section>
       <section>
-        <h2>Ecosystem</h2>
-        <img class="stretch" src="img/hadoop_ecosystem.png" />
-      </section>
-      <section>
         <h2>Core Components</h2>
         <ul>
           <li><strong>HDFS</strong>: Parallel filesystem</li>
           <li><strong>YARN</strong>: Resource manager</li>
         </ul>
+      </section>
+      <section>
+        <h2>Ecosystem</h2>
+        <img class="stretch" src="img/hadoop_ecosystem.png" />
       </section>
     </section>
 
@@ -403,13 +403,13 @@ Accept the license agreement presented
 
       <section>
         <h2>HDFS Architecture</h2>
-        <img src="img/hdfsarchitecture.gif" />
+        <img class="stretch" src="img/hdfsarchitecture.gif" />
         <footer>Source: <a href="http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS Architecture Guide</a></footer>
       </section>
 
       <section>
         <h2>HDFS Replicas</h2>
-        <img src="img/hdfsreplicas.gif" />
+        <img class="stretch" src="img/hdfsreplicas.gif" />
         <footer>Source: <a href="http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS Architecture Guide</a></footer>
       </section>
 
@@ -477,6 +477,7 @@ Accept the license agreement presented
       <section>
         <h2>List running jobs</h2>
         <pre><code>yarn application -list</code></pre>
+        <pre><code>yarn top</code></pre>
       </section>
       <section>
         <h2>See application logs</h2>
@@ -487,19 +488,425 @@ Accept the license agreement presented
         <pre><code>yarn application -kill applicationId</code></pre>
       </section>
       <section>
-        <h2>Capacity Scheduler Queues</h2>
-        <img src="img/yarn_queues.png">
+        <h2>Fair Scheduler</h2>
+        <ul>
+          <li>Resources will be shared with the rest of users using the YARN fair share scheduler</li>
+          <li><strong>Dominant Resource Fairness</strong>: both CPU and memory considered</li>
+          <li>Jobs should be composed of lots of short running tasks so they share resources nicely with other jobs</li>
+          <li>Long running tasks that monopolize resources during large times can be <strong>preempted</strong> to allow other applications to run</li>
+        </ul>
       </section>
       <section>
-        <h2>WebUI</h2>
-        <img class="stretch" src="img/webui.png">
+        <h2>Fair Scheduler Queues</h2>
+        <ul>
+          <li>root.users.[username]: default queue, one per user</li>
+          <li>interactive: Jupyter Notebooks and interactive jobs</li>
+          <li>urgent: limited resources that can be used for urgent jobs</li>
+        </ul>
       </section>
       <section>
-        <h2>HUE Job Browser</h2>
+        <h2>Web Job Browser</h2>
+        <p>
+        You can access the HUE Job Browser from the
+        <a href="https://bigdata.cesga.es">WebUI</a>:
+        </p>
         <img src="img/hue_job_browser.png">
       </section>
     </section>
     <!-- Tutorial End: YARN -->
+
+    <!-- Provided Tools -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Provided Tools</h2>
+      </section>
+    </section>
+
+    <!-- Tutorial Start: Spark -->
+    <section>
+      <section>
+        <h2>Spark</h2>
+        <h4>A fast and general engine for large-scale data processing</h4>
+      </section>
+      <section>
+        <h2>Speed</h2>
+        <img class="strecth" src="img/spark_speed.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Easy</h2>
+        <img class="strecth" src="img/spark_easy.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Generality</h2>
+        <img class="strecth" src="img/spark_generality.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Language Selection</h2>
+        <ul>
+          <li>Scala</li>
+          <li>Java</li>
+          <li>Python</li>
+          <li>R</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Updated to Spark 2.4</h2>
+        <p>Now the main entry point is <strong>spark</strong> instead of <strong>sc</strong> and <strong>sqlContext</strong></p>
+      </section>
+    </section>
+
+    <!-- PySpark -->
+    <section>
+      <section>
+        <h2>PySpark</h2>
+      </section>
+      <section>
+        <h2>PySpark Basics</h2>
+        <ul>
+          <li>Can be used together with Anaconda Python distribution</li>
+          <li>Over 720 packages for data preparation, data analysis, data visualization, machine learning and interactive data science</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Running pyspark interactively</h2>
+        <ul>
+          <li>Running from the command line:
+            <pre><code>pyspark</code></pre>
+          </li>
+          <li>Running from the command line using <strong>ipython</strong>:
+            <pre><code>
+              module load anaconda2
+              PYSPARK_DRIVER_PYTHON=ipython pyspark
+            </code></pre>
+          </li>
+          <li>Running inside a Jupyter notebook</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <pre><code>
+          from pyspark.sql import Row
+          Person = Row('name', 'surname')
+          data = []
+          data.append(Person('Joe', 'MacMillan'))
+          data.append(Person('Gordon', 'Clark'))
+          data.append(Person('Cameron', 'Howe'))
+          df = spark.createDataFrame(data)
+          df.show()
+           +-------+---------+
+           |   name|  surname|
+           +-------+---------+
+           |    Joe|MacMillan|
+           | Gordon|    Clark|
+           |Cameron|     Howe|
+           +-------+---------+
+        </code></pre>
+      </section>
+    </section>
+
+    <!-- spark-submit -->
+    <section>
+      <section>
+        <h2>spark-submit</h2>
+        <h4>Submit job to queue</h4>
+      </section>
+      <section>
+        <h2>Spark Components</h2>
+        <img class="strecth" src="img/cluster-overview.png" />
+        <footer>Source: <a href="http://spark.apache.org/docs/latest/cluster-overview.html">Apache Spark Components</a></footer>
+      </section>
+      <section>
+        <h2>spark-submit Python</h2>
+        <pre><code>
+        # client mode
+        spark-submit --master yarn \
+          --name testWC test.py input output
+        # cluster mode
+        spark-submit --master yarn --deploy-mode cluster \
+          --name testWC test.py input output
+        </code></pre>
+      </section>
+      <section>
+        <h2>spark-submit Scala/Java</h2>
+        <pre><code>
+        # client mode
+        spark-submit --master yarn --name testWC \
+          --class es.cesga.hadoop.Test test.jar \
+          input output
+        # cluster mode
+        spark-submit --master yarn --deploy-mode cluster \
+          --name testWC \
+          --class es.cesga.hadoop.Test test.jar \
+          input output
+        </code></pre>
+      </section>
+      <section>
+        <h2>spark-submit options</h2>
+        <pre><code>
+--num-executors NUM    Number of executors to launch (Default: 2)
+--executor-cores NUM   Number of cores per executor. (Default: 1)
+--driver-cores NUM     Number of cores for driver (cluster mode)
+--executor-memory MEM  Memory per executor (Default: 1G)
+--queue QUEUE_NAME     The YARN queue to submit to (Default: "default")
+--proxy-user NAME      User to impersonate
+        </code></pre>
+      </section>
+    </section>
+    <!-- Tutorial End: Spark -->
+
+    <!-- Tutorial Start: Jupyter -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Jupyter</h2>
+      </section>
+      <section>
+        <h2>Jupyter</h2>
+        <p>The <strong>Jupyter Notebook</strong> is a web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.</p>
+      </section>
+      <section>
+        <h2>Launching Jupyter</h2>
+        <ul>
+          <li>Connect to hadoop3.cesga.es</li>
+          <li>Go to your working directory</li>
+          <li>Launch the Jupyter server
+          <pre><code>start_jupyter</code></pre>
+          </li>
+          <li>Point your browser to the address where the notebook is running:
+          <pre><code>The Jupyter Notebook is running at: http://1.2.3.4:8888/</code></pre>
+          </li>
+          <li>The VPN must be running</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Jupyter</h2>
+        <img class="stretch" src="img/jupyter_files.png">
+      </section>
+      <section>
+        <h2>Jupyter Terminal</h2>
+        <img class="stretch" src="img/jupyter_terminal.png">
+      </section>
+      <section>
+        <h2>Jupyter Conda</h2>
+        <img class="stretch" src="img/jupyter_conda.png">
+      </section>
+    </section>
+    <!-- Tutorial End: Jupyter -->
+
+    <!-- Tutorial Start: HIVE -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Hive</h2>
+        <h4>SQL-like interface</h4>
+      </section>
+
+      <section>
+        <h2>Hive</h2>
+        <p>Hive offers the possibility to use Hadoop through a SQL-like interface</p> 
+        <p>Hive and Impala use the same SQL syntax <strong>HiveQL</strong></p>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Create Table
+          ```
+          CREATE EXTERNAL TABLE jobs (
+            jobid INT,
+            username STRING,
+            submitted DATE,
+            etime BIGINT
+          ) LOCATION '/user/jlopez/data/jobs';
+          ```
+        </script>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Load Data
+          ```
+          hdfs dfs -put sge_201601*.log /user/jlopez/data/jobs
+          ```
+        </script>
+      </section>
+
+      <section>
+        <h2>Field delimitter</h2>
+        <ul>
+          <li>Default field delimitter Ctr+A (0x01)</li>
+          <li>It can be changed when creating a table
+          <pre><code>
+            ROW FORMAT DELIMITED
+            FIELDS TERMINATED BY ':'
+          </code></pre>
+          </li>
+        </ul>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Sample queries
+          ```
+          SELECT * FROM jobs;
+          SELECT count(*) FROM jobs;
+          SELECT username, sum(etime) FROM jobs GROUP BY username;
+          SELECT jobs.*, users.*
+            FROM jobs JOIN users ON (jobs.username = users.username);
+          ```
+        </script>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Remove table
+          ```
+          DROP TABLE jobs;
+          ```
+        </script>
+      </section>
+    </section>
+    <!-- Tutorial End: HIVE -->
+
+    <!-- Tutorial Start: Impala -->
+    <section>
+      <section>
+        <h2>Impala</h2>
+        <h4>Low-latency SQL queries</h4>
+      </section>
+
+      <section>
+        <h2>Impala</h2>
+        <pre><code>impala-shell --ssl --impalad=c14-2</code></pre>
+        <p>Point it to any worker node in the cluster</p>
+      </section>
+    </section>
+    <!-- Tutorial End: Impala -->
+
+    <!-- Tutorial Start: Sqoop -->
+    <section>
+      <section>
+        <h1>Sqoop</h1>
+        <h4>Transferring data between Hadoop and relational databases</h4>
+      </section>
+      <section>
+        <h2>Sqoop</h2>
+        <img class="stretch" src="img/sqoop_diagram.png" />
+        <footer>Source: <a href="http://bigdatariding.blogspot.com.es/">bigdatariding</a></footer>
+      </section>
+      <section>
+        <h2>List tables</h2>
+        <pre><code>
+        sqoop list-tables \
+          --username ${USER} -P \
+          --connect jdbc:postgresql://${SERVER}/${DB}
+        </code></pre>
+      </section>
+      <section>
+        <h2>Import one table</h2>
+        <pre><code>
+        sqoop import \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --target-dir /user/username/mytable \
+          --num-mappers 1
+        </code></pre>
+      </section>
+      <section>
+        <h2>Import into Hive</h2>
+        <pre><code>
+        sqoop import \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --target-dir /user/username/mytable \
+          --num-mappers 1 \
+          --hive-import
+        </code></pre>
+      </section>
+      <section>
+        <h2>Create only the table structure into Hive</h2>
+        <pre><code>
+        sqoop create-hive-table \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable
+        </code></pre>
+      </section>
+      <section>
+        <h2>Sqoop Export</h2>
+        <img class="stretch" src="img/sqoop_export.png" />
+        <footer>Source: <a href="http://bigdatariding.blogspot.com.es/">bigdatariding</a></footer>
+      </section>
+      <section>
+        <h2>Export</h2>
+        <p>First create table into PostgreSQL</p>
+        <pre><code>
+        sqoop export \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --export-dir /user/username/mytable \
+          --input-fields-terminated-by '\001' \
+          --num-mappers 1
+        </code></pre>
+      </section>
+      <section>
+        <h2>Direct mode</h2>
+        <p>For MySQL and PosgreSQL for faster performance you can use direct mode (<strong>--direct</strong> option)</p>
+      </section>
+    </section>
+    <!-- Tutorial End: Sqoop -->
+
+    <!-- Tutorial Start: Modules -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Modules</h2>
+      </section>
+      <section>
+        <h2>Choosing software versions</h2>
+        <pre><code>module available</code></pre>
+      </section>
+      <section>
+        <h2>Anaconda</h2>
+        <p>We recommend that you use the Anaconda version of Python instead of the OS one</p>
+        <pre><code>module load anaconda2/2018.12</code></pre>
+        <p>Even you can try Python 3 (not officially supported)</p>
+        <pre><code>module load anaconda3/2018.12</code></pre>
+      </section>
+      <section>
+        <h2>Build tools</h2>
+        <p>You can load the following build tools</p>
+        <ul>
+          <li>maven</li>
+          <li>sbt</li>
+        </ul>
+      </section>
+    </section>
+    <!-- Tutorial End: Modules -->
+
+    <!-- The End -->
+    <section>
+      <h3>Q&A</h3>
+      <p style="text-align: center;">We are here to help:</p>
+      <p style="text-align: center;">
+        <script language="JavaScript">
+        var address = "bigdata";
+        var domain = "cesga.gal";
+        var linktext = address + "@" + domain ;
+        document.write("<a href='" + "mail" + "to:" + address + "@" + domain + "'>" + linktext + "</a>");
+        </script>
+      </p>
+      <p style="text-align: center;">Stay up to date subscribing to our <a href="https://listas.cesga.es/mailman/listinfo/bigdata-dev">Mailing list</a></p>
+    </section>
+    
+    <!-- Extra -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Extra Material</h2>
+      </section>
+    </section>
 
     <!-- Tutorial: MapReduce -->
     <section>
@@ -718,281 +1125,6 @@ yarn jar \
     </section>
     <!-- Tutorial End: MapReduce -->
 
-    <!-- Tutorial Start: Spark -->
-    <section>
-      <section>
-        <h2>Spark</h2>
-        <h4>A fast and general engine for large-scale data processing</h4>
-      </section>
-      <section>
-        <h2>Speed</h2>
-        <img class="strecth" src="img/spark_speed.png" />
-        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
-      </section>
-      <section>
-        <h2>Easy</h2>
-        <img class="strecth" src="img/spark_easy.png" />
-        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
-      </section>
-      <section>
-        <h2>Generality</h2>
-        <img class="strecth" src="img/spark_generality.png" />
-        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
-      </section>
-      <section>
-        <h2>Language Selection</h2>
-        <ul>
-          <li>Scala</li>
-          <li>Java</li>
-          <li>Python</li>
-          <li>R</li>
-        </ul>
-      </section>
-    </section>
-
-    <!-- PySpark -->
-    <section>
-      <section>
-        <h2>PySpark</h2>
-      </section>
-      <section>
-        <h2>PySpark Basics</h2>
-        <ul>
-          <li>Based on Anaconda Python distribution</li>
-          <li>Over 720 packages for data preparation, data analysis, data visualization, machine learning and interactive data science</li>
-        </ul>
-      </section>
-      <section>
-        <h2>Running pyspark interactively</h2>
-        <ul>
-          <li>Using Jupyter notebook</li>
-          <li>Running from the command line using ipython:
-            <pre><code>PYSPARK_DRIVER_PYTHON=ipython pyspark</code></pre>
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h2>Example</h2>
-        <pre><code>
-          [jlopez@login7 ~]$ PYSPARK_DRIVER_PYTHON=ipython pyspark
-          >>>  from pyspark.sql import Row
-          >>>  Person = Row('name', 'surname')
-          >>>  data = []
-          >>>  data.append(Person('Joe', 'MacMillan'))
-          >>>  data.append(Person('Gordon', 'Clark'))
-          >>>  data.append(Person('Cameron', 'Howe'))
-          >>>  df = sqlContext.createDataFrame(data)
-          >>>  df.show()
-            +-------+---------+
-            |   name|  surname|
-            +-------+---------+
-            |    Joe|MacMillan|
-            | Gordon|    Clark|
-            |Cameron|     Howe|
-            +-------+---------+
-        </code></pre>
-      </section>
-    </section>
-
-    <!-- spark-submit -->
-    <section>
-      <section>
-        <h2>spark-submit</h2>
-        <h4>Submit job to queue</h4>
-      </section>
-      <section>
-        <h2>Spark Components</h2>
-        <img class="strecth" src="img/cluster-overview.png" />
-        <footer>Source: <a href="http://spark.apache.org/docs/latest/cluster-overview.html">Apache Spark Components</a></footer>
-      </section>
-      <section>
-        <h2>spark-submit Python</h2>
-        <pre><code>
-        # client mode
-        spark-submit --master yarn \
-          --name testWC test.py input output
-        # cluster mode
-        spark-submit --master yarn --deploy-mode cluster \
-          --name testWC test.py input output
-        </code></pre>
-      </section>
-      <section>
-        <h2>spark-submit Scala/Java</h2>
-        <pre><code>
-        # client mode
-        spark-submit --master yarn --name testWC \
-          --class es.cesga.hadoop.Test test.jar \
-          input output
-        # cluster mode
-        spark-submit --master yarn --deploy-mode cluster \
-          --name testWC \
-          --class es.cesga.hadoop.Test test.jar \
-          input output
-        </code></pre>
-      </section>
-      <section>
-        <h2>spark-submit options</h2>
-        <pre><code>
---num-executors NUM    Number of executors to launch (Default: 2)
---executor-cores NUM   Number of cores per executor. (Default: 1)
---driver-cores NUM     Number of cores for driver (cluster mode)
---executor-memory MEM  Memory per executor (Default: 1G)
---queue QUEUE_NAME     The YARN queue to submit to (Default: "default")
---proxy-user NAME      User to impersonate
-        </code></pre>
-      </section>
-    </section>
-    <!-- Tutorial End: Spark -->
-
-    <!-- Tutorial Start: HIVE -->
-    <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Hive</h2>
-        <h4>SQL-like interface</h4>
-      </section>
-
-      <section>
-        <h2>Hive</h2>
-        <p>Hive offers the possibility to use Hadoop through a SQL-like interface</p> 
-        <p>Hive and Impala use the same SQL syntax <strong>HiveQL</strong></p>
-      </section>
-
-      <section data-markdown>
-        <script type="text/template">
-          ## Create Table
-          ```
-          CREATE EXTERNAL TABLE jobs (
-            jobid INT,
-            username STRING,
-            submitted DATE,
-            etime BIGINT
-          ) LOCATION '/user/jlopez/data/jobs';
-          ```
-        </script>
-      </section>
-
-      <section data-markdown>
-        <script type="text/template">
-          ## Load Data
-          ```
-          hdfs dfs -put sge_201601*.log /user/jlopez/data/jobs
-          ```
-        </script>
-      </section>
-
-      <section>
-        <h2>Field delimitter</h2>
-        <ul>
-          <li>Default field delimitter Ctr+A (0x01)</li>
-          <li>It can be changed when creating a table
-          <pre><code>
-            ROW FORMAT DELIMITED
-            FIELDS TERMINATED BY ':'
-          </code></pre>
-          </li>
-        </ul>
-      </section>
-
-      <section data-markdown>
-        <script type="text/template">
-          ## Sample queries
-          ```
-          SELECT * FROM jobs;
-          SELECT count(*) FROM jobs;
-          SELECT username, sum(etime) FROM jobs GROUP BY username;
-          SELECT jobs.*, users.*
-            FROM jobs JOIN users ON (jobs.username = users.username);
-          ```
-        </script>
-      </section>
-
-      <section data-markdown>
-        <script type="text/template">
-          ## Remove table
-          ```
-          DROP TABLE jobs;
-          ```
-        </script>
-      </section>
-    </section>
-    <!-- Tutorial End: HIVE -->
-
-    <!-- Tutorial Start: Sqoop -->
-    <section>
-      <section>
-        <h1>Sqoop</h1>
-        <h4>Transferring data between Hadoop and relational databases</h4>
-      </section>
-      <section>
-        <h2>Sqoop</h2>
-        <img class="stretch" src="img/sqoop_diagram.png" />
-        <footer>Source: <a href="http://bigdatariding.blogspot.com.es/">bigdatariding</a></footer>
-      </section>
-      <section>
-        <h2>List tables</h2>
-        <pre><code>
-        sqoop list-tables \
-          --username ${USER} -P \
-          --connect jdbc:postgresql://${SERVER}/${DB}
-        </code></pre>
-      </section>
-      <section>
-        <h2>Import one table</h2>
-        <pre><code>
-        sqoop import \
-          --username ${USER} --password ${PASSWORD} \
-          --connect jdbc:postgresql://${SERVER}/${DB} \
-          --table mytable \
-          --target-dir /user/username/mytable \
-          --num-mappers 1
-        </code></pre>
-      </section>
-      <section>
-        <h2>Import into Hive</h2>
-        <pre><code>
-        sqoop import \
-          --username ${USER} --password ${PASSWORD} \
-          --connect jdbc:postgresql://${SERVER}/${DB} \
-          --table mytable \
-          --target-dir /user/username/mytable \
-          --num-mappers 1 \
-          --hive-import
-        </code></pre>
-      </section>
-      <section>
-        <h2>Create only the table structure into Hive</h2>
-        <pre><code>
-        sqoop create-hive-table \
-          --username ${USER} --password ${PASSWORD} \
-          --connect jdbc:postgresql://${SERVER}/${DB} \
-          --table mytable
-        </code></pre>
-      </section>
-      <section>
-        <h2>Sqoop Export</h2>
-        <img class="stretch" src="img/sqoop_export.png" />
-        <footer>Source: <a href="http://bigdatariding.blogspot.com.es/">bigdatariding</a></footer>
-      </section>
-      <section>
-        <h2>Export</h2>
-        <p>First create table into PostgreSQL</p>
-        <pre><code>
-        sqoop export \
-          --username ${USER} --password ${PASSWORD} \
-          --connect jdbc:postgresql://${SERVER}/${DB} \
-          --table mytable \
-          --export-dir /user/username/mytable \
-          --input-fields-terminated-by '\001' \
-          --num-mappers 1
-        </code></pre>
-      </section>
-      <section>
-        <h2>Direct mode</h2>
-        <p>For MySQL and PosgreSQL for faster performance you can use direct mode (<strong>--direct</strong> option)</p>
-      </section>
-    </section>
-    <!-- Tutorial End: Sqoop -->
-
     <!-- Optimizations -->
     <section>
       <section>
@@ -1021,99 +1153,7 @@ yarn jar \
       </section>
     </section>
 
-    <!-- DEMOS -->
-    <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-      <h2>Tutorials</h2>
-    </section>
-
-    <!-- Tutorial Start: Modules -->
-    <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Modules</h2>
-      </section>
-      <section>
-        <h2>Choosing software versions</h2>
-        <pre><code>module available</code></pre>
-      </section>
-      <section>
-        <h2>Anaconda</h2>
-        <p>We recommend that you use the Anaconda version of Python instead of the OS one</p>
-        <pre><code>module load anaconda2/2018.12</code></pre>
-        <p>Even you can try Python 3 (not officially supported)</p>
-        <pre><code>module load anaconda3/2018.12</code></pre>
-      </section>
-      <section>
-        <h2>Build tools</h2>
-        <p>You can load the following build tools</p>
-        <ul>
-          <li>maven</li>
-          <li>sbt</li>
-        </ul>
-      </section>
-    </section>
-    <!-- Tutorial End: Modules -->
-
-    <!-- Tutorial Start: Jupyter -->
-    <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Jupyter</h2>
-      </section>
-      <section>
-        <h2>Jupyter</h2>
-        <p>The <strong>Jupyter Notebook</strong> is a web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.</p>
-      </section>
-      <section>
-        <h2>Launching Jupyter</h2>
-        <ul>
-          <li>Connect to hadoop3.cesga.es</li>
-          <li>Go to your working directory</li>
-          <li>Launch the Jupyter server
-          <pre><code>start_jupyter</code></pre>
-          </li>
-          <li>Point your browser to the address where the notebook is running:
-          <pre><code>The Jupyter Notebook is running at: http://1.2.3.4:8888/</code></pre>
-          </li>
-          <li>The VPN must be running</li>
-        </ul>
-      </section>
-      <section>
-        <h2>Jupyter</h2>
-        <img class="stretch" src="img/jupyter_files.png">
-      </section>
-      <section>
-        <h2>Jupyter Terminal</h2>
-        <img class="stretch" src="img/jupyter_terminal.png">
-      </section>
-      <section>
-        <h2>Jupyter Conda</h2>
-        <img class="stretch" src="img/jupyter_conda.png">
-      </section>
-    </section>
-    <!-- Tutorial End: Jupyter -->
-
-    <!-- Extra demos -->
-    <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Demos</h2>
-      </section>
-
-      <section>
-        <h2>MapReduce</h2>
-      </section>
-
-      <section>
-        <h2>Sqoop</h2>
-      </section>
-
-      <section>
-        <h2>Hive</h2>
-      </section>
-
-      <section>
-        <h2>Spark</h2>
-      </section>
-    </section>
-
+    <!-- Success Stories -->
     <section>
       <section>
         <h2>Success Stories</h2>
@@ -1133,22 +1173,6 @@ yarn jar \
 
     </section>
 
-    <section>
-      <h3>Q&A</h3>
-      <p style="text-align: center;">We are here to help:</p>
-      <p style="text-align: center;">
-        <script language="JavaScript">
-        var address = "bigdata";
-        var domain = "cesga.gal";
-        var linktext = address + "@" + domain ;
-        document.write("<a href='" + "mail" + "to:" + address + "@" + domain + "'>" + linktext + "</a>");
-        </script>
-      </p>
-
-      <p style="text-align: center;">Stay up to date subscribing to our <a href="https://listas.cesga.es/mailman/listinfo/bigdata-dev">Mailing list</a></p>
-
-    </section>
-    
 
   </div>
 
