@@ -274,7 +274,6 @@ Accept the license agreement presented
         <ol>
           <li>Configure the Fortigate VPN</li>
           <li>Start the <strong>VPN</strong></li>
-          <p>More on this later on</p>
         </ol>
       </section>
       <section>
@@ -289,8 +288,8 @@ Accept the license agreement presented
         <img class="stretch" src="img/webui.png" />
       </section>
       <section>
-        <h2>How to connect without VPN: Remote Desktop</h2>
-        <p>Indirectly through a <a href="https://portalusuarios.cesga.es">Remote Desktop</a></p>
+        <h2>How to connect: Remote Desktop</h2>
+        <p><strong>No VPN needed</strong> if connecting from a <a href="https://portalusuarios.cesga.es">Remote Desktop</a></p>
         <img class="stretch" src="img/remotedesktop.png" />
       </section>
     </section>
@@ -300,6 +299,24 @@ Accept the license agreement presented
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>How to transfer data</h2>
+      </section>
+      <section>
+        <h2>How to transfer data efficiently</h2>
+        <p>Use our dedicated Data Transfer Node: <strong>dtn.srv.cesga.es</strong></p>
+        <p>SCP/SFTP is fine for small transfers</p>
+        <p>But for large transfers use <a target="_blank" href="https://www.globus.org">Globus</a></p>
+        <p>Our endpoint is <strong>cesga#dtn</strong></p>
+        <p>For more info check the <a href="http://bigdata.cesga.es/dtn-user-guide/">DTN User Guide</a></p>
+      </section>
+      <section>
+        <h2>Expected upload times</h2>
+        <img class="stretch" src="img/expected_upload_times.png" />
+      </section>
+      <section>
+        <h2>How to transfer data: non-efficient way</h2>
+        <p>Direct SCP/SFTP to hadoop3.cesga.es</p>
+        <p>Useful only for internal transfers: eg. FT to BD</p>
+        <p>Not recommended for external transfers because it will be slowed down by the VPN server and the firewall</p>
       </section>
       <section>
         <h2>Filesystem Quotas</h2>
@@ -331,24 +348,6 @@ Accept the license agreement presented
         <p>We recommend that you use the <strong>discp</strong> tool</p>
         <pre><code>hadoop distcp -i -pat -update hdfs://10.121.13.19:8020/user/uscfajlc/wcresult hdfs://nameservice1/user/uscfajlc/wcresult</code></pre>
         <p>Run it from <strong>hadoop3.cesga.es</strong> so it takes into account HA</p>
-      </section>
-      <section>
-        <h2>How to transfer data efficiently</h2>
-        <p>Use our dedicated Data Transfer Node: <strong>dtn.srv.cesga.es</strong></p>
-        <p>SCP/SFTP is fine for small transfers</p>
-        <p>But for large transfers use <a target="_blank" href="https://www.globus.org">Globus</a></p>
-        <p>Our endpoint is <strong>cesga#dtn</strong></p>
-        <p>For more info check the <a href="http://bigdata.cesga.es/dtn-user-guide/">DTN User Guide</a></p>
-      </section>
-      <section>
-        <h2>Expected upload times</h2>
-        <img class="stretch" src="img/expected_upload_times.png" />
-      </section>
-      <section>
-        <h2>How to transfer data: non-efficient way</h2>
-        <p>Direct SCP/SFTP to hadoop3.cesga.es</p>
-        <p>Useful only for internal transfers: eg. FT to BD</p>
-        <p>Not recommended for external transfers because it will be slowed down by the VPN server and the firewall</p>
       </section>
     </section>
     <!-- Tutorial End: How to upload data -->
@@ -462,8 +461,8 @@ Accept the license agreement presented
     <!-- Tutorial Start: YARN -->
     <section>
       <section>
-        <h2>YARN</h2>
-        <h4>Yet Another Resource Negotiator</h4>
+        <h1>YARN</h1>
+        <h3>Yet Another Resource Negotiator</h3>
       </section>
       <section>
         <h2>YARN Architecture</h2>
@@ -525,7 +524,7 @@ Accept the license agreement presented
     <!-- Tutorial Start: Spark -->
     <section>
       <section>
-        <h2>Spark</h2>
+        <h1>Spark</h1>
         <h4>A fast and general engine for large-scale data processing</h4>
       </section>
       <section>
@@ -659,8 +658,8 @@ Accept the license agreement presented
 
     <!-- Tutorial Start: Jupyter -->
     <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Jupyter</h2>
+      <section>
+        <h1>Jupyter</h1>
       </section>
       <section>
         <h2>Jupyter</h2>
@@ -698,8 +697,8 @@ Accept the license agreement presented
     <!-- Tutorial Start: HIVE -->
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Hive</h2>
-        <h4>SQL-like interface</h4>
+        <h1>Hive</h1>
+        <h3>SQL-like interface</h3>
       </section>
 
       <section>
@@ -771,8 +770,8 @@ Accept the license agreement presented
     <!-- Tutorial Start: Impala -->
     <section>
       <section>
-        <h2>Impala</h2>
-        <h4>Low-latency SQL queries</h4>
+        <h1>Impala</h1>
+        <h3>Low-latency SQL queries</h3>
       </section>
 
       <section>
@@ -861,8 +860,9 @@ Accept the license agreement presented
 
     <!-- Tutorial Start: Modules -->
     <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Modules</h2>
+      <section>
+        <h1>Modules</h1>
+        <h3>Additional Software Versions</h3>
       </section>
       <section>
         <h2>Choosing software versions</h2>
@@ -886,10 +886,72 @@ Accept the license agreement presented
     </section>
     <!-- Tutorial End: Modules -->
 
+    <section>
+      <h2>Technology Selection</h2>
+      <img class="stretch" src="img/technology-selection.png" />
+    </section>
+
+    <!-- Reference Documentation -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Where to get additional information</h2>
+      </section>
+      <section>
+        <h2>Tutorials</h2>
+        <img class="stretch" src="img/tutorials.png" />
+        <footer><a href="http://bigdata.cesga.es/#tutorials">http://bigdata.cesga.gal/#tutorials</a></footer>
+      </section>
+      <section>
+        <h2>User Guide</h2>
+        <img class="stretch" src="img/hadoop3-user-guide.png" />
+        <footer><a href="http://bigdata.cesga.es/user-guide">http://bigdata.cesga.gal/user-guide</a></footer>
+      </section>
+      <section>
+        <h2>DTN User Guide</h2>
+        <img class="stretch" src="img/dtn-user-guide.png" />
+        <footer><a href="http://bigdata.cesga.es/dtn-user-guide">http://bigdata.cesga.gal/dtn-user-guide</a></footer>
+      </section>
+      <section>
+        <h2>Official Documentation</h2>
+        <p>Cloudera Official Documentation:</p>
+        <ul>
+          <li><a href="http://www.cloudera.com/documentation/enterprise/6/6.1/topics/cdh_components.html">CDH 6.1 Documentation</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/spark.html">Spark Guide</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/hive.html">Hive Guide</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/impala.html">Impala Guide</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/hue.html">HUE Guide</a></li>
+        </ul>
+        <p>Reference Documentation for each component:</p>
+        <ul>
+          <li><a href="https://spark.apache.org/docs/2.4.0/index.html">Spark 2.4.0 Documentation</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/cdh_component_documentation_links.html">Links to each component documentation</a></li>
+        </ul>
+      </section>
+    </section>
+
+    <section>
+      <h2>Upcoming courses</h2>
+      <ul>
+        <li>Spark Course: covering pyspark and sparklyr</li>
+        <li>Additional courses (Hive, HBase, Kafka, Flume, Sqoop): depending on your interests</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Documentation Pack</h2>
+      <p>We have prepared a documentation pack including <strong>today's slides</strong> as well as all related material:</p>
+      <ul>
+        <li><a href="http://bigdata.cesga.es/files/workshop-bigdata-documentation-pack.zip">Documentation Pack</a></li>
+      </ul>
+      <img class="stretch" src="img/documentation-pack.png" />
+    </section>
+
     <!-- The End -->
     <section>
       <h3>Q&A</h3>
-      <p style="text-align: center;">We are here to help:</p>
+      <p style="text-align: center;">Big Data is a <strong>multi-disciplinary</strong> domain.</p>
+      <p style="text-align: center;">Collaboration is a key factor in Big Data projects.</p>
+      <p style="text-align: center;">Tell us your project and we will help you:</p>
       <p style="text-align: center;">
         <script language="JavaScript">
         var address = "bigdata";
@@ -898,7 +960,7 @@ Accept the license agreement presented
         document.write("<a href='" + "mail" + "to:" + address + "@" + domain + "'>" + linktext + "</a>");
         </script>
       </p>
-      <p style="text-align: center;">Stay up to date subscribing to our <a href="https://listas.cesga.es/mailman/listinfo/bigdata-dev">Mailing list</a></p>
+      <!-- <p style="text-align: center;">Stay up to date subscribing to our <a href="https://listas.cesga.es/mailman/listinfo/bigdata-dev">Mailing list</a></p> -->
     </section>
     
     <!-- Extra -->
