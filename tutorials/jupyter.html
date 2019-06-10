@@ -44,8 +44,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
   <!-- Any section element inside of this container is displayed as a slide -->
   <div class="slides">
     <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Jupyter</h2>
+      <section>
+        <h1>Jupyter</h1>
+        <h3>Interactive Computing</h3>
       </section>
       <section>
         <h2>Jupyter</h2>
@@ -59,23 +60,39 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <li>Launch the Jupyter server
           <pre><code>start_jupyter</code></pre>
           </li>
-          <li>Point your browser to the address where the notebook is running:
-          <pre><code>The Jupyter Notebook is running at: http://1.2.3.4:8888/</code></pre>
-          </li>
-          <li>The VPN must be running</li>
+          <li>Point your browser to the provided URL</li>
+          <li><strong>VPN must be running</strong> if not using a remote desktop</li>
         </ul>
       </section>
       <section>
         <h2>Jupyter</h2>
-        <img class="stretch" src="img/jupyter_files.png">
+        <img class="stretch" src="img/jupyter.png">
       </section>
       <section>
-        <h2>Jupyter Terminal</h2>
-        <img class="stretch" src="img/jupyter_terminal.png">
+        <h2>Using Python 3</h2>
+        <p>You can also use Jupyter with Python 3:</p> 
+        <pre><code>
+          module load anaconda3/2018.12
+          start_jupyter
+        </code></pre>
+        <p>Just load the desired python version first</p>
+        <p>Keep in mind that CDH 6.1 does not officially support Python 3 yet</p>
       </section>
       <section>
-        <h2>Jupyter Conda</h2>
-        <img class="stretch" src="img/jupyter_conda.png">
+        <h2>JupyterLab</h2>
+        <p>You can also try the new Jupyter Lab:</p>
+        <pre><code>
+          module load anaconda2/2018.12
+          start_jupyter-lab
+        </code></pre>
+      </section>
+      <section>
+        <h2>JupyterLab</h2>
+        <img class="stretch" src="img/jupyter-lab-1.png">
+      </section>
+      <section>
+        <h2>JupyterLab</h2>
+        <img class="stretch" src="img/jupyter-lab-2.png">
       </section>
     </section>
 

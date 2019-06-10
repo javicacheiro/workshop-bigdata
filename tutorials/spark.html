@@ -45,7 +45,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
   <div class="slides">
     <section>
       <section>
-        <h2>Spark</h2>
+        <h1>Spark</h1>
         <h4>A fast and general engine for large-scale data processing</h4>
       </section>
       <section>
@@ -72,54 +72,60 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <li>R</li>
         </ul>
       </section>
-    </section>
-
-    <!-- PySpark -->
-    <section>
       <section>
-        <h2>PySpark</h2>
+        <h2>Updated to Spark 2.4</h2>
+        <p>Now the main entry point is <strong>spark</strong> instead of <strong>sc</strong> and <strong>sqlContext</strong></p>
+      </section>
+
+      <!-- PySpark -->
+      <section>
+        <h2>Spark Python</h2>
+        <h4>PySpark</h4>
       </section>
       <section>
         <h2>PySpark Basics</h2>
         <ul>
-          <li>Based on Anaconda Python distribution</li>
+          <li>Can be used together with Anaconda Python distribution</li>
           <li>Over 720 packages for data preparation, data analysis, data visualization, machine learning and interactive data science</li>
         </ul>
       </section>
       <section>
         <h2>Running pyspark interactively</h2>
         <ul>
-          <li>Using Jupyter notebook</li>
-          <li>Running from the command line using ipython:
-            <pre><code>PYSPARK_DRIVER_PYTHON=ipython pyspark</code></pre>
+          <li>Running from the command line:
+            <pre><code>pyspark</code></pre>
           </li>
+          <li>Running from the command line using <strong>ipython</strong>:
+            <pre><code>
+              module load anaconda2
+              PYSPARK_DRIVER_PYTHON=ipython pyspark
+            </code></pre>
+          </li>
+          <li>Running inside a Jupyter notebook</li>
         </ul>
       </section>
       <section>
         <h2>Example</h2>
         <pre><code>
-          [jlopez@login7 ~]$ PYSPARK_DRIVER_PYTHON=ipython pyspark
-          >>>  from pyspark.sql import Row
-          >>>  Person = Row('name', 'surname')
-          >>>  data = []
-          >>>  data.append(Person('Joe', 'MacMillan'))
-          >>>  data.append(Person('Gordon', 'Clark'))
-          >>>  data.append(Person('Cameron', 'Howe'))
-          >>>  df = sqlContext.createDataFrame(data)
-          >>>  df.show()
-            +-------+---------+
-            |   name|  surname|
-            +-------+---------+
-            |    Joe|MacMillan|
-            | Gordon|    Clark|
-            |Cameron|     Howe|
-            +-------+---------+
+          from pyspark.sql import Row
+          Person = Row('name', 'surname')
+          data = []
+          data.append(Person('Joe', 'MacMillan'))
+          data.append(Person('Gordon', 'Clark'))
+          data.append(Person('Cameron', 'Howe'))
+          df = spark.createDataFrame(data)
+          df.show()
+           +-------+---------+
+           |   name|  surname|
+           +-------+---------+
+           |    Joe|MacMillan|
+           | Gordon|    Clark|
+           |Cameron|     Howe|
+           +-------+---------+
         </code></pre>
       </section>
-    </section>
 
-    <!-- spark-submit -->
-    <section>
+      <!-- spark-submit -->
       <section>
         <h2>spark-submit</h2>
         <h4>Submit job to queue</h4>

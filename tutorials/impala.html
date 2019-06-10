@@ -45,27 +45,19 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
   <div class="slides">
     <section>
       <section>
-        <h1>Modules</h1>
-        <h3>Additional Software Versions</h3>
+        <h1>Impala</h1>
+        <h3>Low-latency SQL queries</h3>
       </section>
+
       <section>
-        <h2>Choosing software versions</h2>
-        <pre><code>module available</code></pre>
+        <h2>Impala</h2>
+        <pre><code>impala-shell --ssl --impalad=c14-2</code></pre>
+        <p>Point it to any worker node in the cluster</p>
       </section>
+
       <section>
-        <h2>Anaconda</h2>
-        <p>We recommend that you use the Anaconda version of Python instead of the OS one</p>
-        <pre><code>module load anaconda2/2018.12</code></pre>
-        <p>Even you can try Python 3 (not officially supported)</p>
-        <pre><code>module load anaconda3/2018.12</code></pre>
-      </section>
-      <section>
-        <h2>Build tools</h2>
-        <p>You can load the following build tools</p>
-        <ul>
-          <li>maven</li>
-          <li>sbt</li>
-        </ul>
+        <h2>Impala</h2>
+        <p>Hive and Impala use the same SQL syntax <strong>HiveQL</strong></p>
       </section>
     </section>
 

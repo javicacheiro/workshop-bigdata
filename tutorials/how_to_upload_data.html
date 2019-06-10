@@ -45,20 +45,56 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
   <div class="slides">
     <section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>How to upload data</h2>
+        <h2>How to transfer data</h2>
       </section>
       <section>
-        <h2>How to upload data</h2>
+        <h2>How to transfer data efficiently</h2>
         <p>Use our dedicated Data Transfer Node: <strong>dtn.srv.cesga.es</strong></p>
         <p>SCP/SFTP is fine for small transfers</p>
-        <p>But for large transfers use <a target="_blank" href="https://www.globus.org">Globus Online</a></p>
+        <p>But for large transfers use <a target="_blank" href="https://www.globus.org">Globus</a></p>
         <p>Our endpoint is <strong>cesga#dtn</strong></p>
-        <p>If you prefer you can use gridftp directly :-)</p>
+        <p>For more info check the <a href="http://bigdata.cesga.es/dtn-user-guide/">DTN User Guide</a></p>
       </section>
       <section>
         <h2>Expected upload times</h2>
         <img class="stretch" src="img/expected_upload_times.png" />
       </section>
+      <section>
+        <h2>How to transfer data: non-efficient way</h2>
+        <p>Direct SCP/SFTP to hadoop3.cesga.es</p>
+        <p>Useful only for internal transfers: eg. FT to BD</p>
+        <p>Not recommended for external transfers because it will be slowed down by the VPN server and the firewall</p>
+      </section>
+      <section>
+        <h2>Filesystem Quotas</h2>
+        <ul>
+          <li>HOMEBD and HDFS have quotas</li>
+          <li>To check current usage you can use the command:</li>
+          <pre><code>myquota</code></pre>
+          <li>Verify that you have enough space before transfering files or submitting jobs</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Default Filesystem Quotas</h2>
+        <p>Defaults:</p>
+        <ul>
+          <li>HDFS: 18TB</li>
+          <li>HOMEBD: 800GB</li>
+        </ul>
+        <p>If you need additional space you can request <a href="//www.altausuarios.cesga.es/solic/almalta.php">Additional Storage</a></p>
+        </ul>
+      </section>
+      <section>
+        <h2>Backup policies</h2>
+        <p>HDFS and HOMEBD <strong>do not have automatic backups</strong> configured</p>
+        <p>Only HOME FT has automatic daily backups</p>
+        <p>If you need to backup data in HDFS or HOMEBD contact us</p>
+      </section>
+      <section>
+        <h2>Migrating Data from Hadoop 2</h2>
+        <p>We recommend that you use the <strong>discp</strong> tool</p>
+        <pre><code>hadoop distcp -i -pat -update hdfs://10.121.13.19:8020/user/uscfajlc/wcresult hdfs://nameservice1/user/uscfajlc/wcresult</code></pre>
+        <p>Run it from <strong>hadoop3.cesga.es</strong> so it takes into account HA</p>
       </section>
     </section>
 

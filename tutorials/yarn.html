@@ -45,8 +45,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
   <div class="slides">
     <section>
       <section>
-        <h2>YARN</h2>
-        <h4>Yet Another Resource Negotiator</h4>
+        <h1>YARN</h1>
+        <h3>Yet Another Resource Negotiator</h3>
       </section>
       <section>
         <h2>YARN Architecture</h2>
@@ -60,6 +60,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       <section>
         <h2>List running jobs</h2>
         <pre><code>yarn application -list</code></pre>
+        <pre><code>yarn top</code></pre>
       </section>
       <section>
         <h2>See application logs</h2>
@@ -70,16 +71,29 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <pre><code>yarn application -kill applicationId</code></pre>
       </section>
       <section>
-        <h2>Capacity Scheduler Queues</h2>
-        <img src="img/yarn_queues.png">
+        <h2>Fair Scheduler</h2>
+        <ul>
+          <li>Resources will be shared with the rest of users using the YARN fair share scheduler</li>
+          <li><strong>Dominant Resource Fairness</strong>: both CPU and memory considered</li>
+          <li>Jobs should be composed of lots of short running tasks so they share resources nicely with other jobs</li>
+          <li>Long running tasks that monopolize resources during large times can be <strong>preempted</strong> to allow other applications to run</li>
+        </ul>
       </section>
       <section>
-        <h2>WebUI</h2>
-        <img class="stretch" src="img/webui.png">
+        <h2>Fair Scheduler Queues</h2>
+        <ul>
+          <li>root.users.[username]: default queue, one per user</li>
+          <li>interactive: Jupyter Notebooks and interactive jobs</li>
+          <li>urgent: limited resources that can be used for urgent jobs</li>
+        </ul>
       </section>
       <section>
-        <h2>YARN UI</h2>
-        <img src="img/yarnui.png">
+        <h2>Web Job Browser</h2>
+        <p>
+        You can access the HUE Job Browser from the
+        <a href="https://bigdata.cesga.es">WebUI</a>:
+        </p>
+        <img src="img/hue_job_browser.png">
       </section>
     </section>
 

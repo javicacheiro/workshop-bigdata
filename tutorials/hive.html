@@ -44,15 +44,35 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
   <!-- Any section element inside of this container is displayed as a slide -->
   <div class="slides">
     <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Hive</h2>
-        <h4>SQL-like interface</h4>
+      <section>
+        <h1>Hive</h1>
+        <h3>SQL-like interface</h3>
       </section>
 
       <section>
         <h2>Hive</h2>
         <p>Hive offers the possibility to use Hadoop through a SQL-like interface</p> 
-        <p>Hive and Impala use the same SQL syntax <strong>HiveQL</strong></p>
+      </section>
+
+      <section>
+        <h2>Using Hive: HUE</h2>
+        <p>You can use Hive from the <a href="https://bigdata.cesga.es">WebUI</a> through HUE:</p>
+        <img src="img/hue-hive.png">
+      </section>
+
+      <section>
+        <h2>Using Hive: Beeline</h2>
+        <pre><code>beeline</code></pre>
+        <pre><code>beeline> !connect 
+        jdbc:hive2://c14-19.bd.cluster.cesga.es:10000/default;
+        ssl=true;sslTrustStore=/opt/cesga/cdh61/hiveserver2.jks;
+        trustStorePassword=notsecret</code></pre>
+      </section>
+
+      <section>
+        <h2>Using Hive: deprecated</h2>
+        <p>The Hive CLI is not deprecated and not recommended:</p>
+        <pre><code>hive</code></pre>
       </section>
 
       <section data-markdown>
@@ -73,7 +93,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <script type="text/template">
           ## Load Data
           ```
-          hdfs dfs -put sge_201601*.log /user/jlopez/data/jobs
+          hdfs dfs -put jobs.201901* /user/jlopez/data/jobs
           ```
         </script>
       </section>
@@ -112,6 +132,30 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           ```
         </script>
       </section>
+
+      <section>
+        <h2>Important Considerations</h2>
+        <ul>
+          <li>Do not create tables in the default database</li>
+          <li>Create a database with your username and then create your tables in this database</li>
+          <pre><code>
+          create database if not exists uscfajlc;
+          use uscfajlc;
+          </code></pre>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Important Considerations</h2>
+        <ul>
+          <li>To restrict access to your database set permissions of the directory:</li>
+          <pre><code>hdfs dfs -chmod go-rwx /user/hive/warehouse/uscfajlc.db</code></pre>
+          <li>Use always <strong>external tables</strong> that are stored in your HDFS HOME</li>
+          <li>Customize the permissions of the external directory</li>
+          <li>Use HDFS ACLs to fine tune the permissions to further fit your needs</li>
+        </ul>
+      </section>
+
     </section>
 
   </div>
