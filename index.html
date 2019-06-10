@@ -211,6 +211,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
     <!-- Tutorial Start: VPN -->
     <section>
       <section>
+        <h1>VPN</h1>
+      </section>
+      <section>
         <h2>VPN</h2>
         <p>The <strong>VPN</strong> software allows you not only to connect to CESGA in a secure way but also to access internal resources that you can not reach otherwise.</p>
       </section>
@@ -266,8 +269,8 @@ Accept the license agreement presented
 
     <!-- Tutorial Start: How to connect -->
     <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>How to connect</h2>
+      <section>
+        <h1>How to connect</h1>
       </section>
       <section>
         <h2>How to connect: Setup</h2>
@@ -555,12 +558,11 @@ Accept the license agreement presented
         <h2>Updated to Spark 2.4</h2>
         <p>Now the main entry point is <strong>spark</strong> instead of <strong>sc</strong> and <strong>sqlContext</strong></p>
       </section>
-    </section>
 
-    <!-- PySpark -->
-    <section>
+      <!-- PySpark -->
       <section>
-        <h2>PySpark</h2>
+        <h2>Spark Python</h2>
+        <h4>PySpark</h4>
       </section>
       <section>
         <h2>PySpark Basics</h2>
@@ -604,10 +606,8 @@ Accept the license agreement presented
            +-------+---------+
         </code></pre>
       </section>
-    </section>
 
-    <!-- spark-submit -->
-    <section>
+      <!-- spark-submit -->
       <section>
         <h2>spark-submit</h2>
         <h4>Submit job to queue</h4>
@@ -660,6 +660,7 @@ Accept the license agreement presented
     <section>
       <section>
         <h1>Jupyter</h1>
+        <h3>Interactive Computing</h3>
       </section>
       <section>
         <h2>Jupyter</h2>
@@ -673,30 +674,46 @@ Accept the license agreement presented
           <li>Launch the Jupyter server
           <pre><code>start_jupyter</code></pre>
           </li>
-          <li>Point your browser to the address where the notebook is running:
-          <pre><code>The Jupyter Notebook is running at: http://1.2.3.4:8888/</code></pre>
-          </li>
-          <li>The VPN must be running</li>
+          <li>Point your browser to the provided URL</li>
+          <li><strong>VPN must be running</strong> if not using a remote desktop</li>
         </ul>
       </section>
       <section>
         <h2>Jupyter</h2>
-        <img class="stretch" src="img/jupyter_files.png">
+        <img class="stretch" src="img/jupyter.png">
       </section>
       <section>
-        <h2>Jupyter Terminal</h2>
-        <img class="stretch" src="img/jupyter_terminal.png">
+        <h2>Using Python 3</h2>
+        <p>You can also use Jupyter with Python 3:</p> 
+        <pre><code>
+          module load anaconda3/2018.12
+          start_jupyter
+        </code></pre>
+        <p>Just load the desired python version first</p>
+        <p>Keep in mind that CDH 6.1 does not officially support Python 3 yet</p>
       </section>
       <section>
-        <h2>Jupyter Conda</h2>
-        <img class="stretch" src="img/jupyter_conda.png">
+        <h2>JupyterLab</h2>
+        <p>You can also try the new Jupyter Lab:</p>
+        <pre><code>
+          module load anaconda2/2018.12
+          start_jupyter-lab
+        </code></pre>
+      </section>
+      <section>
+        <h2>JupyterLab</h2>
+        <img class="stretch" src="img/jupyter-lab-1.png">
+      </section>
+      <section>
+        <h2>JupyterLab</h2>
+        <img class="stretch" src="img/jupyter-lab-2.png">
       </section>
     </section>
     <!-- Tutorial End: Jupyter -->
 
     <!-- Tutorial Start: HIVE -->
     <section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+      <section>
         <h1>Hive</h1>
         <h3>SQL-like interface</h3>
       </section>
@@ -704,7 +721,27 @@ Accept the license agreement presented
       <section>
         <h2>Hive</h2>
         <p>Hive offers the possibility to use Hadoop through a SQL-like interface</p> 
-        <p>Hive and Impala use the same SQL syntax <strong>HiveQL</strong></p>
+      </section>
+
+      <section>
+        <h2>Using Hive: HUE</h2>
+        <p>You can use Hive from the <a href="https://bigdata.cesga.es">WebUI</a> through HUE:</p>
+        <img src="img/hue-hive.png">
+      </section>
+
+      <section>
+        <h2>Using Hive: Beeline</h2>
+        <pre><code>beeline</code></pre>
+        <pre><code>beeline> !connect 
+        jdbc:hive2://c14-19.bd.cluster.cesga.es:10000/default;
+        ssl=true;sslTrustStore=/opt/cesga/cdh61/hiveserver2.jks;
+        trustStorePassword=notsecret</code></pre>
+      </section>
+
+      <section>
+        <h2>Using Hive: deprecated</h2>
+        <p>The Hive CLI is not deprecated and not recommended:</p>
+        <pre><code>hive</code></pre>
       </section>
 
       <section data-markdown>
@@ -725,7 +762,7 @@ Accept the license agreement presented
         <script type="text/template">
           ## Load Data
           ```
-          hdfs dfs -put sge_201601*.log /user/jlopez/data/jobs
+          hdfs dfs -put jobs.201901* /user/jlopez/data/jobs
           ```
         </script>
       </section>
@@ -764,6 +801,30 @@ Accept the license agreement presented
           ```
         </script>
       </section>
+
+      <section>
+        <h2>Important Considerations</h2>
+        <ul>
+          <li>Do not create tables in the default database</li>
+          <li>Create a database with your username and then create your tables in this database</li>
+          <pre><code>
+          create database if not exists uscfajlc;
+          use uscfajlc;
+          </code></pre>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Important Considerations</h2>
+        <ul>
+          <li>To restrict access to your database set permissions of the directory:</li>
+          <pre><code>hdfs dfs -chmod go-rwx /user/hive/warehouse/uscfajlc.db</code></pre>
+          <li>Use always <strong>external tables</strong> that are stored in your HDFS HOME</li>
+          <li>Customize the permissions of the external directory</li>
+          <li>Use HDFS ACLs to fine tune the permissions to further fit your needs</li>
+        </ul>
+      </section>
+
     </section>
     <!-- Tutorial End: HIVE -->
 
@@ -778,6 +839,11 @@ Accept the license agreement presented
         <h2>Impala</h2>
         <pre><code>impala-shell --ssl --impalad=c14-2</code></pre>
         <p>Point it to any worker node in the cluster</p>
+      </section>
+
+      <section>
+        <h2>Impala</h2>
+        <p>Hive and Impala use the same SQL syntax <strong>HiveQL</strong></p>
       </section>
     </section>
     <!-- Tutorial End: Impala -->
@@ -941,7 +1007,7 @@ Accept the license agreement presented
       <h2>Documentation Pack</h2>
       <p>We have prepared a documentation pack including <strong>today's slides</strong> as well as all related material:</p>
       <ul>
-        <li><a href="http://bigdata.cesga.es/files/workshop-bigdata-documentation-pack.zip">Documentation Pack</a></li>
+        <li><a href="http://bigdata.cesga.es/files/workshop-bigdata-documentation-pack.zip">Documentation Pack: <strong>http://bit.ly/hadoop2019</strong></a></li>
       </ul>
       <img class="stretch" src="img/documentation-pack.png" />
     </section>
