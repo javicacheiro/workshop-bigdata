@@ -59,24 +59,31 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
             <h2>Creating an Hbase instance</h2>
         </section>        
         <section>
-            <h3>Launch an HBASE Cluster thought the webUI and get the IP</h3>
+            <h3>Launch an HBASE Cluster through the webUI and get the Network Address</h3>
             <img class="stretch" src="img/ConnectHBASE.PNG" />
         </section>
 
         <section>
-            <h3>Add Address to your /etc/hosts</h3>
+            <h3>Add the Network Address to your /etc/hosts</h3>
             <pre><code>
                 10.121.243.250   hbase_node0
             </code></pre>
         </section>
+        
+        <section>
+            <h3>Activate the vpn and test the connection/h3>
+            <pre><code>
+                ping hbase_node0
+            </code></pre>
+        </section>
 
         <section>
-            <h2>How to connect</h2>
+            <h2>How to use</h2>
         </section>
         <section>
         <h2>Using Python</h2>
         <p>
-            Requires happybase. There is a 'test' table you can use to verify everything works:
+            You can use happybase. There is a 'test' table you can use to verify everything works:
         </p>
         <pre><code>
             import happybase
@@ -89,6 +96,11 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <section>
             <h2>Using Java</h2>
                 <p>To connect using java you can use our <a href="https://github.com/bigdatacesga/hbase-client-java">Sample Java HBaseclient</a> and modify the hbase.zookeeper.quorum to reflect the right IP of your instance</p>
+                <p>The example App can be built using maven
+                    <pre><code>
+                        mvn package
+                        java -jar target/hbaseclient-0.1.0.jar
+                    </code></pre></p>
         </section>
         
     </section>
