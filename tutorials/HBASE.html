@@ -88,7 +88,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <pre><code>
         import happybase
         connection = happybase.Connection(host='10.121.243.250')
-        test = connection.table('test')             for k, d in test.scan(): print k, d
+        test = connection.table('test')
+        for k, d in test.scan(): print k, d
         </code> </pre>
         </section>
         
