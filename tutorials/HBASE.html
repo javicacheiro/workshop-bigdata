@@ -71,7 +71,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         </section>
         
         <section>
-            <h3>Activate the vpn and test the connection/h3>
+            <h3>Activate the vpn and test the connection</h3>
             <pre><code>
                 ping hbase_node0
             </code></pre>
@@ -86,10 +86,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
             You can use happybase. There is a 'test' table you can use to verify everything works:
         </p>
         <pre><code>
-            import happybase
-            connection = happybase.Connection(host='10.121.243.250')
-            test = connection.table('test') 
-            for k, d in test.scan(): print k, d
+        import happybase
+        connection = happybase.Connection(host='10.121.243.250')
+        test = connection.table('test')             for k, d in test.scan(): print k, d
         </code> </pre>
         </section>
         
@@ -98,8 +97,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
                 <p>To connect using java you can use our <a href="https://github.com/bigdatacesga/hbase-client-java">Sample Java HBaseclient</a> and modify the hbase.zookeeper.quorum to reflect the right IP of your instance</p>
                 <p>The example App can be built using maven
                     <pre><code>
-                        mvn package
-                        java -jar target/hbaseclient-0.1.0.jar
+                    mvn package
+                    java -jar target/hbaseclient-0.1.0.jar
                     </code></pre></p>
         </section>
         
