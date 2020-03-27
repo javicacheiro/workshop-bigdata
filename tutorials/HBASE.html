@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>Workshop BD|CESGA</title>
+
+<meta name="description" content="Introducción al servicio Big Data del CESGA basado en Hadoop.">
+<meta name="author" content="Javier Cacheiro">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+<!-- JLC CSS customizations -->
+<link rel="stylesheet" href="css/custom.css">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- Printing and PDF exports -->
+<script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+        <section>
+            <h1>HBASE</h1>
+            <h3>The Hadoop Database</h3>
+        </section>
+
+        <section>
+            <h3>Considerations</h3>
+            <p>All PaaS products should only be used for testing and developing purposes.</p>
+
+        </section>
+
+        <section>
+            <h2>Creating an Hbase instance</h2>
+        </section>        
+        <section>
+            <h3>Launch an HBASE Cluster thought the webUI and get the IP</h3>
+            <img class="stretch" src="img/ConnectHBASE.PNG" />
+        </section>
+
+        <section>
+            <h3>Add Address to your /etc/hosts</h3>
+            <pre><code>
+                10.121.243.250   hbase_node0
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>How to connect</h2>
+        </section>
+        <section>
+        <h2>Using Python</h2>
+        <p>
+            Requires happybase. There is a 'test' table you can use to verify everything works:
+        </p>
+        <pre><code>
+            import happybase
+            connection = happybase.Connection(host='10.121.243.250')
+            test = connection.table('test') 
+            for k, d in test.scan(): print k, d
+        </code> </pre>
+        </section>
+        
+        <section>
+            <h2>Using Java</h2>
+                <p>To connect using java you can use our <a href="https://github.com/bigdatacesga/hbase-client-java">Sample Java HBaseclient</a> and modify the hbase.zookeeper.quorum to reflect the right IP of your instance</p>
+        </section>
+        
+    </section>
+</div>
+
+</div>
+
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+controls: true,
+progress: true,
+history: true,
+center: true,
+
+transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+// Optional reveal.js plugins
+dependencies: [
+{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+{ src: 'plugin/zoom-js/zoom.js', async: true },
+{ src: 'plugin/notes/notes.js', async: true }
+]
+});
+
+            </script>
+
+            </body>
+            </html>
