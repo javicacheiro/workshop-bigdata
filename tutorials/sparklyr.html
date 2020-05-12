@@ -76,18 +76,14 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
               <li>Define a spark connection <pre><code> > sc <- spark_connect(master = "yarn-client", spark_home = Sys.getenv('SPARK_HOME'))
               </code></pre></li>
               <li>Use the <code>sc</code> connection to use spark from R</li>
-              <li>Close the connection: <pre>
-                <code> > spark_disconnect(sc)</code>
-              </pre></li>
+              <li>Close the connection: <pre><code> > spark_disconnect(sc)</code></pre></li>
             </ul>
       </section>
       <section>
         <h2>More options</h2>
             <ul>
-              <li>Use Jupyter Notebooks <pre><code>  start_jupyter </code></pre></li>
-              <li> Launch R scripts <pre>
-                <code>spark-submit --class sparklyr.Shell '/opt/cesga/anaconda/Anaconda2-2018.12-sparklyr/lib/R/library/sparklyr/java/sparklyr-2.4-2.11.jar' 8880 1234 --batch example_sparklyr_script.R</code>
-              </pre></li>
+              <li>Use Jupyter Notebooks <pre><code> start_jupyter </code></pre></li>
+              <li> Launch R scripts <pre><code>spark-submit --class sparklyr.Shell '/opt/cesga/anaconda/Anaconda2-2018.12-sparklyr/lib/R/library/sparklyr/java/sparklyr-2.4-2.11.jar' 8880 1234 --batch example_sparklyr_script.R</code></pre></li>
             </ul>
       </section>
       <section>
