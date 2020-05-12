@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>Workshop BD|CESGA</title>
+
+<meta name="description" content="Introducción al servicio Big Data del CESGA basado en Hadoop.">
+<meta name="author" content="Javier Cacheiro">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+<!-- JLC CSS customizations -->
+<link rel="stylesheet" href="css/custom.css">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- Printing and PDF exports -->
+<script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+      <section>
+        <h1>Sparklyr</h1>
+        <h4>R interface for Apache Spark</h4>
+      </section>
+      <section>
+       <ul>
+         <li>Connect to Spark from R.</li>
+         <li>Complete dplyr backend.</li>
+         <li>Filter and aggregate Spark datasets then bring them into R for
+          analysis and visualization.</li>
+          <li>Use Spark’s distributed machine learning library from R.</li>
+          <li>Work with data stored on HDFS</li>
+       </ul>
+      </section>
+      <section>
+        <h2>Getting started</h2>        
+      </section>
+      <section>
+        <ul>
+        <li>Activate your <a href="https://bigdata.cesga.es/tutorials/vpn.html#/">vpn</a> and <a href="https://bigdata.cesga.es/tutorials/how_to_connect.html#/">connect</a>  to hadoop3.cesga.es</li>
+        <li>Sparklyr is available as a module, it's based on an anaconda2 distribution. You can load it typing <pre><code>module load sparklyr</code></pre></li>
+        <li>The module includes python 2.7, R 3.1.5, sparklyr 1.0.5, and all its dependencies installed</li>
+        <li>Start R by typing <code>R</code></li>
+      </ul>
+      </section>
+      <section>
+        <h2>Connecting R to a spark session</h2>
+            <ul>
+              <li>Load the package <pre><code> > library(sparklyr) </code></pre></li>
+              <li>Define a spark connection <pre><code> > sc <- spark_connect(master = "yarn-client", spark_home = Sys.getenv('SPARK_HOME'))
+              </code></pre></li>
+              <li>Use the <code>sc</code> connection to use spark from R</li>
+              <li>Close the connection: <pre>
+                <code> > spark_disconnect(sc)</code>
+              </pre></li>
+            </ul>
+      </section>
+      <section>
+        <h2>More options</h2>
+            <ul>
+              <li>Use Jupyter Notebooks <pre><code>  start_jupyter </code></pre></li>
+              <li> Launch R scripts <pre>
+                <code>spark-submit --class sparklyr.Shell '/opt/cesga/anaconda/Anaconda2-2018.12-sparklyr/lib/R/library/sparklyr/java/sparklyr-2.4-2.11.jar' 8880 1234 --batch example_sparklyr_script.R</code>
+              </pre></li>
+            </ul>
+      </section>
+      <section>
+        <h3>Remember to disconnect sessions and properly shut down Jupyter Notebook servers.</h3>
+      </section>
+      <section>
+        <h2>More info</h2>
+            <ul>
+            <li><a href="https://github.com/aurora-mareviv/sparklyr_start">sparklyr workshop</a></li>
+            <li><a href="https://bigdata.cesga.es/user-guide/sparklyr.html"> CESGA sparklyr User Guide</a></li>
+            <li><a href="https://spark.rstudio.com/">https://spark.rstudio.com/</a></li>
+            </ul>
+      </section>
+    </section>
+
+  </div>
+
+</div>
+
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+controls: true,
+progress: true,
+history: true,
+center: true,
+
+transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+// Optional reveal.js plugins
+dependencies: [
+{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+{ src: 'plugin/zoom-js/zoom.js', async: true },
+{ src: 'plugin/notes/notes.js', async: true }
+]
+});
+
+            </script>
+
+            </body>
+            </html>
