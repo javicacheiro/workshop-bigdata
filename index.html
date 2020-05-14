@@ -950,6 +950,171 @@ Accept the license agreement presented
       </section>
     </section>
     <!-- Tutorial End: Sqoop -->
+    
+    <!-- Tutorial Start: Sparklyr -->
+    <section>
+      <section>
+        <h1>Sparklyr</h1>
+        <h4>R interface for Apache Spark</h4>
+      </section>
+      <section>
+       <ul>
+         <li>Connect to Spark from R.</li>
+         <li>Complete dplyr backend.</li>
+         <li>Filter and aggregate Spark datasets then bring them into R for
+          analysis and visualization.</li>
+          <li>Use Spark’s distributed machine learning library from R.</li>
+          <li>Work with data stored on HDFS</li>
+       </ul>
+      </section>
+      <section>
+        <h2>Getting started</h2>        
+      </section>
+      <section>
+        <ul>
+        <li>Activate your <a href="https://bigdata.cesga.es/tutorials/vpn.html#/">vpn</a> and <a href="https://bigdata.cesga.es/tutorials/how_to_connect.html#/">connect</a>  to hadoop3.cesga.es</li>
+        <li>Sparklyr is available as a module, it's based on an anaconda2 distribution. You can load it typing <pre><code>module load sparklyr</code></pre></li>
+        <li>The module includes python 2.7, R 3.1.5, sparklyr 1.0.5, and all its dependencies installed</li>
+        <li>Start R by typing <code>R</code></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Connecting R to a spark session</h2>
+            <ul>
+              <li>Load the package <pre><code> > library(sparklyr)</code></pre></li>
+              <li>Define a spark connection <pre><code> > sc <- spark_connect(master = "yarn-client", spark_home = Sys.getenv('SPARK_HOME'))</code></pre></li>
+              <li>Use the <code>sc</code> connection to use spark from R</li>
+              <li>Close the connection: <pre><code> > spark_disconnect(sc)</code></pre></li>
+            </ul>
+      </section>
+      <section>
+        <h2>More options</h2>
+            <ul>
+              <li>Use Jupyter Notebooks <pre><code> start_jupyter</code></pre></li>
+              <li> Launch R scripts <pre><code>spark-submit --class sparklyr.Shell '/opt/cesga/anaconda/Anaconda2-2018.12-sparklyr/lib/R/library/sparklyr/java/sparklyr-2.4-2.11.jar' 8880 1234 --batch example_sparklyr_script.R</code></pre></li>
+            </ul>
+      </section>
+      <section>
+        <h3>Remember to disconnect sessions and properly shut down Jupyter Notebook servers.</h3>
+      </section>
+      <section>
+        <h2>More info</h2>
+            <ul>
+            <li><a href="https://github.com/aurora-mareviv/sparklyr_start">sparklyr workshop</a></li>
+            <li><a href="https://bigdata.cesga.es/user-guide/sparklyr.html"> CESGA sparklyr User Guide</a></li>
+            <li><a href="https://spark.rstudio.com/">https://spark.rstudio.com/</a></li>
+            </ul>
+      </section>
+    </section>
+    <!-- Tutorial End: Sparklyr -->
+    
+    <!-- Tutorial Start: GATK -->
+    <section>
+      <section>
+          <h1>GATK</h1>
+          <h3>Genome Analysis Toolkit</h3>
+      </section>
+
+      <section>
+          <h2>How to use</h2>
+          <p>gatk is available as a module on hadoop3.cesga.es</p>
+          <pre><code>module load gatk</code></pre>
+          <p>More info on how to use modules on the <a href="https://bigdata.cesga.es/tutorials/modules.html"> modules tutorial</a></p>
+      </section>
+
+      <section>
+          <h2>Using SPARK tools</h2>
+          <p>gatk uses hdfs when you launch a SPARK tool, check the <a href="https://bigdata.cesga.es/tutorials/hdfs.html"> hdfs tutorial</a> for instructions. </p>
+          <p>gatk only supports SPARK on some tools, SPARK tools always end with Spark. Check the tool list <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037224712--Tool-Documentation-Index">here</a>.  </p>
+          <pre><code>gatk ToolName toolArguments -- --spark-runner SPARK --spark-master yarn additionalSparkArguments</code></pre>
+          <p> <code>additionalSparkArguments</code>  can be used if a gatk job needs access to more resources, <a href="https://bigdata.cesga.es/tutorials/spark.html"> SPARK tutorial</a></p></p>
+      </section>        
+      <section>
+          <h2>Examples</h2>
+          <pre><code>gatk HaplotypeCallerSpark -L 1:1000000-2000000 -R hdfs://nameservice1/user/username/ref.fa -I hdfs://nameservice1/user/username/input.bam -O hdfs://nameservice1/user/username/output.vcf -- --spark-runner SPARK --spark-master yarn --driver-memory 4g --executor-memory 4g</code></pre>
+
+          <pre><code>gatk CalcMetadataSpark -I  hdfs://nameservice1/user/username/input.bam -O  hdfs://nameservice1/user/username/statistics.txt -- --spark-runner SPARK --spark-master yarn</code></pre>
+      </section>
+
+      <section>
+          <h2>Non SPARK tools </h2>
+          <p>You can use standard gatk tools on hadoop3.cesga.es for testing but its not recommended </p>
+          <P>For this use case, gatk is also available on the finisterrae for faster execution.</P>
+      </section>
+      
+        <section>
+        <h2>More documentation</H2>    
+            <ul>
+                <li> <a href="https://gatk.broadinstitute.org/hc/">https://gatk.broadinstitute.org/hc/</a></li>
+                <li> <a href="https://github.com/broadinstitute/gatk">https://github.com/broadinstitute/gatk</a> </li>
+            </ul>
+        </section>
+      </section>    
+    <!-- Tutorial End: GATK -->
+
+    <!-- Tutorial Start: Hbase -->
+    <section>
+      <section>
+          <h1>HBASE</h1>
+          <h3>The Hadoop Database</h3>
+      </section>
+
+      <section>
+          <h3>Considerations</h3>
+          <p>All PaaS products should only be used for testing and developing purposes.</p>
+
+      </section>
+
+      <section>
+          <h2>Creating an Hbase instance</h2>
+      </section>        
+      <section>
+          <h3>Launch an HBASE Cluster through the webUI and get the Network Address</h3>
+          <img class="stretch" src="img/ConnectHBASE.PNG" />
+      </section>
+
+      <section>
+          <h3>Add the Network Address to your /etc/hosts</h3>
+          <pre><code>
+              10.121.243.250   hbase_node0
+          </code></pre>
+      </section>
+      
+      <section>
+          <h3>Activate the vpn and test the connection</h3>
+          <pre><code>
+              ping hbase_node0
+          </code></pre>
+      </section>
+
+      <section>
+          <h2>How to use</h2>
+      </section>
+      <section>
+      <h2>Using Python</h2>
+      <p>
+          You can use happybase. There is a 'test' table you can use to verify everything works:
+      </p>
+      <pre><code>
+      import happybase
+      connection = happybase.Connection(host='10.121.243.250')
+      test = connection.table('test')
+      for k, d in test.scan(): print k, d
+      </code> </pre>
+      </section>
+      
+      <section>
+          <h2>Using Java</h2>
+              <p>To connect using java you can use our <a href="https://github.com/bigdatacesga/hbase-client-java">Sample Java HBaseclient</a> and modify the hbase.zookeeper.quorum to reflect the right IP of your instance</p>
+              <p>The example App can be built using maven
+                  <pre><code>
+                  mvn package
+                  java -jar target/hbaseclient-0.1.0.jar
+                  </code></pre></p>
+      </section>
+      
+  </section>
+    <!-- Tutorial End: Hbase -->
 
     <!-- Tutorial Start: Modules -->
     <section>

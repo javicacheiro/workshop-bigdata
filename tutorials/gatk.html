@@ -44,38 +44,38 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
   <!-- Any section element inside of this container is displayed as a slide -->
   <div class="slides">
     <section>
-        <section>
-            <h1>GATK</h1>
-            <h3>Genome Analysis Toolkit</h3>
-        </section>
+      <section>
+          <h1>GATK</h1>
+          <h3>Genome Analysis Toolkit</h3>
+      </section>
 
-        <section>
-            <h2>How to use</h2>
-            <p>gatk is available as a module on hadoop3.cesga.es</p>
-            <pre><code>module load gatk</code></pre>
-            <p>More info on how to use modules on the <a href="https://bigdata.cesga.es/tutorials/modules.html"> modules tutorial</a></p>
-        </section>
+      <section>
+          <h2>How to use</h2>
+          <p>gatk is available as a module on hadoop3.cesga.es</p>
+          <pre><code>module load gatk</code></pre>
+          <p>More info on how to use modules on the <a href="https://bigdata.cesga.es/tutorials/modules.html"> modules tutorial</a></p>
+      </section>
 
-        <section>
-            <h2>Using SPARK tools</h2>
-            <p>gatk uses hdfs when you launch a SPARK tool, check the <a href="https://bigdata.cesga.es/tutorials/hdfs.html"> hdfs tutorial</a> for instructions. </p>
-            <p>gatk only supports SPARK on some tools, SPARK tools always end with Spark. Check the tool list <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037224712--Tool-Documentation-Index">here</a>.  </p>
-            <pre><code>gatk ToolName toolArguments -- --spark-runner SPARK --spark-master yarn additionalSparkArguments</code></pre>
-            <p> <code>additionalSparkArguments</code>  can be used if a gatk job needs access to more resources, <a href="https://bigdata.cesga.es/tutorials/spark.html"> SPARK tutorial</a></p></p>
-        </section>        
-        <section>
-            <h2>Examples</h2>
-            <pre><code>gatk HaplotypeCallerSpark -L 1:1000000-2000000 -R hdfs://nameservice1/user/username/ref.fa -I hdfs://nameservice1/user/username/input.bam -O hdfs://nameservice1/user/username/output.vcf -- --spark-runner SPARK --spark-master yarn --driver-memory 4g --executor-memory 4g</code></pre>
+      <section>
+          <h2>Using SPARK tools</h2>
+          <p>gatk uses hdfs when you launch a SPARK tool, check the <a href="https://bigdata.cesga.es/tutorials/hdfs.html"> hdfs tutorial</a> for instructions. </p>
+          <p>gatk only supports SPARK on some tools, SPARK tools always end with Spark. Check the tool list <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037224712--Tool-Documentation-Index">here</a>.  </p>
+          <pre><code>gatk ToolName toolArguments -- --spark-runner SPARK --spark-master yarn additionalSparkArguments</code></pre>
+          <p> <code>additionalSparkArguments</code>  can be used if a gatk job needs access to more resources, <a href="https://bigdata.cesga.es/tutorials/spark.html"> SPARK tutorial</a></p></p>
+      </section>        
+      <section>
+          <h2>Examples</h2>
+          <pre><code>gatk HaplotypeCallerSpark -L 1:1000000-2000000 -R hdfs://nameservice1/user/username/ref.fa -I hdfs://nameservice1/user/username/input.bam -O hdfs://nameservice1/user/username/output.vcf -- --spark-runner SPARK --spark-master yarn --driver-memory 4g --executor-memory 4g</code></pre>
 
-            <pre><code>gatk CalcMetadataSpark -I  hdfs://nameservice1/user/username/input.bam -O  hdfs://nameservice1/user/username/statistics.txt -- --spark-runner SPARK --spark-master yarn</code></pre>
-        </section>
+          <pre><code>gatk CalcMetadataSpark -I  hdfs://nameservice1/user/username/input.bam -O  hdfs://nameservice1/user/username/statistics.txt -- --spark-runner SPARK --spark-master yarn</code></pre>
+      </section>
 
-        <section>
-            <h2>Non SPARK tools </h2>
-            <p>You can use standard gatk tools on hadoop3.cesga.es for testing but its not recommended </p>
-            <P>For this use case, gatk is also available on the finisterrae for faster execution.</P>
-        </section>
-        
+      <section>
+          <h2>Non SPARK tools </h2>
+          <p>You can use standard gatk tools on hadoop3.cesga.es for testing but its not recommended </p>
+          <P>For this use case, gatk is also available on the finisterrae for faster execution.</P>
+      </section>
+      
         <section>
         <h2>More documentation</H2>    
             <ul>
@@ -83,9 +83,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
                 <li> <a href="https://github.com/broadinstitute/gatk">https://github.com/broadinstitute/gatk</a> </li>
             </ul>
         </section>
+      </section>    
 
-    </section>
-</div>
+  </div>
 
 </div>
 
