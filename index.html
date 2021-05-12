@@ -1167,6 +1167,98 @@ Accept the license agreement presented
       
   </section>
     <!-- Tutorial End: Hbase -->
+    <!-- Tutorial Start: Mongodb -->
+    <section>
+      <section>
+          <h1>MongoDB</h1>
+      </section>
+
+      <section>
+          <h3>Warnings</h3>
+          <p>All PaaS products should only be used for testing and developing purposes.</p>
+          <p>Destroy the clusters when you no longer need them, do not saturate the service.</p>
+      </section>
+
+      <section>
+        <h3>How to launch</h3>
+        <p>Activate your VPN and connect to the <a href="https://bigdata.cesga.es/web-ui/app/#/login">webUI</a>.</p>
+        <p>Go to PaaS > Products and launch a MongoDB cluster.</p>
+        <p>Select the resources you need.</p>
+        <p>For testing the product use only 1 CPU to save up on resources</p>
+      </section>
+
+      <section>
+        <img class="stretch" src="img/mongodb_launch.png" />
+      </section>
+
+      <section>
+        <h3>Connect to the cluster</h3>
+        <p>When cluster status is <b>ready</b> click on show info and copy the IPs provided.</p>
+        <li>
+          <ul>You can use the IP beginning with 10.112.XXX.XXX to connect from your computer providing your VPN is active.</ul>
+          <ul>You can also conect to 10.117.XXX.XXX (faster connection) but only from a machine at CESGA, like hadoop3.cesga.es </ul>
+        </li>
+      </section>
+      <section>
+        <img class="stretch" src="img/mongodb_info.png" />
+      </section>
+      <section>
+        <h2>Examples</h2>
+        <p>Form your computer:</p>
+        <pre><code>mongo --host 10.112.243.28</code></pre>
+        <p>Form hadoop3.cesga.es or ft.cesga.es:</p>
+        <pre><code>mongo --host 10.117.243.28</code></pre>
+      </section>
+
+    </section>
+    <!-- Tutorial End: Mongodb -->
+
+    <!-- Tutorial Start: Cassandra -->
+    <section>
+      <section>
+          <h1>Cassandra</h1>
+      </section>
+
+      <section>
+          <h3>Warnings</h3>
+          <p>All PaaS products should only be used for testing and developing purposes.</p>
+          <p>Destroy the clusters when you no longer need them, do not saturate the service.</p>
+      </section>
+
+      <section>
+        <h3>How to launch</h3>
+        <p>Activate your VPN and connect to the <a href="https://bigdata.cesga.es/web-ui/app/#/login">webUI</a>.</p>
+        <p>Go to PaaS > Products and launch a Cassandra cluster.</p>
+        <p>Select the resources you need. Minimun 3 nodes (an odd number is recommented) and 2 disks per node (Max 11 disks)</p>
+        <p>For testing the product use the minimun resources possible</p>
+      </section>
+
+      <section>
+        <img class="stretch" src="img/cassandra_launch.png" />
+      </section>
+
+      <section>
+        <h3>Connect to the cluster</h3>
+        <p>When cluster status is <b>ready</b> click on show info and copy the IPs provided for the "cassandranode0"</p>
+        <li>
+          <ul>You can use the IP beginning with 10.112.XXX.XXX to connect from your computer providing your VPN is active.</ul>
+          <ul>You can also conect to 10.117.XXX.XXX (faster connection) but only from a machine at CESGA, like hadoop3.cesga.es </ul>
+        </li>
+        <p>You can access through cqlsh or use any other application, like python</p>
+      </section>
+      <section>
+        <img class="stretch" src="img/cassandra_info.png" />
+      </section>
+      <section>
+        <h2>Examples</h2>
+        <p>Form your computer:</p>
+        <pre><code>cqlsh 10.112.243.28</code></pre>
+        <p>Form hadoop3.cesga.es or ft.cesga.es:</p>
+        <pre><code>cqlsh 10.117.243.28</code></pre>
+      </section>
+
+    </section>
+    <!-- Tutorial End: Cassandra -->
 
     <!-- Tutorial Start: Mariadb -->
     <section>
@@ -1229,12 +1321,9 @@ Accept the license agreement presented
       <section>
         <h3>How to launch</h3>
         <p>Activate your VPN and connect to the <a href="https://bigdata.cesga.es/web-ui/app/#/login">webUI</a>.</p>
-        <p>Go to PaaS > Products and launch a PostgreSQL <b>9.2.15</b> cluster, selecting the correct version.</p>
+        <p>Go to PaaS > Products and launch a PostgreSQL cluster, selecting your preferred version.</p>
         <p>Select the resources you need and provide a <b>numeric</b> password.</p>
         <p>For testing the product use only 1 CPU to save up on resources</p>
-      </section>
-      <section>
-        <img class="stretch" src="img/postgresversion.PNG" />
       </section>
       <section>
         <img class="stretch" src="img/postgresopt.PNG" />
@@ -1252,7 +1341,8 @@ Accept the license agreement presented
       </section>
       <section>
         <p>You need to connect as user postgresql and to the database test</p>
-        <p>After initial connection you can create other databases <code>using create database &lt;databasename&gt;</code></p>
+        <p>You will then be asked for your numeric password</p>
+        <p>After initial connection you can create other databases using <code> create database &lt;databasename&gt;</code></p>
       </section>
       <section>
         <h2>Examples using psql</h2>
@@ -1260,6 +1350,14 @@ Accept the license agreement presented
         <pre><code>psql -h 10.112.243.248 -U postgresql test</code></pre>
         <p>Form hadoop3.cesga.es or ft.cesga.es:</p>
         <pre><code>psql -h 10.117.243.248 -U postgresql test </code></pre>
+      </section>
+      <section>
+        <h2>Using the postgresql spatiotemporal product</h2>
+        <p>This product includes 2 of the most popular extensions for managing time series and spatial data</p>
+        <p>After launching the product, the process of setting up and conecting is the same</p>
+        <p>In order to use the extensions, load them first in your db</p>
+        <pre><code> CREATE EXTENSION IF NOT EXISTS postgis CASCADE;</code></pre>
+        <pre><code>CREATE EXTENSION IF NOT EXISTS timescaledb  VERSION '1.7.5' CASCADE;</code></pre>
       </section>
 
     </section>

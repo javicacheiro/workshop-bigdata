@@ -57,12 +57,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       <section>
         <h3>How to launch</h3>
         <p>Activate your VPN and connect to the <a href="https://bigdata.cesga.es/web-ui/app/#/login">webUI</a>.</p>
-        <p>Go to PaaS > Products and launch a PostgreSQL <b>9.2.15</b> cluster, selecting the correct version.</p>
+        <p>Go to PaaS > Products and launch a PostgreSQL cluster, selecting your preferred version.</p>
         <p>Select the resources you need and provide a <b>numeric</b> password.</p>
         <p>For testing the product use only 1 CPU to save up on resources</p>
-      </section>
-      <section>
-        <img class="stretch" src="img/postgresversion.PNG" />
       </section>
       <section>
         <img class="stretch" src="img/postgresopt.PNG" />
@@ -80,7 +77,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
       <section>
         <p>You need to connect as user postgresql and to the database test</p>
-        <p>After initial connection you can create other databases <code>using create database &lt;databasename&gt;</code></p>
+        <p>You will then be asked for your numeric password</p>
+        <p>After initial connection you can create other databases using <code> create database &lt;databasename&gt;</code></p>
       </section>
       <section>
         <h2>Examples using psql</h2>
@@ -88,6 +86,14 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <pre><code>psql -h 10.112.243.248 -U postgresql test</code></pre>
         <p>Form hadoop3.cesga.es or ft.cesga.es:</p>
         <pre><code>psql -h 10.117.243.248 -U postgresql test </code></pre>
+      </section>
+      <section>
+        <h2>Using the postgresql spatiotemporal product</h2>
+        <p>This product includes 2 of the most popular extensions for managing time series and spatial data</p>
+        <p>After launching the product, the process of setting up and conecting is the same</p>
+        <p>In order to use the extensions, load them first in your db</p>
+        <pre><code> CREATE EXTENSION IF NOT EXISTS postgis CASCADE;</code></pre>
+        <pre><code>CREATE EXTENSION IF NOT EXISTS timescaledb  VERSION '1.7.5' CASCADE;</code></pre>
       </section>
 
     </section>

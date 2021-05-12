@@ -1,0 +1,1680 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>Workshop BD|CESGA</title>
+
+<meta name="description" content="Introducción al servicio Big Data del CESGA basado en Hadoop.">
+<meta name="author" content="Javier Cacheiro">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+<!-- JLC CSS customizations -->
+<link rel="stylesheet" href="css/custom.css">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- Printing and PDF exports -->
+<script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+      <h2 style="font-family: arvo;">BD|CESGA</h2>
+      <p style="font-size: 30px;text-align:center;">
+          Providing quick access to ready-to-use Big Data solutions</p>
+      <p style="font-size: 20px;text-align:center;">
+          Because Big Data doesn't have to be complicated</p>
+      <p style="text-align: center;">
+      <br/><br/>
+      <small><a href="http://www.cesga.es">Javier Cacheiro</a> / Cloudera Certified Developer for Spark &amp; Hadoop / <a href="http://twitter.com/javicacheiro">@javicacheiro</a></small>
+      </p>
+    </section>
+
+    <!-- Intro -->
+    <section>
+      <section>
+        <h1>Big Data</h1>
+        <h3>Introduction</h3>
+      </section>
+      <section>
+        <h2>3Vs of Big Data</h2>
+        <img class="stretch" src="img/3vs_not_just_volume.png" />
+      </section>
+      <section>
+        <h2>Variety</h2>
+        <img class="stretch" src="img/structured-vs-unstructured.png" />
+        <footer>Source: <a href="https://lrscy.github.io/2018/10/22/DeepLearningNotes-NNandDL/">Andrew Ng/lrscy.github.io</a></footer>
+      </section>
+      <section>
+        <img class="stretch" src="img/bigdata-speed.png" />
+      </section>
+      <section>
+        <h2>The importance of data</h2>
+        <img class="stretch" src="img/google-small.jpg" />
+        <p style="text-align: center;"><em>We don’t have better algorithms. <br />We just have more data.</em></p>
+        <footnote><small>Peter Norvig, Google's Research Director</small></footnote>
+      </section>
+      <section>
+        <img class="stretch" src="img/bigdata-ml-iot.png" />
+      </section>
+      <section>
+        <img class="stretch" src="img/data-driven-decision-making.png" />
+      </section>
+      <section>
+        <img class="stretch" src="img/data-our-new-religion.jpg" />
+      </section>
+      <section>
+        <h2>Big Data</h2>
+        <h4>Important concepts</h4>
+      </section>
+      <section>
+        <h2>Vertical Scaling</h2>
+        <img class="stretch" style="border:20px solid white; opacity: 1.0; background: white;" src="img/scale_up.png" />
+      </section>
+      <section>
+        <h2>Horizontal Scaling</h2>
+        <img class="stretch" style="border:20px solid white; opacity: 1.0; background: white;" src="img/scale_out.png" />
+      </section>
+      <section>
+        <h2>Data Centric</h2>
+        <p><em>Compute centric</em>: 
+            bring the <strong>data</strong> to the <strong>computation</strong></p>
+        <p><em>Data centric</em>:
+             bring the <strong>computation</strong> to the <strong>data</strong></p>
+      </section>
+      <!-- HPC is dying, and MPI is killing it -->
+      <section>
+        <h2>MPI Shortcomings</h2>
+        <p>Jonathan Dursi:
+          <a href="http://www.dursi.ca/hpc-is-dying-and-mpi-is-killing-it/">
+              <strong>HPC is dying, and MPI is killing it</strong></a>
+        </p>
+        <ul>
+          <li>Wrong level of abstraction for application writers</li>
+          <li>No fault-tolerance</li>
+        </ul>
+      </section>
+    </section>
+
+
+    <!-- Tutorial Start: Hardware -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2 style="font-family: arvo;">BD|CESGA</h2>
+        <h3>Hardware</h3>
+      </section>
+      <section>
+        <h2>Hardware Infrastructure</h2>
+        <ul>
+          <li>38 nodes: 4 masters + 34 slaves</li>
+          <li>Storage capacity <strong>816TB</strong></li>
+          <li>Aggregated I/O throughtput <strong>30GB/s</strong></li>
+          <li><strong>64GB</strong> RAM per node</li>
+          <li><strong>10GbE</strong> connectivity between all nodes</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Hardware Master Nodes</h2>
+        <ul>
+           <li>Model: Lenovo System x3550 M5</li>
+           <li>CPU: 2x Intel Xeon E5-2620 v3 @ 2.40GHz  </li>
+           <li>Cores: 12 (2x6)  </li>
+           <li>HyperThreading: On (24 threads)</li>
+           <li>Total memory: 64GB  </li>
+           <li>Network: 1x10Gbps + 2x1Gbps  </li>
+           <li>Disks: 8x 480GB SSD SATA 2.5" MLC G3HS</li>
+           <li>Controller: ServeRAID M5210 1GB Cache FastPath</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Hardware Slave Nodes</h2>
+        <ul>
+           <li>Modelo: Lenovo System x3650 M5</li>
+           <li>CPU: 2x Intel Xeon E5-2620 v3 @ 2.40GHz  </li>
+           <li>Cores: 12 (2x6)  </li>
+           <li>HyperThreading: On (24 threads)</li>
+           <li>Total memory: 64GB  </li>
+           <li>Network: 1x10Gbps + 2x1Gbps  </li>
+           <li>Disks: 12x 2TB NL SATA 6Gbps 3.5" G2HS</li>
+           <li>Controller: N2215 SAS/SATA HBA</li>
+      </section>
+
+    </section>
+    <!-- Tutorial End: Hardware -->
+
+    <!-- Software -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2 style="font-family: arvo;">BD|CESGA</h2>
+        <h3>Software</h3>
+      </section>
+      <section>
+        <h2>Platforms available</h2>
+        <ul>
+          <li>Hadoop Platform</li>
+          <li>PaaS Platform (beta)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Hadoop Platform</h2>
+        <ul>
+          <li>Ready to use Hadoop ecosystem</li>
+          <li>Covers most of the uses cases</li>
+          <li>Production ready</li>
+          <li>Fully optimized for Big Data applications</li>
+        </ul>
+      </section>
+      <section>
+        <h2>PaaS Platform</h2>
+        <ul>
+          <li>When you need something outside the Hadoop ecosystem</li>
+          <li>Enables you to deploy custom Big Data clusters</li>
+          <li>Advanced resource planning based on Mesos</li>
+          <li>No virtualization overheads: based on Docker</li>
+          <li>Includes a catalog of products ready to use: eg. Cassandra, MongoDB, PostgreSQL</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- BD|CESGA Portal overview -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>BD|CESGA Portal</h2>
+        <h4>bigdata.cesga.es</h4>
+      </section>
+      <section>
+        <h2>Front Page</h2>
+        <img class="stretch" src="img/web_frontpage.png" />
+      </section>
+      <section>
+        <h2>General info</h2>
+        <img class="stretch" src="img/web_how.png" />
+      </section>
+      <section>
+        <h2>Tools available</h2>
+        <img class="stretch" src="img/web_what.png" />
+      </section>
+      <section>
+        <h2>WebUI</h2>
+        <img class="stretch" src="img/web_webui.png" />
+      </section>
+      <section>
+        <h2>Tutorials</h2>
+        <img class="stretch" src="img/web_tutorials.png" />
+      </section>
+    </section>
+
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Accessing Hadoop 3 Service</h2>
+      </section>
+    </section>
+
+    <!-- Tutorial Start: VPN -->
+    <section>
+      <section>
+        <h1>VPN</h1>
+      </section>
+      <section>
+        <h2>VPN</h2>
+        <p>The <strong>VPN</strong> software allows you not only to connect to CESGA in a secure way but also to access internal resources that you can not reach otherwise.</p>
+      </section>
+      <section>
+        <h2>Installing the Forticlient VPN software</h2>
+        <ul>
+          <li>Download the VPN software from <a href="https://www.forticlient.com/downloads" target="_blank">Official Forticlient download page</a> or from the <a href="https://portalusuarios.cesga.es/layout/download/vpn-fortissl.rar" target="_blank">CESGA Repository</a></li>
+          <li>For Windows/Mac just launch the installation wizard</li>
+          <li>For new Linux version follow the <a href="https://www.forticlient.com/repoinfo" target="_blank">official instructions</a></li>
+          <li>For old Linux versions see the next slides</li>
+          <li>There is also an alternative open-source Linux client: OpenFortiVPN</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Forticlient Configuration</h2>
+        <ul>
+          <li>Enter the following configuration options</li>
+          <pre><code>Gateway: gateway.cesga.es
+Port: 443
+Username: your email address registered at CESGA
+Password: your password in the supercomputers</code></pre>
+        </ul>
+      </section>
+      <section>
+        <h2>VPN Installation in old Linux versions</h2>
+        <ul>
+          <li>If your Linux distribution is not supported in the <a href="https://www.forticlient.com/repoinfo" target="_blank">official download page</a> use our <a href="https://portalusuarios.cesga.es/layout/download/vpn-fortissl.rar" target="_blank">CESGA Local Repository</a></li>
+          <li>Follow the next steps:</li>
+          <pre><code>unrar e vpn-fortissl.rar
+tar xvzf forticlientsslvpn_linux_4.4.2323.tar.gz
+cd forticlientsslvpn
+./fortisslvpn.sh
+Accept the license agreement presented
+../forticlientsslvpn_cli \
+   --server gateway.cesga.es:443 \
+   --vpnuser usuario@dominio.com
+          </code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Alternative Open Source Linux Client <strong>OpenFortiVPN</strong></h2>
+        <ul>
+          <li>For Linux there is also an alternative open-source client that you can use instead of the official fortivpn client</li>
+          <li>Some Linux distibutions like Ubuntu, Debian, OpenSuse or Arch Linux provide openfortivpn packages</li>
+          <li>Check the project github page for details <a href="https://github.com/adrienverge/openfortivpn" target="_blank">openfortivpn</a></li>
+          <li>It has also a GUI that you can use: <a href="https://hadler.me/linux/openfortigui/" target="_blank">openfortigui</a></li>
+        </ul>
+        <p>For more info check the VPN section of the <a href="http://bigdata.cesga.es/user-guide/vpn.html">User Guide</a></p>
+      </section>
+    </section>
+    <!-- Tutorial End: VPN -->
+
+    <!-- Tutorial Start: How to connect -->
+    <section>
+      <section>
+        <h1>How to connect</h1>
+      </section>
+      <section>
+        <h2>How to connect: Setup</h2>
+        <ol>
+          <li>Configure the Fortigate VPN</li>
+          <li>Start the <strong>VPN</strong></li>
+        </ol>
+      </section>
+      <section>
+        <h2>How to connect: SSH</h2>
+        <p>Using a powerful CLI through SSH:
+          <pre><code>ssh username@hadoop3.cesga.es</code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>How to connect: WebUI</h2>
+        <p>Using a simple <a href="https://bigdata.cesga.es">Web User Interface</a></p>
+        <img class="stretch" src="img/webui.png" />
+      </section>
+      <section>
+        <h2>How to connect: Remote Desktop</h2>
+        <p><strong>No VPN needed</strong> if connecting from a <a href="https://portalusuarios.cesga.es">Remote Desktop</a></p>
+        <img class="stretch" src="img/remotedesktop.png" />
+      </section>
+    </section>
+    <!-- Tutorial End: How to connect -->
+
+    <!-- Tutorial Start: How to upload data -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>How to transfer data</h2>
+      </section>
+      <section>
+        <h2>How to transfer data efficiently</h2>
+        <p>Use our dedicated Data Transfer Node: <strong>dtn.srv.cesga.es</strong></p>
+        <p>SCP/SFTP is fine for small transfers</p>
+        <p>But for large transfers use <a target="_blank" href="https://www.globus.org">Globus</a></p>
+        <p>Our endpoint is <strong>cesga#dtn</strong></p>
+        <p>For more info check the <a href="http://bigdata.cesga.es/dtn-user-guide/">DTN User Guide</a></p>
+      </section>
+      <section>
+        <h2>Expected upload times</h2>
+        <img class="stretch" src="img/expected_upload_times.png" />
+      </section>
+      <section>
+        <h2>How to transfer data: non-efficient way</h2>
+        <p>Direct SCP/SFTP to hadoop3.cesga.es</p>
+        <p>Useful only for internal transfers: eg. FT to BD</p>
+        <p>Not recommended for external transfers because it will be slowed down by the VPN server and the firewall</p>
+      </section>
+      <section>
+        <h2>Filesystem Quotas</h2>
+        <ul>
+          <li>HOMEBD and HDFS have quotas</li>
+          <li>To check current usage you can use the command:</li>
+          <pre><code>myquota</code></pre>
+          <li>Verify that you have enough space before transfering files or submitting jobs</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Default Filesystem Quotas</h2>
+        <p>Defaults:</p>
+        <ul>
+          <li>HDFS: 18TB</li>
+          <li>HOMEBD: 800GB</li>
+        </ul>
+        <p>If you need additional space you can request <a href="//www.altausuarios.cesga.es/solic/almalta.php">Additional Storage</a></p>
+        </ul>
+      </section>
+      <section>
+        <h2>Backup policies</h2>
+        <p>HDFS and HOMEBD <strong>do not have automatic backups</strong> configured</p>
+        <p>Only HOME FT has automatic daily backups</p>
+        <p>If you need to backup data in HDFS or HOMEBD contact us</p>
+      </section>
+      <section>
+        <h2>Migrating Data from Hadoop 2</h2>
+        <p>We recommend that you use the <strong>discp</strong> tool</p>
+        <pre><code>hadoop distcp -i -pat -update hdfs://10.121.13.19:8020/user/uscfajlc/wcresult hdfs://nameservice1/user/uscfajlc/wcresult</code></pre>
+        <p>Run it from <strong>hadoop3.cesga.es</strong> so it takes into account HA</p>
+      </section>
+    </section>
+    <!-- Tutorial End: How to upload data -->
+
+    <!-- Hadoop Platform -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Hadoop</h2>
+        <h4>Core Concepts</h4>
+      </section>
+      <section>
+        <h2>Core Components</h2>
+        <ul>
+          <li><strong>HDFS</strong>: Parallel filesystem</li>
+          <li><strong>YARN</strong>: Resource manager</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Ecosystem</h2>
+        <img class="stretch" src="img/hadoop_ecosystem.png" />
+      </section>
+    </section>
+
+    <!-- Tutorial Start: HDFS -->
+    <section>
+      <section>
+        <h1>HDFS</h1>
+        <h3>The Hadoop Distributed Filesystem</h3>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Characteristics
+          - Parallel Filesystem written in Java
+          - Best performance on large files (>100MB)
+          - Files in HDFS are of type <em>write once</em>
+          - HDFS is optimized for large sequential reads
+        </script>
+      </section>
+      
+      <section data-markdown>
+        <script type="text/template">
+          ## How files are stored
+          - Data is distributed over multiple nodes
+          - Files are split in blocks
+            - In our case default block size is <strong>128MB</strong>
+          - Blocks are stored as standard files in DataNodes
+          - Blocks are replicated across multiple nodes
+            - By default <strong>3 replicas</strong>
+          - NameNode keeps track of what blocks are part of a file and where they are (metadata)        </script>
+      </section>
+
+      <section>
+        <h2>HDFS Architecture</h2>
+        <img class="stretch" src="img/hdfsarchitecture.gif" />
+        <footer>Source: <a href="http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS Architecture Guide</a></footer>
+      </section>
+
+      <section>
+        <h2>HDFS Replicas</h2>
+        <img class="stretch" src="img/hdfsreplicas.gif" />
+        <footer>Source: <a href="http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">HDFS Architecture Guide</a></footer>
+      </section>
+
+      <section>
+        <h2>Upload a file to HDFS</h2>
+        <p>
+          To upload a file from local disk to HDFS:
+        </p>
+        <pre><code>hdfs dfs -put file.txt file.txt</code></pre>
+        <p>It will copy the file to <em>/user/username/file.txt</em> in HDFS.</p>
+      </section>
+      
+      <section>
+        <h2>List files</h2>
+        <p>
+          To list files in HDFS:
+        </p>
+        <pre><code>hdfs dfs -ls</code></pre>
+        <p>Lists the files in our HOME directory of HDFS <em>/user/username/</em></p>
+        <p>To list files in the root directory:</p>
+        <pre><code>hdfs dfs -ls /</code></pre>
+      </section>
+
+      <section>
+        <h2>Working with directories</h2>
+        <p> Create a directory: </p>
+        <pre><code>hdfs dfs -mkdir /tmp/test</code></pre>
+        <p> Delete a directory: </p>
+        <pre><code>hdfs dfs -rm -r -f /tmp/test</code></pre>
+      </section>
+
+      <section>
+        <h2>Working with files</h2>
+        <p> Read a file: </p>
+        <pre><code>hdfs dfs -cat file.txt</code></pre>
+        <p> Download a file from HDFS to local disk: </p>
+        <pre><code>hdfs dfs -get fichero.txt</code></pre>
+      </section>
+      <section>
+        <h2>Web File Explorer</h2>
+        <p>
+        You can easily access the HUE File Explorer from the
+        <a href="https://bigdata.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/hue_file_explorer.png" />
+      </section>
+    </section>
+    <!-- Tutorial End: HDFS -->
+
+    <!-- Tutorial Start: YARN -->
+    <section>
+      <section>
+        <h1>YARN</h1>
+        <h3>Yet Another Resource Negotiator</h3>
+      </section>
+      <section>
+        <h2>YARN Architecture</h2>
+        <img src="img/yarn_architecture.gif" />
+        <footer>Source: <a href="https://hadoop.apache.org/docs/r2.7.2/hadoop-yarn/hadoop-yarn-site/YARN.html">Apache Hadoop YARN Architecture</a></footer>
+      </section>
+      <section>
+        <h2>Launching an application</h2>
+        <pre><code>yarn jar application.jar DriverClass input output</code></pre>
+      </section>
+      <section>
+        <h2>List running jobs</h2>
+        <pre><code>yarn application -list</code></pre>
+        <pre><code>yarn top</code></pre>
+      </section>
+      <section>
+        <h2>See application logs</h2>
+        <pre><code>yarn logs -applicationId applicationId</code></pre>
+      </section>
+      <section>
+        <h2>Kill an application</h2>
+        <pre><code>yarn application -kill applicationId</code></pre>
+      </section>
+      <section>
+        <h2>Fair Scheduler</h2>
+        <ul>
+          <li>Resources will be shared with the rest of users using the YARN fair share scheduler</li>
+          <li><strong>Dominant Resource Fairness</strong>: both CPU and memory considered</li>
+          <li>Jobs should be composed of lots of short running tasks so they share resources nicely with other jobs</li>
+          <li>Long running tasks that monopolize resources during large times can be <strong>preempted</strong> to allow other applications to run</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Fair Scheduler Queues</h2>
+        <ul>
+          <li>root.users.[username]: default queue, one per user</li>
+          <li>interactive: Jupyter Notebooks and interactive jobs</li>
+          <li>urgent: limited resources that can be used for urgent jobs</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Web Job Browser</h2>
+        <p>
+        You can access the HUE Job Browser from the
+        <a href="https://bigdata.cesga.es">WebUI</a>:
+        </p>
+        <img src="img/hue_job_browser.png">
+      </section>
+    </section>
+    <!-- Tutorial End: YARN -->
+
+    <!-- Provided Tools -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Provided Tools</h2>
+      </section>
+    </section>
+
+    <!-- Tutorial Start: Spark -->
+    <section>
+      <section>
+        <h1>Spark</h1>
+        <h4>A fast and general engine for large-scale data processing</h4>
+      </section>
+      <section>
+        <h2>Speed</h2>
+        <img class="strecth" src="img/spark_speed.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Easy</h2>
+        <img class="strecth" src="img/spark_easy.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Generality</h2>
+        <img class="strecth" src="img/spark_generality.png" />
+        <footer>Source: <a href="http://spark.apache.org/">Apache Spark Site</a></footer>
+      </section>
+      <section>
+        <h2>Language Selection</h2>
+        <ul>
+          <li>Scala</li>
+          <li>Java</li>
+          <li>Python</li>
+          <li>R</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Updated to Spark 2.4</h2>
+        <p>Now the main entry point is <strong>spark</strong> instead of <strong>sc</strong> and <strong>sqlContext</strong></p>
+      </section>
+
+      <!-- PySpark -->
+      <section>
+        <h2>Spark Python</h2>
+        <h4>PySpark</h4>
+      </section>
+      <section>
+        <h2>PySpark Basics</h2>
+        <ul>
+          <li>Can be used together with Anaconda Python distribution</li>
+          <li>Over 720 packages for data preparation, data analysis, data visualization, machine learning and interactive data science</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Running pyspark interactively</h2>
+        <ul>
+          <li>Running from the command line:
+            <pre><code>pyspark</code></pre>
+          </li>
+          <li>Running from the command line using <strong>ipython</strong>:
+            <pre><code>
+              module load anaconda2
+              PYSPARK_DRIVER_PYTHON=ipython pyspark
+            </code></pre>
+          </li>
+          <li>Running inside a Jupyter notebook</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <pre><code>
+          from pyspark.sql import Row
+          Person = Row('name', 'surname')
+          data = []
+          data.append(Person('Joe', 'MacMillan'))
+          data.append(Person('Gordon', 'Clark'))
+          data.append(Person('Cameron', 'Howe'))
+          df = spark.createDataFrame(data)
+          df.show()
+           +-------+---------+
+           |   name|  surname|
+           +-------+---------+
+           |    Joe|MacMillan|
+           | Gordon|    Clark|
+           |Cameron|     Howe|
+           +-------+---------+
+        </code></pre>
+      </section>
+
+      <!-- spark-submit -->
+      <section>
+        <h2>spark-submit</h2>
+        <h4>Submit job to queue</h4>
+      </section>
+      <section>
+        <h2>Spark Components</h2>
+        <img class="strecth" src="img/cluster-overview.png" />
+        <footer>Source: <a href="http://spark.apache.org/docs/latest/cluster-overview.html">Apache Spark Components</a></footer>
+      </section>
+      <section>
+        <h2>spark-submit Python</h2>
+        <pre><code>
+        # client mode
+        spark-submit --master yarn \
+          --name testWC test.py input output
+        # cluster mode
+        spark-submit --master yarn --deploy-mode cluster \
+          --name testWC test.py input output
+        </code></pre>
+      </section>
+      <section>
+        <h2>spark-submit Scala/Java</h2>
+        <pre><code>
+        # client mode
+        spark-submit --master yarn --name testWC \
+          --class es.cesga.hadoop.Test test.jar \
+          input output
+        # cluster mode
+        spark-submit --master yarn --deploy-mode cluster \
+          --name testWC \
+          --class es.cesga.hadoop.Test test.jar \
+          input output
+        </code></pre>
+      </section>
+      <section>
+        <h2>spark-submit options</h2>
+        <pre><code>
+--num-executors NUM    Number of executors to launch (Default: 2)
+--executor-cores NUM   Number of cores per executor. (Default: 1)
+--driver-cores NUM     Number of cores for driver (cluster mode)
+--executor-memory MEM  Memory per executor (Default: 1G)
+--queue QUEUE_NAME     The YARN queue to submit to (Default: "default")
+--proxy-user NAME      User to impersonate
+        </code></pre>
+      </section>
+    </section>
+    <!-- Tutorial End: Spark -->
+
+    <!-- Tutorial Start: Jupyter -->
+    <section>
+      <section>
+        <h1>Jupyter</h1>
+        <h3>Interactive Computing</h3>
+      </section>
+      <section>
+        <h2>Jupyter</h2>
+        <p>The <strong>Jupyter Notebook</strong> is a web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.</p>
+      </section>
+      <section>
+        <h2>Launching Jupyter</h2>
+        <ul>
+          <li>Connect to hadoop3.cesga.es</li>
+          <li>Go to your working directory</li>
+          <li>Launch the Jupyter server
+          <pre><code>start_jupyter</code></pre>
+          </li>
+          <li>Point your browser to the provided URL</li>
+          <li><strong>VPN must be running</strong> if not using a remote desktop</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Jupyter</h2>
+        <img class="stretch" src="img/jupyter.png">
+      </section>
+      <section>
+        <h2>Using Python 3</h2>
+        <p>You can also use Jupyter with Python 3:</p> 
+        <pre><code>
+          module load anaconda3/2018.12
+          start_jupyter
+        </code></pre>
+        <p>Just load the desired python version first</p>
+        <p>Keep in mind that CDH 6.1 does not officially support Python 3 yet</p>
+      </section>
+      <section>
+        <h2>JupyterLab</h2>
+        <p>You can also try the new Jupyter Lab:</p>
+        <pre><code>
+          module load anaconda2/2018.12
+          start_jupyter-lab
+        </code></pre>
+      </section>
+      <section>
+        <h2>JupyterLab</h2>
+        <img class="stretch" src="img/jupyter-lab-1.png">
+      </section>
+      <section>
+        <h2>JupyterLab</h2>
+        <img class="stretch" src="img/jupyter-lab-2.png">
+      </section>
+    </section>
+    <!-- Tutorial End: Jupyter -->
+
+    <!-- Tutorial Start: HIVE -->
+    <section>
+      <section>
+        <h1>Hive</h1>
+        <h3>SQL-like interface</h3>
+      </section>
+
+      <section>
+        <h2>Hive</h2>
+        <p>Hive offers the possibility to use Hadoop through a SQL-like interface</p> 
+      </section>
+
+      <section>
+        <h2>Using Hive: HUE</h2>
+        <p>You can use Hive from the <a href="https://bigdata.cesga.es">WebUI</a> through HUE:</p>
+        <img src="img/hue-hive.png">
+      </section>
+
+      <section>
+        <h2>Using Hive: Beeline</h2>
+        <pre><code>beeline</code></pre>
+        <pre><code>beeline> !connect 
+        jdbc:hive2://c14-19.bd.cluster.cesga.es:10000/default;
+        ssl=true;sslTrustStore=/opt/cesga/cdh61/hiveserver2.jks;
+        trustStorePassword=notsecret</code></pre>
+      </section>
+
+      <section>
+        <h2>Using Hive: deprecated</h2>
+        <p>The Hive CLI is not deprecated and not recommended:</p>
+        <pre><code>hive</code></pre>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Create Table
+          ```
+          CREATE EXTERNAL TABLE jobs (
+            jobid INT,
+            username STRING,
+            submitted DATE,
+            etime BIGINT
+          ) LOCATION '/user/jlopez/data/jobs';
+          ```
+        </script>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Load Data
+          ```
+          hdfs dfs -put jobs.201901* /user/jlopez/data/jobs
+          ```
+        </script>
+      </section>
+
+      <section>
+        <h2>Field delimitter</h2>
+        <ul>
+          <li>Default field delimitter Ctr+A (0x01)</li>
+          <li>It can be changed when creating a table
+          <pre><code>
+            ROW FORMAT DELIMITED
+            FIELDS TERMINATED BY ':'
+          </code></pre>
+          </li>
+        </ul>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Sample queries
+          ```
+          SELECT * FROM jobs;
+          SELECT count(*) FROM jobs;
+          SELECT username, sum(etime) FROM jobs GROUP BY username;
+          SELECT jobs.*, users.*
+            FROM jobs JOIN users ON (jobs.username = users.username);
+          ```
+        </script>
+      </section>
+
+      <section data-markdown>
+        <script type="text/template">
+          ## Remove table
+          ```
+          DROP TABLE jobs;
+          ```
+        </script>
+      </section>
+
+      <section>
+        <h2>Important Considerations</h2>
+        <ul>
+          <li>Do not create tables in the default database</li>
+          <li>Create a database with your username and then create your tables in this database</li>
+          <pre><code>
+          create database if not exists uscfajlc;
+          use uscfajlc;
+          </code></pre>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Important Considerations</h2>
+        <ul>
+          <li>To restrict access to your database set permissions of the directory:</li>
+          <pre><code>hdfs dfs -chmod go-rwx /user/hive/warehouse/uscfajlc.db</code></pre>
+          <li>Use always <strong>external tables</strong> that are stored in your HDFS HOME</li>
+          <li>Customize the permissions of the external directory</li>
+          <li>Use HDFS ACLs to fine tune the permissions to further fit your needs</li>
+        </ul>
+      </section>
+
+    </section>
+    <!-- Tutorial End: HIVE -->
+
+    <!-- Tutorial Start: Impala -->
+    <section>
+      <section>
+        <h1>Impala</h1>
+        <h3>Low-latency SQL queries</h3>
+      </section>
+
+      <section>
+        <h2>Impala</h2>
+        <pre><code>impala-shell --ssl --impalad=c14-2</code></pre>
+        <p>Point it to any worker node in the cluster</p>
+      </section>
+
+      <section>
+        <h2>Impala</h2>
+        <p>Hive and Impala use the same SQL syntax <strong>HiveQL</strong></p>
+      </section>
+    </section>
+    <!-- Tutorial End: Impala -->
+
+    <!-- Tutorial Start: Sqoop -->
+    <section>
+      <section>
+        <h1>Sqoop</h1>
+        <h4>Transferring data between Hadoop and relational databases</h4>
+      </section>
+      <section>
+        <h2>Sqoop</h2>
+        <img class="stretch" src="img/sqoop_diagram.png" />
+        <footer>Source: <a href="http://bigdatariding.blogspot.com.es/">bigdatariding</a></footer>
+      </section>
+      <section>
+        <h2>List tables</h2>
+        <pre><code>
+        sqoop list-tables \
+          --username ${USER} -P \
+          --connect jdbc:postgresql://${SERVER}/${DB}
+        </code></pre>
+      </section>
+      <section>
+        <h2>Import one table</h2>
+        <pre><code>
+        sqoop import \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --target-dir /user/username/mytable \
+          --num-mappers 1
+        </code></pre>
+      </section>
+      <section>
+        <h2>Import into Hive</h2>
+        <pre><code>
+        sqoop import \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --target-dir /user/username/mytable \
+          --num-mappers 1 \
+          --hive-import
+        </code></pre>
+      </section>
+      <section>
+        <h2>Create only the table structure into Hive</h2>
+        <pre><code>
+        sqoop create-hive-table \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable
+        </code></pre>
+      </section>
+      <section>
+        <h2>Sqoop Export</h2>
+        <img class="stretch" src="img/sqoop_export.png" />
+        <footer>Source: <a href="http://bigdatariding.blogspot.com.es/">bigdatariding</a></footer>
+      </section>
+      <section>
+        <h2>Export</h2>
+        <p>First create table into PostgreSQL</p>
+        <pre><code>
+        sqoop export \
+          --username ${USER} --password ${PASSWORD} \
+          --connect jdbc:postgresql://${SERVER}/${DB} \
+          --table mytable \
+          --export-dir /user/username/mytable \
+          --input-fields-terminated-by '\001' \
+          --num-mappers 1
+        </code></pre>
+      </section>
+      <section>
+        <h2>Direct mode</h2>
+        <p>For MySQL and PosgreSQL for faster performance you can use direct mode (<strong>--direct</strong> option)</p>
+      </section>
+    </section>
+    <!-- Tutorial End: Sqoop -->
+    
+    <!-- Tutorial Start: Sparklyr -->
+    <section>
+      <section>
+        <h1>Sparklyr</h1>
+        <h4>R interface for Apache Spark</h4>
+      </section>
+      <section>
+       <ul>
+         <li>Connect to Spark from R.</li>
+         <li>Complete dplyr backend.</li>
+         <li>Filter and aggregate Spark datasets then bring them into R for
+          analysis and visualization.</li>
+          <li>Use Spark’s distributed machine learning library from R.</li>
+          <li>Work with data stored on HDFS</li>
+       </ul>
+      </section>
+      <section>
+        <h2>Getting started</h2>        
+      </section>
+      <section>
+        <ul>
+        <li>Activate your <a href="https://bigdata.cesga.es/tutorials/vpn.html#/">vpn</a> and <a href="https://bigdata.cesga.es/tutorials/how_to_connect.html#/">connect</a>  to hadoop3.cesga.es</li>
+        <li>Sparklyr is available as a module, it's based on an anaconda2 distribution. You can load it typing <pre><code>module load sparklyr</code></pre></li>
+        <li>The module includes python 2.7, R 3.1.5, sparklyr 1.0.5, and all its dependencies installed</li>
+        <li>Start R by typing <code>R</code></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Connecting R to a spark session</h2>
+            <ul>
+              <li>Load the package <pre><code> > library(sparklyr)</code></pre></li>
+              <li>Define a spark connection <pre><code> > sc <- spark_connect(master = "yarn-client", spark_home = Sys.getenv('SPARK_HOME'))</code></pre></li>
+              <li>Use the <code>sc</code> connection to use spark from R</li>
+              <li>Close the connection: <pre><code> > spark_disconnect(sc)</code></pre></li>
+            </ul>
+      </section>
+      <section>
+        <h2>More options</h2>
+            <ul>
+              <li>Use Jupyter Notebooks <pre><code> start_jupyter</code></pre></li>
+              <li> Launch R scripts <pre><code>spark-submit --class sparklyr.Shell '/opt/cesga/anaconda/Anaconda2-2018.12-sparklyr/lib/R/library/sparklyr/java/sparklyr-2.4-2.11.jar' 8880 1234 --batch example_sparklyr_script.R</code></pre></li>
+            </ul>
+      </section>
+      <section>
+        <h3>Remember to disconnect sessions and properly shut down Jupyter Notebook servers.</h3>
+      </section>
+      <section>
+        <h2>More info</h2>
+            <ul>
+            <li><a href="https://github.com/aurora-mareviv/sparklyr_start">sparklyr workshop</a></li>
+            <li><a href="https://bigdata.cesga.es/user-guide/sparklyr.html"> CESGA sparklyr User Guide</a></li>
+            <li><a href="https://spark.rstudio.com/">https://spark.rstudio.com/</a></li>
+            </ul>
+      </section>
+    </section>
+    <!-- Tutorial End: Sparklyr -->
+    
+    <!-- Tutorial Start: GATK -->
+    <section>
+      <section>
+          <h1>GATK</h1>
+          <h3>Genome Analysis Toolkit</h3>
+      </section>
+
+      <section>
+          <h2>How to use</h2>
+          <p>gatk is available as a module on hadoop3.cesga.es</p>
+          <pre><code>module load gatk</code></pre>
+          <p>More info on how to use modules on the <a href="https://bigdata.cesga.es/tutorials/modules.html"> modules tutorial</a></p>
+      </section>
+
+      <section>
+          <h2>Using SPARK tools</h2>
+          <p>gatk uses hdfs when you launch a SPARK tool, check the <a href="https://bigdata.cesga.es/tutorials/hdfs.html"> hdfs tutorial</a> for instructions. </p>
+          <p>gatk only supports SPARK on some tools, SPARK tools always end with Spark. Check the tool list <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037224712--Tool-Documentation-Index">here</a>.  </p>
+          <pre><code>gatk ToolName toolArguments -- --spark-runner SPARK --spark-master yarn additionalSparkArguments</code></pre>
+          <p> <code>additionalSparkArguments</code>  can be used if a gatk job needs access to more resources, <a href="https://bigdata.cesga.es/tutorials/spark.html"> SPARK tutorial</a></p></p>
+      </section>        
+      <section>
+          <h2>Examples</h2>
+          <pre><code>gatk HaplotypeCallerSpark -L 1:1000000-2000000 -R hdfs://nameservice1/user/username/ref.fa -I hdfs://nameservice1/user/username/input.bam -O hdfs://nameservice1/user/username/output.vcf -- --spark-runner SPARK --spark-master yarn --driver-memory 4g --executor-memory 4g</code></pre>
+
+          <pre><code>gatk CalcMetadataSpark -I  hdfs://nameservice1/user/username/input.bam -O  hdfs://nameservice1/user/username/statistics.txt -- --spark-runner SPARK --spark-master yarn</code></pre>
+      </section>
+
+      <section>
+          <h2>Non SPARK tools </h2>
+          <p>You can use standard gatk tools on hadoop3.cesga.es for testing but its not recommended </p>
+          <P>For this use case, gatk is also available on the finisterrae for faster execution.</P>
+      </section>
+      
+        <section>
+        <h2>More documentation</H2>    
+            <ul>
+                <li> <a href="https://gatk.broadinstitute.org/hc/">https://gatk.broadinstitute.org/hc/</a></li>
+                <li> <a href="https://github.com/broadinstitute/gatk">https://github.com/broadinstitute/gatk</a> </li>
+            </ul>
+        </section>
+      </section>    
+    <!-- Tutorial End: GATK -->
+
+    <!-- Tutorial Start: PaaS -->
+    <section>
+      <section>
+          <h1>PaaS</h1>
+          <h3>When you need something outside the Hadoop ecosystem.</h3>
+      </section>
+
+      <section>
+        <ul>
+            <li>Deploy custom Big Data clusters.</li>
+            <li>Try out a variety of products</li>
+            <li>Built on docker</li>
+            <li>Easy to use</li>
+        </ul>
+      </section>
+
+      <section>
+          <h2>Warning</h2>
+          <p>The PaaS service is intended to test, learn and develop using the products offered, not for continuous use. </p> 
+          <p>Clusters must be destroyed when not needed anymore.</p>
+          <p>Clusters are designed for flexibility, if you need to use any of the products permanently, on a production environment, contact us for a custom solution.</p> 
+      </section>        
+
+      <section>
+        <section>
+            <h2>How to use</h2>
+            <p>Access the <a href="https://bigdata.cesga.es/web-ui/atpp/#/login">WebUI</a> and log in.</p>
+            <p> In the menu o the left click on <b>PaaS</b>  and then on <b>Products</b> to se the available products</p>
+            <img class="stretch" src="img/paas_products.PNG" />
+        </section>
+      </section>
+      
+      <section>
+        <p>
+            Select a product and click on <b>LAUNCH</b>
+        </p>
+        <p>Specify the resources that you need</p>
+        <img class="stretch" src="img/paas_launching.PNG" />
+      </section>
+
+      <section>
+        <h2>The Clusters page</h2>
+        <p>Here you can get information on the clusters you launched</p>
+        <p>Destroy the clusters when they are no longer needed</p>
+        <img class="stretch" src="img/paas_clusters.PNG" />
+      </section>
+      
+      
+    </section>
+    <!-- Tutorial End: PaaS -->
+
+    <!-- Tutorial Start: Hbase -->
+    <section>
+      <section>
+          <h1>HBASE</h1>
+          <h3>The Hadoop Database</h3>
+      </section>
+
+      <section>
+          <h3>Warnings</h3>
+          <p>All PaaS products should only be used for testing and developing purposes.</p>
+          <p>Destroy the clusters when you no longer need them, do not saturate the service.</p>
+
+      </section>
+
+      <section>
+          <h2>Creating an Hbase instance</h2>
+      </section>        
+      <section>
+          <h3>Launch an HBASE Cluster through the webUI and get the Network Address</h3>
+          <img class="stretch" src="img/ConnectHBASE.PNG" />
+      </section>
+
+      <section>
+          <h3>Add the Network Address to your /etc/hosts</h3>
+          <pre><code>
+              10.121.243.250   hbase_node0
+          </code></pre>
+      </section>
+      
+      <section>
+          <h3>Activate the vpn and test the connection</h3>
+          <pre><code>
+              ping hbase_node0
+          </code></pre>
+      </section>
+
+      <section>
+          <h2>How to use</h2>
+      </section>
+      <section>
+      <h2>Using Python</h2>
+      <p>
+          You can use happybase. There is a 'test' table you can use to verify everything works:
+      </p>
+      <pre><code>
+      import happybase
+      connection = happybase.Connection(host='10.121.243.250')
+      test = connection.table('test')
+      for k, d in test.scan(): print k, d
+      </code> </pre>
+      </section>
+      
+      <section>
+          <h2>Using Java</h2>
+              <p>To connect using java you can use our <a href="https://github.com/bigdatacesga/hbase-client-java">Sample Java HBaseclient</a> and modify the hbase.zookeeper.quorum to reflect the right IP of your instance</p>
+              <p>The example App can be built using maven
+                  <pre><code>
+                  mvn package
+                  java -jar target/hbaseclient-0.1.0.jar
+                  </code></pre></p>
+      </section>
+      
+  </section>
+    <!-- Tutorial End: Hbase -->
+
+    <!-- Tutorial Start: Mariadb -->
+    <section>
+      <section>
+          <h1>MariaDB</h1>
+      </section>
+
+      <section>
+          <h3>Warnings</h3>
+          <p>All PaaS products should only be used for testing and developing purposes.</p>
+          <p>Destroy the clusters when you no longer need them, do not saturate the service.</p>
+      </section>
+
+      <section>
+        <h3>How to launch</h3>
+        <p>Activate your VPN and connect to the <a href="https://bigdata.cesga.es/web-ui/app/#/login">webUI</a>.</p>
+        <p>Go to PaaS > Products and launch a MariaDB cluster.</p>
+        <p>Select the resources you need and provide a <b>numeric</b> password.</p>
+        <p>For testing the product use only 1 CPU to save up on resources</p>
+      </section>
+
+      <section>
+        <img class="stretch" src="img/mariadb_launch.png" />
+      </section>
+
+      <section>
+        <h3>Connect to the cluster</h3>
+        <p>When cluster status is <b>ready</b> click on show info and copy the IPs provided.</p>
+        <li>
+          <ul>You can use the IP beginning with 10.112.XXX.XXX to connect from your computer providing your VPN is active.</ul>
+          <ul>You can also conect to 10.117.XXX.XXX (faster connection) but only from a machine at CESGA, like hadoop3.cesga.es </ul>
+        </li>
+      </section>
+      <section>
+        <img class="stretch" src="img/mariadb_info.png" />
+      </section>
+      <section>
+        <h2>Examples</h2>
+        <p>Form your computer:</p>
+        <pre><code>mysql -u root -p -h 10.112.243.28</code></pre>
+        <p>Form hadoop3.cesga.es or ft.cesga.es:</p>
+        <pre><code>mysql -u root -p -h 10.117.243.28</code></pre>
+      </section>
+
+    </section>
+    <!-- Tutorial End: Mariadb -->
+
+    <!-- Tutorial Start: PostgreSQL -->
+    <section>
+      <section>
+          <h1>PostgreSQL</h1>
+      </section>
+
+      <section>
+          <h3>Warnings</h3>
+          <p>All PaaS products should only be used for testing and developing purposes.</p>
+          <p>Destroy the clusters when you no longer need them, do not saturate the service.</p>
+      </section>
+
+      <section>
+        <h3>How to launch</h3>
+        <p>Activate your VPN and connect to the <a href="https://bigdata.cesga.es/web-ui/app/#/login">webUI</a>.</p>
+        <p>Go to PaaS > Products and launch a PostgreSQL <b>9.2.15</b> cluster, selecting the correct version.</p>
+        <p>Select the resources you need and provide a <b>numeric</b> password.</p>
+        <p>For testing the product use only 1 CPU to save up on resources</p>
+      </section>
+      <section>
+        <img class="stretch" src="img/postgresversion.PNG" />
+      </section>
+      <section>
+        <img class="stretch" src="img/postgresopt.PNG" />
+      </section>
+      <section>
+        <h3>Connect to the cluster</h3>
+        <p>When cluster status is <b>ready</b> click on show info and copy the IPs provided.</p>
+        <li>
+          <ul>You can use the IP beginning with 10.112.XXX.XXX to connect from your computer providing your VPN is active.</ul>
+          <ul>You can also conect to 10.117.XXX.XXX (faster connection) but only from a machine at CESGA, like hadoop3.cesga.es </ul>
+        </li>
+      </section>
+      <section>
+        <img class="stretch" src="img/postgresip.PNG" />
+      </section>
+      <section>
+        <p>You need to connect as user postgresql and to the database test</p>
+        <p>After initial connection you can create other databases <code>using create database &lt;databasename&gt;</code></p>
+      </section>
+      <section>
+        <h2>Examples using psql</h2>
+        <p>Form your computer:</p>
+        <pre><code>psql -h 10.112.243.248 -U postgresql test</code></pre>
+        <p>Form hadoop3.cesga.es or ft.cesga.es:</p>
+        <pre><code>psql -h 10.117.243.248 -U postgresql test </code></pre>
+      </section>
+
+    </section>
+    <!-- Tutorial End: PostgreSQL -->
+
+    <!-- Tutorial Start: Modules -->
+    <section>
+      <section>
+        <h1>Modules</h1>
+        <h3>Additional Software Versions</h3>
+      </section>
+      <section>
+        <h2>Choosing software versions</h2>
+        <pre><code>module available</code></pre>
+      </section>
+      <section>
+        <h2>Anaconda</h2>
+        <p>We recommend that you use the Anaconda version of Python instead of the OS one</p>
+        <pre><code>module load anaconda2/2018.12</code></pre>
+        <p>Even you can try Python 3 (not officially supported)</p>
+        <pre><code>module load anaconda3/2018.12</code></pre>
+      </section>
+      <section>
+        <h2>Build tools</h2>
+        <p>You can load the following build tools</p>
+        <ul>
+          <li>maven</li>
+          <li>sbt</li>
+        </ul>
+      </section>
+    </section>
+    <!-- Tutorial End: Modules -->
+
+    <section>
+      <h2>Technology Selection</h2>
+      <img class="stretch" src="img/technology-selection.png" />
+    </section>
+
+    <!-- Reference Documentation -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Where to get additional information</h2>
+      </section>
+      <section>
+        <h2>Tutorials</h2>
+        <img class="stretch" src="img/tutorials.png" />
+        <footer><a href="http://bigdata.cesga.es/#tutorials">http://bigdata.cesga.gal/#tutorials</a></footer>
+      </section>
+      <section>
+        <h2>User Guide</h2>
+        <img class="stretch" src="img/hadoop3-user-guide.png" />
+        <footer><a href="http://bigdata.cesga.es/user-guide">http://bigdata.cesga.gal/user-guide</a></footer>
+      </section>
+      <section>
+        <h2>DTN User Guide</h2>
+        <img class="stretch" src="img/dtn-user-guide.png" />
+        <footer><a href="http://bigdata.cesga.es/dtn-user-guide">http://bigdata.cesga.gal/dtn-user-guide</a></footer>
+      </section>
+      <section>
+        <h2>Official Documentation</h2>
+        <p>Cloudera Official Documentation:</p>
+        <ul>
+          <li><a href="http://www.cloudera.com/documentation/enterprise/6/6.1/topics/cdh_components.html">CDH 6.1 Documentation</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/spark.html">Spark Guide</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/hive.html">Hive Guide</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/impala.html">Impala Guide</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/hue.html">HUE Guide</a></li>
+        </ul>
+        <p>Reference Documentation for each component:</p>
+        <ul>
+          <li><a href="https://spark.apache.org/docs/2.4.0/index.html">Spark 2.4.0 Documentation</a></li>
+          <li><a href="https://www.cloudera.com/documentation/enterprise/6/6.1/topics/cdh_component_documentation_links.html">Links to each component documentation</a></li>
+        </ul>
+      </section>
+    </section>
+
+    <section>
+      <h2>Upcoming courses</h2>
+      <ul>
+        <li>Spark Course: covering pyspark and sparklyr</li>
+        <li>Additional courses (Hive, HBase, Kafka, Flume, Sqoop): depending on your interests</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Documentation Pack</h2>
+      <p>We have prepared a documentation pack including <strong>today's slides</strong> as well as all related material:</p>
+      <ul>
+        <li><a href="http://bigdata.cesga.es/files/workshop-bigdata-documentation-pack.zip">Documentation Pack: <strong>http://bit.ly/hadoop2019</strong></a></li>
+      </ul>
+      <img class="stretch" src="img/documentation-pack.png" />
+    </section>
+
+    <!-- The End -->
+    <section>
+      <h3>Q&A</h3>
+      <p style="text-align: center;">Big Data is a <strong>multi-disciplinary</strong> domain.</p>
+      <p style="text-align: center;">Collaboration is a key factor in Big Data projects.</p>
+      <p style="text-align: center;">Tell us your project and we will help you:</p>
+      <p style="text-align: center;">
+        <script language="JavaScript">
+        var address = "bigdata";
+        var domain = "cesga.gal";
+        var linktext = address + "@" + domain ;
+        document.write("<a href='" + "mail" + "to:" + address + "@" + domain + "'>" + linktext + "</a>");
+        </script>
+      </p>
+      <!-- <p style="text-align: center;">Stay up to date subscribing to our <a href="https://listas.cesga.es/mailman/listinfo/bigdata-dev">Mailing list</a></p> -->
+    </section>
+    
+    <!-- Extra -->
+    <section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Extra Material</h2>
+      </section>
+    </section>
+
+    <!-- Tutorial Start: MapReduce -->
+    <section>
+      <section>
+        <h2>MapReduce</h2>
+      </section>
+
+      <section>
+        <h2>MapReduce</h2>
+        <p>MapReduce is a programming model and an associated implementation for processing and generating large data sets with a parallel, distributed algorithm on a cluster.</p>
+      </section>
+
+      <section>
+        <h2>MapReduce</h2>
+        <img src="img/mapreduce.png" />
+      </section>
+      
+      <section>
+        <h2>Launching a job</h2>
+        <p>
+          To launch a job:
+        </p>
+        <pre><code>yarn jar job.jar DriverClass input output</code></pre>
+      </section>
+      
+      <section>
+        <h2>List MR jobs</h2>
+        <p>
+          To list running MR jobs:
+        </p>
+        <pre><code>mapred job -list</code></pre>
+      </section>
+
+      <section>
+        <h2>Cancelling a job</h2>
+        <p>
+          To cancel a job:
+        </p>
+        <pre><code>mapred job -kill [jobid]</code></pre>
+      </section>
+      <section>
+        <h2>Monitoring</h2>
+        <p>
+        You can easily monitor your jobs using the YARN UI from the
+        <a href="https://bigdata.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/yarnui.png" />
+      </section>
+      <section>
+        <h2>Job History</h2>
+        <p>
+        You can see finished jobs using the MR2 UI from the
+        <a href="https://bigdata.cesga.es">WebUI</a>:
+        </p>
+        <img class="stretch" src="img/mapreduceui.png" />
+      </section>
+    </section>
+
+    <!-- MapReduce for Java developers -->
+    <section>
+      <section>
+        <h2>MapReduce for Java developers</h2>
+      </section>
+      <section>
+        <h2>Development Environment Setup</h2>
+        <ul>
+          <li>For a sample Maven-based project use:
+            <pre><code>git clone https://github.com/bigdatacesga/mr-wordcount</code></pre>
+          </li>
+          <li>Import the project in Eclipse using m2e or in Intellij</li>
+          <li>If using an IDE like Eclipse or Intellij it can be useful to:
+            <pre><code>
+              # Download sources and javadoc
+              mvn dependency:sources
+              mvn dependency:resolve -Dclassifier=javadoc
+              # Update the existing Eclipse project
+              mvn eclipse:eclipse
+              # Or if you using Intellij IDEA
+              mvn idea:idea
+            </code></pre>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Maven Basic Usage</h2>
+        <p>Compile:
+          <pre><code>mvn compile</code></pre>
+        </p>
+        <p>Run the tests
+          <pre><code>mvn test</code></pre>
+        </p>
+        <p>Package your app
+          <pre><code>mvn package</code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>Manual Process</h2>
+        <p>If you prefer to compile and package manually:
+          <pre><code>
+            javac -classpath $(hadoop classpath) *.java
+            jar cvf wordcount.jar *.class
+          </code></pre>
+        </p>
+      </section>
+      <section>
+        <h2>MapReduce Program</h2>
+        <p>Basic components of a program:</p>
+        <ul>
+          <li><strong>Driver</strong>: management code for the job or sequence of jobs</li>
+          <li><strong>map</strong> function of the Mapper</li>
+          <li><strong>reduce</strong> function of the Reducer</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Driver Code</h2>
+        <pre><code data-trim>
+public class Driver {
+  public static void main(String[] args) throws Exception {
+    Configuration conf = new Configuration();
+    Job job = Job.getInstance(conf);
+    job.setJarByClass(Driver.class);
+    job.setJobName("Word Count");
+    job.setMapperClass(WordMapper.class);
+    job.setCombinerClass(SumReducer.class);
+    job.setReducerClass(SumReducer.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
+    FileInputFormat.setInputPaths(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));    
+    boolean success = job.waitForCompletion(true);
+    System.exit(success ? 0 : 1);
+  }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Map Code</h2>
+        <pre><code data-trim>
+public class WordMapper
+    extends Mapper&lt;LongWritable, Text, Text, IntWritable&gt; {
+	private final static IntWritable one = new IntWritable(1);
+	private Text word = new Text();
+	@Override
+	public void map(LongWritable key, Text value, Context context)
+			throws IOException, InterruptedException {
+		String line = value.toString();
+		for (String field : line.split("\\W+")) {
+			if (field.length() &gt; 0) {
+				word.set(field);
+				context.write(word, one);
+			}
+		}
+	}
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Reduce Code</h2>
+        <pre><code data-trim>
+public class SumReducer
+  extends Reducer&lt;Text, IntWritable, Text, IntWritable&gt; {
+	@Override
+	public void reduce(
+            Text key, Iterable&lt;IntWritable&gt; values, Context context)
+			throws IOException, InterruptedException {
+		int wordCount = 0;
+
+		for (IntWritable value : values) {
+			wordCount += value.get();
+		}
+		context.write(key, new IntWritable(wordCount));
+	}
+}
+        </code></pre>
+      </section>
+
+    </section>
+
+    <!-- MapReduce Streaming API -->
+    <section>
+      <section>
+        <h2>MapReduce Streaming API</h2>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
+          ## MapReduce Streaming API
+          - Advantadges of the Streaming API
+            - Supports any language (perl, python, ruby, etc)
+            - Easy to reuse existing code
+          - Disadvantadges
+            - Performance
+            - Less flexibility during development than using the native MapReduce API
+        </script>
+      </section>
+      <section>
+        <h2>Quick how-to</h2>
+        <ul>
+          <li>We write two separated scripts: Mapper y Reducer</li>
+          <li>The Mapper script will receive as stdin the file line by line</li>
+          <li>The stdout of the Mapper and Reducer must be key-value pairs separated by a tab</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Example</h2>
+        <pre><code>
+yarn jar \
+    /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar \
+    -input input -output output \
+    -mapper mapper.pl -reducer reducer.pl \
+    -file mapper.pl -file reducer.pl
+        </code></pre>
+      </section>
+    </section>
+    <!-- Tutorial End: MapReduce -->
+
+    <!-- Optimizations -->
+    <section>
+      <section>
+        <h1>Optimizations</h1>
+        <h3>Improving the performance</h3>
+      </section>
+      <section>
+        <h2>BLAS</h2>
+        <p>Low-level routines for performing common linear algebra operations</p>
+        <ul>
+          <li><strong>Intel MKL</strong>: /opt/cesga/anaconda/Anaconda2-2018.12/lib/libmkl_rt.so<br/>
+          <a href="https://software.intel.com/es-es/node/528522">Single Dynamic Library (SDL) interface</a>
+          </li>
+          <li> <strong>OpenBlas</strong>: /usr/lib64/libopenblas.so.0</li>
+        </ul>
+      </section>
+      <section>
+        <h1>NumPy</h1>
+        <p>Adds support to Python for <strong>fast</strong> operations with multi-dimensional arrays and matrices</p>
+        <p>Already configured to use Intel MKL</p>
+      </section>
+      <section>
+        <h1>Storage Formats</h1>
+        <img height="100" src="img/avro.png" />
+        <img height="100" src="img/parquet.png" />
+      </section>
+    </section>
+
+    <!-- Success Stories -->
+    <section>
+      <section>
+        <h2>Success Stories</h2>
+      </section>
+      
+      <section>
+        <h2>Gaia (UDC)</h2>
+        <img class="stretch" src="img/gaia.jpg" />
+        <!-- <a target="_blank" href="https://www.cesga.es/es/biblioteca/downloadAsset/id/750" target="_blank">Technical Report</a> -->
+      </section>
+
+      <section>
+        <h2>FilmYou (CITIC)</h2>
+        <img class="stretch" src="img/filmyou.jpg" />
+        <!-- <a target="_blank" href="http://citic-research.org/sala_de_prensa/object_details_remote/1869691728?action_page=noticias&locale=es&object_name=NewsItem">Portal</a> -->
+      </section>
+
+    </section>
+
+
+  </div>
+
+</div>
+
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+controls: true,
+progress: true,
+history: true,
+center: true,
+
+transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+// Optional reveal.js plugins
+dependencies: [
+{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+{ src: 'plugin/zoom-js/zoom.js', async: true },
+{ src: 'plugin/notes/notes.js', async: true }
+]
+});
+
+            </script>
+
+            </body>
+            </html>
