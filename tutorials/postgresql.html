@@ -82,9 +82,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       </section>
       <section>
         <h2>Examples using psql</h2>
-        <p>Form your computer:</p>
+        <p>From your computer:</p>
         <pre><code>psql -h 10.112.243.248 -U postgresql test</code></pre>
-        <p>Form hadoop3.cesga.es or ft.cesga.es:</p>
+        <p>From hadoop3.cesga.es or dtn.srv.cesga.es:</p>
         <pre><code>psql -h 10.117.243.248 -U postgresql test </code></pre>
       </section>
       <section>
@@ -92,7 +92,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <p>This product includes 2 of the most popular extensions for managing time series and spatial data</p>
         <p>After launching the product, the process of setting up and conecting is the same</p>
         <p>In order to use the extensions, load them first in your db</p>
-        <pre><code> CREATE EXTENSION IF NOT EXISTS postgis CASCADE;</code></pre>
+        <pre><code>CREATE EXTENSION IF NOT EXISTS postgis CASCADE;</code></pre>
         <pre><code>CREATE EXTENSION IF NOT EXISTS timescaledb  VERSION '1.7.5' CASCADE;</code></pre>
       </section>
 
