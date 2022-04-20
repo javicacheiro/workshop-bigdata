@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>Uchuu</title>
+
+<meta name="description" content="Uchuu Collaboration.">
+<meta name="author" content="Javier Cacheiro">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+<!-- JLC CSS customizations -->
+<link rel="stylesheet" href="css/custom.css">
+
+<!-- Code syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- Printing and PDF exports -->
+<script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+<!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+      <section data-background="white">
+        <img class="plain" src="img/uchuu.gif" />
+      </section>
+      <section>
+        <img class="stretch" src="img/netexplo.png" />
+      </section>
+      <section>
+        <img class="stretch" src="img/uchuu_netexplo_virtual_twin_universe.png" />
+      </section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Uchuu Data Release 1</h2>
+        <ul>
+          <li>2.1 trillion N-body simulation that uses Planck2015 cosmology</li>
+          <li>2PB of data generated in the Aterui-II supercomputer</li>
+          <li>Reference: <a href="https://arxiv.org/abs/1711.01453">arXiv:1711.01453</a></li>
+        </ul>
+      </section>
+      <section>
+        <img class="stretch" src="img/aterui-ii.jpg" />
+      </section>
+      <section>
+        <h2>Aterui-II</h2>
+        <ul>
+          <li>National Astronomical Observatory of Japan (NAOJ)</li>
+          <li>Launch Year: 2018</li>
+          <li>Cores: 40.200 SkyLake</li>
+          <li>Memory: 386 TB</li>
+        </ul>
+      </section>
+      <!-- Comparison Ateuri-II vs FT-III -->
+      <!--
+      <section>
+        <h2>Aterui-II</h2>
+        <ul>
+          <li>National Astronomical Observatory of Japan (NAOJ)</li>
+          <li>Launch Year: 2018</li>
+          <li>Cores: 40.200 SkyLake</li>
+          <li>Memory: 386 TB</li>
+          <li>Linpack: 3 PFlops</li>
+        </ul>
+      </section>
+      <section>
+        <h2>FT-III</h2>
+        <ul>
+          <li>Launch Year: 2022</li>
+          <li>Cores: 22.656 IceLake</li>
+          <li>Memory: 119 TB</li>
+          <li>Linpack: 4 PFlops</li>
+          <li>GPUs: 144</li>
+        </ul>
+      </section>
+      -->
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Big Data</h2>
+        <ul>
+          <li>Goal: Allow large scale analysis of the results</li>
+          <li>Selection of 50 epocs</li>
+          <li>Transformation of the datasets to parquet</li>
+          <li>Interactive analysis using Python Notebooks and Spark</li>
+          <li><a href="https://github.com/uchuuproject/uchuu-bigdata">Uchuu github repo with examples</a></li>
+        </ul>
+      </section>
+    </section>
+
+  </div>
+
+</div>
+
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+  controls: true,
+  progress: true,
+  history: true,
+  center: true,
+
+  transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+  // Optional reveal.js plugins
+  dependencies: [
+    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+    { src: 'plugin/zoom-js/zoom.js', async: true },
+    { src: 'plugin/notes/notes.js', async: true }
+  ]
+});
+
+            </script>
+
+            </body>
+            </html>
