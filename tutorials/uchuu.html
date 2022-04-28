@@ -50,17 +50,39 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       <section>
         <img class="stretch" src="img/netexplo.png" />
       </section>
+      <!--
       <section>
         <img class="stretch" src="img/uchuu_netexplo_virtual_twin_universe.png" />
       </section>
-      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-        <h2>Uchuu Data Release 1</h2>
+      -->
+      <section>
+        <img class="stretch" src="img/uchuu_poster.jpg" />
+      </section>
+      <section>
+        <img class="stretch" src="img/uchuu_Universe_Timeline_2016_720.jpg" />
+        <p>The Big Bang theory was not accepted until <strong>1964</strong> with the discovery of the cosmic microwave background</p>
+      </section>
+      <section>
+        <img class="stretch" src="img/uchuu_composition-universe_dreamstime.jpg" />
+        <p>Dark really means we have no idea ;-)</p>
+      </section>
+      <section>
+        <h2>N-body simulation</h2>
+        <img class="stretch" src="img/uchuu_an-example-N-body-simulation-at-current-cosmological-time-redshift-z-0-The-density_Q640.jpg" />
         <ul>
-          <li>2.1 trillion N-body simulation that uses Planck2015 cosmology</li>
-          <li>2PB of data generated in the Aterui-II supercomputer</li>
+          <li>A box of side-length 2.0 h<sup>-1</sup>Gpc</li>
+          <li>2.1 trillion particles (12800<sup>3</sup>)</li>
+        </ul>
+      </section>
+      <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+        <h2>Uchuu Results</h2>
+        <ul>
+          <li>The biggest simulation of the universe ever created</li>
+          <li><a href="https://www.iaa.csic.es/en/news/iaa-participating-development-uchuu-most-accurate-and-complete-simulation-universe">3PB of data</a> generated in the Aterui-II supercomputer</li>
           <li>Reference: <a href="https://arxiv.org/abs/1711.01453">arXiv:1711.01453</a></li>
         </ul>
       </section>
+      <!--
       <section>
         <img class="stretch" src="img/aterui-ii.jpg" />
       </section>
@@ -72,6 +94,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <li>Cores: 40.200 SkyLake</li>
           <li>Memory: 386 TB</li>
         </ul>
+      </section>
+      -->
+      <section>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/R7nV6JEMGAo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </section>
       <!-- Comparison Ateuri-II vs FT-III -->
       <!--
@@ -96,6 +122,14 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         </ul>
       </section>
       -->
+      <section>
+        <h2>Storage costs</h2>
+        <ul>
+          <li><strong>3PB</strong></li>
+          <li>76.800€/month</li>
+          <li>921.600€/year</li>
+        </ul>
+      </section>
       <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
         <h2>Big Data</h2>
         <ul>
@@ -104,6 +138,47 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <li>Transformation of the datasets to parquet</li>
           <li>Interactive analysis using Python Notebooks and Spark</li>
           <li><a href="https://github.com/uchuuproject/uchuu-bigdata">Uchuu github repo with examples</a></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Benchmarks</h2>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>FT-II using <a href="https://vaex.io/docs/index.html">Vaex</a></th>
+              <th>BigData using <a href="https://spark.apache.org/docs/latest/api/python/">Spark</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Preliminary computations</td>
+              <td>109 min</td>
+              <td>less than 1 min</td>
+            </tr>
+              <td>Finding halos</td>
+              <td>9 hours only first host</td>
+              <td>less than 2 min ALL hosts</td>
+            </tr>
+            </tr>
+              <td>Total time</td>
+              <td>more than 38 hours</td>
+              <td>less than 3 min</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>Tutorial</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/VpsTAq3Uw7k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h2>How to pronounce uchuu</h2>
+        <ul>
+          <li>Uchuu means universe in Japanese</li>
+          <!-- <li><a href="https://forvo.com/word/uchuu/">Pronunciation</a></li>-->
+          <img class="plain" src="img/uchuu_location_of_male_from_japan_forvo.png" />
+          <li><a href="img/uchuu.mp3">Let's hear Skent from Japan</a></li>
         </ul>
       </section>
     </section>
