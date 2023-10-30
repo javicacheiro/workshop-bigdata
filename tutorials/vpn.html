@@ -84,13 +84,12 @@ chmod u+x snx
           </code></pre>
           </li>
           <li>Install the dependencies:</li>
-          <pre><code>sudo dpkg --add-architecture i386
-sudo apt update
+          <pre><code>sudo dpkg --add-architecture i386; sudo apt update
 sudo apt install libaudit1:i386 libbsd0:i386 libc6:i386 libcap-ng0:i386 libgcc-s1:i386 libpam0g:i386 libstdc++5:i386 libx11-6:i386 libxau6:i386 libxcb1:i386 libxdmcp6:i386
           </code></pre>
           </li>
-          <li>Connect the VPN: <pre><code>sudo ./snx -s pasarela.cesga.es -u my_username</code></pre></li>
-          <li>To disconnect run: <pre><code>sudo snx -d</code></pre></li>
+          <li>Connect to the VPN: <pre><code>sudo ./snx -s pasarela.cesga.es -u my_username</code></pre></li>
+          <li>To disconnect the VPN run: <pre><code>sudo snx -d</code></pre></li>
         </ul>
       </section>
 
