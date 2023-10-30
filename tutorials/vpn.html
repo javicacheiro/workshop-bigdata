@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>Workshop BD|CESGA</title>
+<title>How to connect</title>
 
 <meta name="description" content="Introducción al servicio Big Data del CESGA basado en Hadoop.">
 <meta name="author" content="Javier Cacheiro">
@@ -52,53 +52,47 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <p>The <strong>VPN</strong> software allows you not only to connect to CESGA in a secure way but also to access internal resources that you can not reach otherwise.</p>
       </section>
       <section>
-        <h2>Installing the Forticlient VPN software</h2>
+        <h2>Installation: Windows/MacOS</h2>
         <ul>
-          <li>Download the VPN software from <a href="https://www.forticlient.com/downloads" target="_blank">Official Forticlient download page</a> or from the <a href="https://portalusuarios.cesga.es/layout/download/vpn-fortissl.rar" target="_blank">CESGA Repository</a></li>
-          <li>For Windows/Mac just launch the installation wizard</li>
-          <li>For new Linux version follow the <a href="https://www.forticlient.com/repoinfo" target="_blank">official instructions</a></li>
-          <li>For old Linux versions see the next slides</li>
-          <li>There is also an alternative open-source Linux client: OpenFortiVPN</li>
+          <li>Download the VPN software</li>
+            <ul>
+              <li>If you are using Linux check the Linux instalaltion section</li>
+              <li><a href="https://portalusuarios.cesga.es/layout/download/VPN/CheckPointVPN_CESGA_HPC.msi" target="_blank">Checkpoint software for Windows 7, 8.1, 10 and 11</a></li>
+              <li><a href="https://portalusuarios.cesga.es/layout/download/VPN/Endpoint_Security_VPN.dmg" target="_blank">Checkpoint software for macOS 10.14, 10.15, 11 and 12</a></li>
+              <li><a href="https://portalusuarios.cesga.es/layout/download/VPN/EndpointSecurityInstalle_80.89.app.zip" target="_blank">Checkpoint software for macOS 10.11 and 10.13</a></li>
+            </ul>
+          <li>Launch the installation wizard</li>
+          <li>Continue with the configuration</li>
         </ul>
       </section>
       <section>
-        <h2>Forticlient Configuration</h2>
+        <h2>Configuration: Windows/MacOS</h2>
         <ul>
           <li>Enter the following configuration options</li>
-          <pre><code>Gateway: gateway.cesga.es
-Port: 443
-Username: your email address registered at CESGA
-Password: your password in the supercomputers</code></pre>
+          <pre><code>Site: CESGA-VPN (already pre-configured)
+Username: enter your username (eg. uscfajlc)
+Password: enter your password</code></pre></li>
+          <li>If requested, for "Login Option Selection" choose "HPC (Default)"</li>
         </ul>
       </section>
       <section>
-        <h2>VPN Installation in old Linux versions</h2>
+        <h2>Installation: Linux</h2>
         <ul>
-          <li>If your Linux distribution is not supported in the <a href="https://www.forticlient.com/repoinfo" target="_blank">official download page</a> use our <a href="https://portalusuarios.cesga.es/layout/download/vpn-fortissl.rar" target="_blank">CESGA Local Repository</a></li>
-          <li>Follow the next steps:</li>
-          <pre><code>unrar e vpn-fortissl.rar
-tar xvzf forticlientsslvpn_linux_4.4.2323.tar.gz
-cd forticlientsslvpn
-./fortisslvpn.sh
-Accept the license agreement presented
-../forticlientsslvpn_cli \
-   --server gateway.cesga.es:443 \
-   --vpnuser usuario@dominio.com
+          <li>Install the <b>snx</b> client:</li>
+          <pre><code>wget http://bigdata.cesga.es/files/snx
+chmod u+x snx
           </code></pre>
           </li>
+          <li>Install the dependencies:</li>
+          <pre><code>sudo dpkg --add-architecture i386
+sudo apt update
+sudo apt install libaudit1:i386 libbsd0:i386 libc6:i386 libcap-ng0:i386 libgcc-s1:i386 libpam0g:i386 libstdc++5:i386 libx11-6:i386 libxau6:i386 libxcb1:i386 libxdmcp6:i386
+          </code></pre>
+          </li>
+          <li>Connect the VPN: <pre><code>sudo ./snx -s pasarela.cesga.es -u my_username</code></pre></li>
+          <li>To disconnect run: <pre><code>sudo snx -d</code></pre></li>
         </ul>
       </section>
-      <section>
-        <h2>Alternative Open Source Linux Client <strong>OpenFortiVPN</strong></h2>
-        <ul>
-          <li>For Linux there is also an alternative open-source client that you can use instead of the official fortivpn client</li>
-          <li>Some Linux distibutions like Ubuntu, Debian, OpenSuse or Arch Linux provide openfortivpn packages</li>
-          <li>Check the project github page for details <a href="https://github.com/adrienverge/openfortivpn" target="_blank">openfortivpn</a></li>
-          <li>It has also a GUI that you can use: <a href="https://hadler.me/linux/openfortigui/" target="_blank">openfortigui</a></li>
-        </ul>
-        <p>For more info check the VPN section of the <a href="http://bigdata.cesga.es/user-guide/vpn.html">User Guide</a></p>
-      </section>
-    </section>
 
   </div>
 
